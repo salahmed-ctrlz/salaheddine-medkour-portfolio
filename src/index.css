@@ -1,0 +1,207 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+  cursor: none;
+}
+
+body {
+  @apply bg-black text-white;
+}
+
+/* Custom Cursor */
+.cursor-dot,
+.cursor-outline {
+  @apply fixed pointer-events-none z-50 transition-all duration-100 ease-out;
+  mix-blend-mode: difference;
+}
+
+.cursor-dot {
+  @apply w-2 h-2 bg-white rounded-full;
+  transform: translate(-50%, -50%);
+}
+
+.cursor-outline {
+  @apply w-8 h-8 border border-white rounded-full;
+  transform: translate(-50%, -50%);
+}
+
+/* Hover Effects */
+a,
+button {
+  @apply transition-all duration-300;
+}
+
+a:hover,
+button:hover {
+  @apply text-indigo-400;
+}
+
+/* Navbar Border Animation */
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.navbar-container {
+  position: relative;
+  isolation: isolate;
+}
+
+.navbar-container::after {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: 9999px;
+  background: linear-gradient(var(--angle), rgba(255, 238, 0, 0.5), rgba(162, 0, 255, 0.5), rgba(255, 0, 0, 0.5));
+  opacity: 0; /* Start with 0 opacity */
+  transition: opacity 0.5s ease-in-out, filter 0.5s ease-in-out;
+  filter: blur(8px);
+  animation: spin 3s linear infinite;
+}
+
+.navbar-container:hover::after {
+  opacity: 0.3; /* Lower opacity on hover */
+  filter: blur(1.5rem);
+  transition-delay: 0.3s; /* Smooth delay on hover */
+}
+
+@keyframes spin {
+  to {
+    --angle: 360deg;
+  }
+}
+
+/* Glass Effect */
+.glass-nav {
+  @apply backdrop-blur-[8px] bg-white/5;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-black;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-indigo-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-indigo-700;
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+  html {
+    cursor: auto;
+  }
+
+  .cursor-dot,
+  .cursor-outline {
+    display: none;
+  }
+}
+
+/* Glow effect on hover */
+.group:hover .glow {
+  opacity: 1;
+  filter: blur(20px);
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Typing Effect Enhancements */
+.react-simple-typewriter {
+  font-weight: bold;
+  color: #00d0ff; /* Indigo */
+}
+
+/* Profile Image Glow Effect */
+.group:hover img {
+  box-shadow: 0 20px 50px rgb(255, 255, 255); /* Indigo glow */
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+/* Add this to your existing CSS */
+.skills-glow {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(173, 216, 230, 0.3), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+  opacity: 0;
+  z-index: 10;
+}
+
+.skills-section:hover .skills-glow {
+  opacity: 1;
+}
+
+/* Add these styles to your existing index.css */
+.project-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover\:scale-105:hover {
+  transform: scale(1.05);
+}
+
+.cursor-zoom-in {
+  cursor: zoom-in;
+}
+
+.cursor-zoom-out {
+  cursor: zoom-out;
+}
+
+.backdrop-blur-lg {
+  backdrop-filter: blur(16px);
+}
+
+.bg-black\/90 {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+.hover\:text-indigo-400:hover {
+  color: #818cf8;
+}
+
+.hover\:bg-indigo-600:hover {
+  background-color: #4f46e5;
+}
+
+.rounded-full {
+  border-radius: 9999px;
+}
+
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+.shadow-xl {
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.hover\:shadow-2xl:hover {
+  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+@font-face {
+  font-family: 'JannaLT-Regular';
+  src: url('/path/to/JannaLT-Regular.woff2') format('woff2'),
+       url('/path/to/JannaLT-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
