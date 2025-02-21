@@ -119,7 +119,7 @@ export default function Contact() {
                     GitHub Profile
                   </a>
                   <a
-                    href="/path/to/your/cv.pdf"
+                    href="Medkour Salah Eddine - Resume Feb 2025.pdf"
                     download
                     className="flex items-center text-gray-300 hover:text-indigo-400 transition-colors text-lg py-2"
                   >
