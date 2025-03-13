@@ -1,7 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Download } from "lucide-react";
 import { useState, useEffect, useCallback } from "react";
 import background from "../components/images/nasa-2W-QWAC0mzI-unsplash.jpg";
+import Resume from "../components/Medkour Salah Eddine - Resume Feb 2025.pdf";
 
 const titles = [
   "Web Developer",
@@ -21,6 +22,7 @@ export default function Hero() {
   const [displayGreeting, setDisplayGreeting] = useState("Hello there I'm");
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [mobileLanguageToggle, setMobileLanguageToggle] = useState(false);
 
   const scrambleText = useCallback((start: string, end: string, setDisplay: (value: string) => void) => {
     let iteration = 0;
@@ -62,29 +64,45 @@ export default function Hero() {
   }, []);
 
   useEffect(() => {
-    if (!isMobile) return;
-
     const titleInterval = setInterval(() => {
       setCurrentTitle((prev) => (prev + 1) % titles.length);
-    }, 5000);
+    }, 3000);
 
-    const languageInterval = setInterval(() => {
-      if (!isTransitioning) {
-        if (displayName === "Medkour Salah Eddine") {
-          scrambleText("Medkour Salah Eddine", "صَلَاحُ الدّينْ مَذكُورْ", setDisplayName);
-          scrambleText("Hello there I'm", "السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ", setDisplayGreeting);
+    // Different animation handling for mobile vs desktop
+    let languageInterval;
+    
+    if (isMobile) {
+      // Mobile animation (simple swap with slide)
+      languageInterval = setInterval(() => {
+        setMobileLanguageToggle(prev => !prev);
+        if (mobileLanguageToggle) {
+          setDisplayName("Medkour Salah Eddine");
+          setDisplayGreeting("Hello there I'm");
         } else {
-          scrambleText("صَلَاحُ الدّينْ مَذكُورْ", "Medkour Salah Eddine", setDisplayName);
-          scrambleText("السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ", "Hello there I'm", setDisplayGreeting);
+          setDisplayName("صَلَاحُ الدّينْ مَذكُورْ");
+          setDisplayGreeting("السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ");
         }
-      }
-    }, 5000);
+      }, 3500);
+    } else {
+      // Desktop animation (scramble effect)
+      languageInterval = setInterval(() => {
+        if (!isTransitioning) {
+          if (displayName === "Medkour Salah Eddine") {
+            scrambleText("Medkour Salah Eddine", "صَلَاحُ الدّينْ مَذكُورْ", setDisplayName);
+            scrambleText("Hello there I'm", "السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ", setDisplayGreeting);
+          } else {
+            scrambleText("صَلَاحُ الدّينْ مَذكُورْ", "Medkour Salah Eddine", setDisplayName);
+            scrambleText("السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ", "Hello there I'm", setDisplayGreeting);
+          }
+        }
+      }, 5000);
+    }
 
     return () => {
       clearInterval(titleInterval);
       clearInterval(languageInterval);
     };
-  }, [isMobile, displayName, isTransitioning, scrambleText]);
+  }, [isMobile, displayName, isTransitioning, scrambleText, mobileLanguageToggle]);
 
   const handleHover = () => {
     if (!isMobile && !isTransitioning) {
@@ -120,31 +138,67 @@ export default function Hero() {
       />
 
       <div className="relative z-10 text-center px-4">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-2xl md:text-3xl mb-4 text-gray-300"
-          onMouseEnter={handleHover}
-          onMouseLeave={handleHover}
-          style={{ fontFamily: isArabic(displayGreeting) ? 'Neo Sans Arabic, sans-serif' : 'inherit' }}
-        >
-          {displayGreeting}
-        </motion.p>
+        {isMobile ? (
+          // Mobile Animation
+          <motion.div>
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={`greeting-${mobileLanguageToggle}`}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.5 }}
+                className="text-2xl md:text-3xl mb-6 text-gray-300"
+                style={{ fontFamily: isArabic(displayGreeting) ? 'Neo Sans Arabic, sans-serif' : 'inherit' }}
+              >
+                {displayGreeting}
+              </motion.p>
+            </AnimatePresence>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-5xl md:text-7xl font-bold mb-4"
-          onMouseEnter={handleHover}
-          onMouseLeave={handleHover}
-          style={{ fontFamily: isArabic(displayName) ? 'Neo Sans Arabic, sans-serif' : 'inherit' }}
-        >
-          {displayName}
-        </motion.h1>
+            <AnimatePresence mode="wait">
+              <motion.h1
+                key={`name-${mobileLanguageToggle}`}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.5 }}
+                className="text-5xl md:text-7xl font-bold mb-8"
+                style={{ fontFamily: isArabic(displayName) ? 'Neo Sans Arabic, sans-serif' : 'inherit' }}
+              >
+                {displayName}
+              </motion.h1>
+            </AnimatePresence>
+          </motion.div>
+        ) : (
+          // Desktop Animation (Original)
+          <>
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-2xl md:text-3xl mb-6 text-gray-300"
+              onMouseEnter={handleHover}
+              onMouseLeave={handleHover}
+              style={{ fontFamily: isArabic(displayGreeting) ? 'Neo Sans Arabic, sans-serif' : 'inherit' }}
+            >
+              {displayGreeting}
+            </motion.p>
 
-        <div className="h-8 mb-8">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-5xl md:text-7xl font-bold mb-8"
+              onMouseEnter={handleHover}
+              onMouseLeave={handleHover}
+              style={{ fontFamily: isArabic(displayName) ? 'Neo Sans Arabic, sans-serif' : 'inherit' }}
+            >
+              {displayName}
+            </motion.h1>
+          </>
+        )}
+
+        <div className="h-10 mb-12">
           <AnimatePresence mode="wait">
             <motion.p
               key={currentTitle}
@@ -159,17 +213,33 @@ export default function Hero() {
           </AnimatePresence>
         </div>
 
-        <motion.button
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={scrollToContact}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-full text-lg font-semibold transition-colors duration-300"
-        >
-          Contact Me
-        </motion.button>
+        <div className="flex flex-col md:flex-row items-center justify-center space-y-4 md:space-y-0 md:space-x-6">
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={scrollToContact}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors duration-300 w-full md:w-auto"
+          >
+            Contact Me
+          </motion.button>
+
+          <motion.a
+            href={Resume}
+            download="Medkour Salah Eddine - Resume.pdf"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="flex items-center justify-center bg-gray-700 hover:bg-gray-600 text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors duration-300 w-full md:w-auto"
+          >
+            <Download className="w-5 h-5 mr-2" />
+            Download Resume
+          </motion.a>
+        </div>
       </div>
 
       <motion.div

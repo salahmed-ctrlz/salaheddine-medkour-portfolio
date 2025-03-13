@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { Mail, Linkedin, Github, Download } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import Resume from "../components/Medkour Salah Eddine - Resume Feb 2025.pdf";
 
 export default function Contact() {
   const handleCopyEmail = () => {
@@ -119,8 +120,8 @@ export default function Contact() {
                     GitHub Profile
                   </a>
                   <a
-                    href="/path/to/your/cv.pdf"
-                    download
+                    href={Resume}
+                    download="Medkour_Salah_Eddine_Resume.pdf"
                     className="flex items-center text-gray-300 hover:text-indigo-400 transition-colors text-lg py-2"
                   >
                     <Download className="w-8 h-8 mr-4" />
