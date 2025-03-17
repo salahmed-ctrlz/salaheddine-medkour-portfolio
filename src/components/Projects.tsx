@@ -8,8 +8,21 @@ import pwdgenDark from './images/pwd-generator-dark.png';
 import pwdgenLight from './images/pwd-generator-light.png';
 import pwdgenHacker from './images/pwd-generator-hacker.png';
 import ePortfolio from './images/eportfolio.png';
+import ecommerce from './images/ecommerce.png';
 
-const projects = [
+interface Project {
+  title: string;
+  description: string;
+  image?: string;
+  images?: string[];
+  github: string;
+  live: string;
+  details: string;
+  technologies: string[];
+  carousel?: boolean;
+}
+
+const projects: Project[] = [
   {
     title: "Gaming & PC Parts Website (PC Haven)",
     description: "A fully responsive e-commerce website for PC components and accessories.",
@@ -39,6 +52,15 @@ const projects = [
     details: "A password generator built with React.js and TypeScript featuring multiple themes (dark, light, hacker mode), adjustable length, and real-time strength feedback.",
     technologies: ["React.js", "TypeScript", "Tailwind CSS"],
     carousel: true
+  },
+  {
+    title: "E-commerce Website (Front End)",
+    description: "A modern e-commerce website built with HTML and CSS.",
+    image: ecommerce,
+    github: "https://github.com/salahmed-ctrlz/etopia",
+    live: "https://salahmed-ctrlz.github.io/etopia/",
+    details: "This project is a fully responsive e-commerce website. Built with HTML CSS & JAVASCRIPT.",
+    technologies: ["HTML", "Tailwind CSS", "JavaScript"]
   },
   {
     title: "Weather Web App",
@@ -74,62 +96,89 @@ export default function Projects() {
   // Carousel auto-rotation effect
   useEffect(() => {
     const carouselProject = projects.find(project => project.carousel);
-    if (!carouselProject) return;
+    if (!carouselProject?.images?.length) return;
 
     const interval = setInterval(() => {
       setCurrentCarouselIndex(prevIndex => 
-        prevIndex === carouselProject.images.length - 1 ? 0 : prevIndex + 1
+        prevIndex === carouselProject.images!.length - 1 ? 0 : prevIndex + 1
       );
-    }, 3000); // Change slide every 3 seconds
+    }, 3000);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <section id="projects" className="py-20 bg-gray-800 text-white">
+    <section id="projects" className="py-20 bg-gradient-to-b from-gray-900 to-gray-800 text-white relative overflow-hidden">
+      {/* Background Pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `radial-gradient(circle at 25px 25px, white 2%, transparent 0%), radial-gradient(circle at 75px 75px, white 2%, transparent 0%)`,
+          backgroundSize: '100px 100px'
+        }} />
+      </div>
+
+      {/* Maximized Image Modal */}
       {maximizedImage && (
-        <div 
-          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-lg flex items-center justify-center p-4 cursor-pointer"
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-xl flex items-center justify-center p-4 cursor-pointer"
           onClick={() => setMaximizedImage(null)}
         >
-          <div className="relative max-w-screen-xl max-h-screen w-full h-full flex items-center justify-center">
+          <motion.div 
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0.9, opacity: 0 }}
+            transition={{ type: "spring", damping: 25 }}
+            className="relative max-w-screen-xl max-h-screen w-full h-full flex items-center justify-center"
+          >
             {/* Blurred background image */}
             <div 
-              className="absolute inset-0 bg-cover bg-center opacity-40 blur-xl"
+              className="absolute inset-0 bg-cover bg-center opacity-30 blur-2xl"
               style={{ backgroundImage: `url(${maximizedImage})` }}
-            ></div>
+            />
             
             {/* Actual image */}
             <div 
               className="relative max-w-[90vw] max-h-[90vh] z-10"
               onClick={(e) => e.stopPropagation()}
             >
-              <button
+              <motion.button
+                whileHover={{ scale: 1.1, rotate: 90 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={() => setMaximizedImage(null)}
-                className="absolute top-2 right-2 bg-black rounded-full p-2 shadow-[0_0_10px_rgba(255,255,255,0.7)] hover:text-indigo-400 transition-colors cursor-pointer z-20"
+                className="absolute -top-4 -right-4 bg-black/80 rounded-full p-2 shadow-lg hover:shadow-indigo-500/50 hover:text-indigo-400 transition-all duration-300 cursor-pointer z-20"
               >
                 <X className="w-8 h-8 text-white" />
-              </button>
-              <img 
+              </motion.button>
+              <motion.img 
+                initial={{ y: 20, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ delay: 0.2 }}
                 src={maximizedImage} 
                 alt="Maximized" 
-                className="max-h-[85vh] max-w-[85vw] object-contain rounded-lg"
+                className="max-h-[85vh] max-w-[85vw] object-contain rounded-lg shadow-2xl"
               />
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
 
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
-          <h2 className="text-4xl font-bold mb-4">Picked Projects</h2>
-          <p className="text-gray-300">Here are some of my projects that I can showcase here, Please feel free to check others on my Github.</p>
+          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+            Picked Projects
+          </h2>
+          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+            Here are some of my projects that I can showcase here. Please feel free to check others on my Github.
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -140,107 +189,140 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.2 }}
               viewport={{ once: true }}
-              whileHover={{ scale: 1.02 }}
-              className="bg-gray-900 rounded-lg overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300"
+              whileHover={{ y: -5 }}
+              className="group bg-gray-900/50 backdrop-blur-sm rounded-xl overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300 border border-gray-800/50"
             >
-              <div className="relative h-60">
-                {project.carousel ? (
-                  <div className="relative w-full h-full overflow-hidden">
+              <div className="relative h-60 overflow-hidden">
+                {project.carousel && project.images ? (
+                  <div className="relative w-full h-full">
                     {project.images.map((image, imgIndex) => (
-                      <img
+                      <motion.img
                         key={imgIndex}
                         src={image}
                         alt={`${project.title} - View ${imgIndex + 1}`}
-                        className={`absolute w-full h-full object-cover transition-all duration-500 ${
+                        className={`absolute w-full h-full object-cover transition-all duration-700 ${
                           imgIndex === currentCarouselIndex ? "opacity-100" : "opacity-0"
                         }`}
                         style={{ objectPosition: "top" }}
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.4 }}
                       />
                     ))}
-                    <div className="absolute bottom-2 left-0 right-0 flex justify-center space-x-2">
+                    <div className="absolute bottom-3 left-0 right-0 flex justify-center space-x-2">
                       {project.images.map((_, dotIndex) => (
-                        <span
+                        <motion.span
                           key={dotIndex}
-                          className={`w-2 h-2 rounded-full ${
-                            dotIndex === currentCarouselIndex ? "bg-indigo-500" : "bg-gray-500"
+                          initial={{ scale: 0.8 }}
+                          animate={{ scale: dotIndex === currentCarouselIndex ? 1.2 : 1 }}
+                          className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                            dotIndex === currentCarouselIndex 
+                              ? "bg-indigo-400 w-4" 
+                              : "bg-gray-500 hover:bg-gray-400"
                           }`}
                         />
                       ))}
                     </div>
-                    <button
-                      onClick={() => setMaximizedImage(project.images[currentCarouselIndex])}
-                      className="absolute top-2 right-2 p-2 bg-black/50 rounded-full text-white hover:text-indigo-400 transition-colors cursor-pointer"
+                    <motion.button
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                      onClick={() => project.images && setMaximizedImage(project.images[currentCarouselIndex])}
+                      className="absolute top-3 right-3 p-2 bg-black/60 backdrop-blur-sm rounded-full text-white hover:text-indigo-400 transition-all duration-300 cursor-pointer opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0"
                     >
                       <Maximize2 className="w-5 h-5" />
-                    </button>
+                    </motion.button>
                   </div>
                 ) : (
-                  <>
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                      style={{ objectPosition: "top" }}
-                    />
-                    <button
-                      onClick={() => setMaximizedImage(project.image)}
-                      className="absolute top-2 right-2 p-2 bg-black/50 rounded-full text-white hover:text-indigo-400 transition-colors cursor-pointer"
-                    >
-                      <Maximize2 className="w-5 h-5" />
-                    </button>
-                  </>
+                  project.image && (
+                    <div className="relative w-full h-full overflow-hidden">
+                      <motion.img
+                        whileHover={{ scale: 1.05 }}
+                        transition={{ duration: 0.4 }}
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover"
+                        style={{ objectPosition: "top" }}
+                      />
+                      <motion.button
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => setMaximizedImage(project.image!)}
+                        className="absolute top-3 right-3 p-2 bg-black/60 backdrop-blur-sm rounded-full text-white hover:text-indigo-400 transition-all duration-300 cursor-pointer opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0"
+                      >
+                        <Maximize2 className="w-5 h-5" />
+                      </motion.button>
+                    </div>
+                  )
                 )}
               </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-2 hover:text-indigo-400 transition-colors">
+
+              <div className="p-6 space-y-4">
+                <h3 className="text-xl font-semibold group-hover:text-indigo-400 transition-colors duration-300">
                   {project.title}
                 </h3>
-                <p className="text-gray-400 mb-4">{project.description}</p>
+                <p className="text-gray-400 text-sm leading-relaxed">
+                  {project.description}
+                </p>
                 <div className="flex space-x-4">
-                  <a
+                  <motion.a
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center text-indigo-400 hover:text-indigo-300 transition-colors"
+                    className="flex items-center text-indigo-400 hover:text-indigo-300 transition-all duration-300"
                   >
                     <Github className="w-5 h-5 mr-2" />
                     Code
-                  </a>
-                  <a
+                  </motion.a>
+                  <motion.a
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     href={project.live}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center text-indigo-400 hover:text-indigo-300 transition-colors"
+                    className="flex items-center text-indigo-400 hover:text-indigo-300 transition-all duration-300"
                   >
                     <ExternalLink className="w-5 h-5 mr-2" />
                     Live Demo
-                  </a>
+                  </motion.a>
                 </div>
-                <button
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                   onClick={() => toggleExpand(index)}
-                  className="mt-4 flex items-center text-indigo-400 hover:text-indigo-300 transition-colors cursor-pointer"
+                  className="w-full mt-4 flex items-center justify-center space-x-2 py-2 px-4 rounded-lg bg-gray-800/50 hover:bg-gray-700/50 text-gray-300 hover:text-white transition-all duration-300"
                 >
+                  <span>View More</span>
                   {expandedIndex === index ? (
-                    <ChevronUp className="w-5 h-5 mr-2" />
+                    <ChevronUp className="w-5 h-5" />
                   ) : (
-                    <ChevronDown className="w-5 h-5 mr-2" />
+                    <ChevronDown className="w-5 h-5" />
                   )}
-                  View More
-                </button>
+                </motion.button>
+                
                 {expandedIndex === index && (
-                  <div className="mt-4">
-                    <p className="text-gray-400 mb-4 whitespace-pre-line">{project.details}</p>
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="mt-4 space-y-4"
+                  >
+                    <p className="text-gray-400 text-sm leading-relaxed whitespace-pre-line">
+                      {project.details}
+                    </p>
                     <div className="flex flex-wrap gap-2">
                       {project.technologies.map((tech, i) => (
-                        <span 
+                        <motion.span
                           key={i}
-                          className="bg-gray-700 text-gray-300 px-3 py-1 rounded-full text-sm hover:bg-indigo-600 transition-colors"
+                          whileHover={{ scale: 1.05 }}
+                          className="bg-gray-800/50 text-gray-300 px-3 py-1 rounded-full text-sm hover:bg-indigo-600/50 hover:text-white transition-all duration-300"
                         >
                           {tech}
-                        </span>
+                        </motion.span>
                       ))}
                     </div>
-                  </div>
+                  </motion.div>
                 )}
               </div>
             </motion.div>
