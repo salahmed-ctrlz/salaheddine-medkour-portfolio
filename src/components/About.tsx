@@ -387,40 +387,51 @@ export default function About() {
             </h2>
             <p className="text-lg text-gray-400">Network Engineering graduate</p>
             <div className="reference relative">
-              <p className="text-gray-500 cursor-text">
+              {/* Location with interactive tooltip */}
+              <p className="text-gray-500 relative inline-block">
                 <span 
-                  className="hover-card"
+                  className="hover-card relative inline-block"
                   onMouseEnter={() => setIsAnnabaHovered(true)}
                   onMouseLeave={() => setIsAnnabaHovered(false)}
                 >
                   Annaba
                 </span>, Algeria
-              </p>
-              <div className={`card absolute ${isAnnabaHovered ? 'card-visible' : ''}`}>
-                <div className="cloud"></div>
-                <div className="cloud"></div>
-                <div className="cloud"></div>
-                <div className="cloud"></div>
-                <div className="relative inner-card">
-                  <div className="bg-map"></div>
-                  <div className="location absolute"></div>
-                  <div className="elements">
-                    <div className="description relative">
-                      <div className="blur-item absolute"></div>
-                      <span className="main-title cursor-text">From Annaba</span>
-                      <p className="second-title">Algeria</p>
-                    </div>
-                    <div className="details">
-                      <div className="peoples">
-                        <div className="people"></div>
-                        <div className="people"></div>
-                        <div className="people"></div>
+                
+                {/* Location Tooltip */}
+                <div className="location-tooltip">
+                  {/* Map background */}
+                  <div className="location-map"></div>
+                  <div className="location-dots"></div>
+                  
+                  {/* Animated pin */}
+                  <div className="location-pin"></div>
+                  
+                  {/* Content */}
+                  <div className="location-content">
+                    <h4 className="location-title">From Annaba</h4>
+                    <p className="location-subtitle">Coastal city in northeastern Algeria</p>
+                    
+                    {/* Stats */}
+                    <div className="location-stats">
+                      <div className="location-stat">
+                        <div className="location-stat-value">650K+</div>
+                        <div className="location-stat-label">Population</div>
                       </div>
-                      <div className="action"></div>
+                      <div className="location-stat">
+                        <div className="location-stat-value">80 km²</div>
+                        <div className="location-stat-label">Area</div>
+                      </div>
+                      <div className="location-stat">
+                        <div className="location-stat-value">1830</div>
+                        <div className="location-stat-label">Founded</div>
+                      </div>
                     </div>
                   </div>
+                  
+                  {/* Decorative wave */}
+                  <div className="location-wave"></div>
                 </div>
-              </div>
+              </p>
             </div>
           </motion.div>
         </div>

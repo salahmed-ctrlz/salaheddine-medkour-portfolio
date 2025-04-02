@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { Download, Mail, Github, Linkedin } from "lucide-react";
+import { ChevronDown, Download, Mail, Github, Linkedin } from "lucide-react";
 import { useState, useEffect, useCallback, useRef } from "react";
 import background2 from "./images/blackhole.webp";
 import Resume from "./Medkour Salah Eddine - Resume Feb 2025.pdf";
@@ -419,7 +419,9 @@ export default function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isContactHovered, setIsContactHovered] = useState(false);
   const [isResumeHovered, setIsResumeHovered] = useState(false);
-  
+  const [isInView, setIsInView] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
   const backgroundRef = useRef<HTMLDivElement>(null);
 
   // Content based on language with phonetic pronunciation
@@ -575,8 +577,29 @@ export default function Hero() {
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // Intersection Observer for particles
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsInView(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  const particlesInit = async (engine: Engine) => {
+    await loadFull(engine);
+  };
+
   return (
     <section 
+      ref={sectionRef}
       className="min-h-screen relative flex flex-col items-center justify-center overflow-hidden"
       onMouseMove={handleMouseMove}
     >
@@ -897,6 +920,54 @@ export default function Hero() {
           <span className="absolute top-[140%] text-white uppercase tracking-[1.5px] text-xs">scroll</span>
         </motion.div>
       </motion.div>
+
+      {/* Particles Background */}
+      <Particles
+        id="tsparticles"
+        init={particlesInit}
+        options={{
+          background: {
+            color: {
+              value: "transparent",
+            },
+          },
+          fpsLimit: 60,
+          particles: {
+            color: {
+              value: "#ffffff",
+            },
+            links: {
+              color: "#ffffff",
+              distance: 150,
+              enable: true,
+              opacity: 0.2,
+              width: 1,
+            },
+            move: {
+              enable: isInView,
+              speed: 1,
+            },
+            number: {
+              density: {
+                enable: true,
+                area: 800,
+              },
+              value: 80,
+            },
+            opacity: {
+              value: 0.3,
+            },
+            shape: {
+              type: "circle",
+            },
+            size: {
+              value: { min: 1, max: 3 },
+            },
+          },
+          detectRetina: true,
+        }}
+        style={{ position: 'absolute', top: '10%' }}
+      />
     </section>
   );
 }

@@ -1,14 +1,14 @@
+import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useState, useEffect, useRef } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 // Import logos
-import nmapLogo from "./images/Nmap.png";
-import zapLogo from "./images/zap.png";
-import burpsuiteLogo from "./images/burp.png";
-import awsLogo from "./images/AWS.png";
-import powershellLogo from "./images/powershell.png";
-import windowsLogo from "./images/windows.png"
+import nmapLogo from "./images/Logos/Nmap.png";
+import zapLogo from "./images/Logos/Zap.png";
+import burpsuiteLogo from "./images/Logos/Burp.png";
+import awsLogo from "./images/Logos/AWS.png";
+import powershellLogo from "./images/Logos/Powershell.png";
+import windowsLogo from "./images/Logos/Windows.png";
 
 interface Skill {
   name: string;

@@ -107,6 +107,28 @@ export default function Footer() {
     });
   };
 
+  useEffect(() => {
+    const contactLink = document.querySelector('a[href="#contact"]');
+    if (contactLink) {
+      contactLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        scrollToSection('contact'); // Use scrollToSection function
+      });
+    }
+  }, []);
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        // Logic to handle section in view
+      }
+    },
+    {
+      threshold: 0.1, // Adjust as needed
+      rootMargin: '0px 0px -50% 0px' // Adjust to ensure correct detection
+    }
+  );
+
   return (
     <footer 
       id="custom-footer" 
@@ -227,7 +249,7 @@ export default function Footer() {
             </motion.div>
           </div>
 
-          {/* Center Column: Contact Details */}
+          {/* Center Column:  Details */}
           <div className="md:col-span-4 space-y-6">
             {/* Email */}
             <motion.div 

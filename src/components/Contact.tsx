@@ -193,8 +193,37 @@ export default function Contact() {
     connectControls.start({ opacity: 1, y: 0 });
   }, [formControls, connectControls]);
 
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const yOffset = -80; // Adjust based on your navbar height
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    const contactLink = document.querySelector('a[href="#contact"]');
+    if (contactLink) {
+      contactLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        scrollToSection('contact');
+      });
+    }
+  }, []);
+
+  // Add smooth hover effects to buttons and links
+  const hoverEffect = {
+    whileHover: { scale: 1.05, transition: { duration: 0.1 } },
+    whileTap: { scale: 0.95 }
+  };
+
   return (
-    <section id="contact" className="pb-16 pt-20 text-white relative overflow-hidden">
+    <section 
+      id="contact" 
+      className="pb-16 pt-20 text-white relative overflow-hidden"
+      style={{ scrollMarginTop: '80px' }} // Adjust based on your navbar height
+    >
       {/* Optimized background animation */}
       <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
         {/* Simplified gradient background for better performance */}
@@ -456,8 +485,7 @@ export default function Contact() {
                     type="submit"
                     disabled={isSubmitting}
                     className="w-full relative group overflow-hidden bg-indigo-600 text-white py-2.5 rounded-lg transition-all duration-300 shadow-lg shadow-indigo-600/20 mt-2"
-                    whileHover={{ scale: 1.01 }}
-                    whileTap={{ scale: 0.98 }}
+                    {...hoverEffect}
                   >
                     <span className="relative flex items-center justify-center gap-2 font-medium text-sm">
                       {isSubmitting ? (
@@ -481,7 +509,7 @@ export default function Contact() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={connectControls}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.2 }}
               className="space-y-6"
             >
               <h3 className="text-xl font-bold mb-4 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
@@ -491,7 +519,7 @@ export default function Contact() {
               <div className="space-y-4">
                 {/* Email Card */}
                 <motion.div
-                  whileHover={{ scale: 1.01, x: 3 }}
+                  whileHover={{ scale: 1.05, x: 10 }}
                   onClick={handleCopyEmail}
                   className="flex items-center text-gray-300 transition-all duration-300 cursor-pointer relative group bg-gray-800/30 backdrop-blur-sm rounded-xl p-4 border border-gray-700/30 overflow-hidden"
                 >
@@ -534,7 +562,7 @@ export default function Contact() {
 
                 {/* LinkedIn Profile */}
                 <motion.a
-                  whileHover={{ scale: 1.01, x: 3 }}
+                  whileHover={{ scale: 1.05, x: 10 }}
                   href="https://www.linkedin.com/in/salah-eddine-medkour/"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -554,7 +582,7 @@ export default function Contact() {
 
                 {/* GitHub Profile */}
                 <motion.a
-                  whileHover={{ scale: 1.01, x: 3 }}
+                  whileHover={{ scale: 1.05, x: 10 }}
                   href="https://github.com/salahmed-ctrlz"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -574,7 +602,7 @@ export default function Contact() {
 
                 {/* Resume Download */}
                 <motion.a
-                  whileHover={{ scale: 1.01, x: 3 }}
+                  whileHover={{ scale: 1.05, x: 10 }}
                   href={Resume}
                   download="Medkour_Salah_Eddine_Resume.pdf"
                   className="flex items-center text-gray-300 transition-all duration-300 relative group bg-gray-800/30 backdrop-blur-sm rounded-xl p-4 border border-gray-700/30 overflow-hidden"

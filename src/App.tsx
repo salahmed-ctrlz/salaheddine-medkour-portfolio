@@ -41,6 +41,13 @@ function App() {
     root.style.setProperty('--time-based-accent', `${accentHue}deg`);
   };
 
+  useEffect(() => {
+    document.querySelector('a[href="#contact"]').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }, []);
+
   return (
     <>
       <SEO />
