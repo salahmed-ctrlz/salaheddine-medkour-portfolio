@@ -8,7 +8,6 @@ createRoot(document.getElementById('root')!).render(
     <App />
   </StrictMode>
 );
-<<<<<<< HEAD
 
 if ('performance' in window) {
   window.addEventListener('load', () => {
@@ -18,5 +17,3 @@ if ('performance' in window) {
     }
   });
 }
-=======
->>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
