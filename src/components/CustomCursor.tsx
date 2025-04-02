@@ -1,5 +1,9 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
+<<<<<<< HEAD
 import { motion, useSpring, useMotionValue } from 'framer-motion';
+=======
+import { motion, useSpring, useMotionValue, useTransform } from 'framer-motion';
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
 
 export default function CustomCursor() {
   const cursorX = useMotionValue(0);
@@ -8,12 +12,20 @@ export default function CustomCursor() {
   const lastUpdateTime = useRef(0);
   const rafId = useRef<number>();
   
+<<<<<<< HEAD
   // Optimized spring configurations for better performance
+=======
+  // Spring configurations for smooth movement
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
   const springConfig = { damping: 20, stiffness: 300, mass: 0.5 };
   const x = useSpring(cursorX, springConfig);
   const y = useSpring(cursorY, springConfig);
   
+<<<<<<< HEAD
   // Spring for scale to avoid direct style manipulation
+=======
+  // Transform scale based on hover state
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
   const scale = useSpring(1, {
     ...springConfig,
     stiffness: 400,
@@ -21,11 +33,15 @@ export default function CustomCursor() {
 
   // Track cursor type
   const [cursorType, setCursorType] = useState<'default' | 'pointer'>('default');
+<<<<<<< HEAD
   
   // Check for touch device once on mount
   const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   // Optimized mouse move handler with debouncing
+=======
+
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
   const handleMouseMove = useCallback((e: MouseEvent) => {
     // Throttle updates to every 16ms (approximately 60fps)
     const now = performance.now();
@@ -42,6 +58,7 @@ export default function CustomCursor() {
     });
   }, [cursorX, cursorY]);
 
+<<<<<<< HEAD
   // Optimized hover detection
   const handleMouseOver = useCallback((e: MouseEvent) => {
     const target = e.target as HTMLElement;
@@ -52,6 +69,19 @@ export default function CustomCursor() {
       target.closest('a, button, nav, [data-hover="true"]') !== null;
 
     if (isInteractive && !isHovering.current) {
+=======
+  const handleMouseOver = useCallback((e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+    const isInteractive = 
+      target.tagName === 'A' || 
+      target.tagName === 'BUTTON' ||
+      target.closest('button') ||
+      target.closest('a') ||
+      target.closest('nav') ||
+      target.dataset.hover === 'true';
+
+    if (isInteractive) {
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
       isHovering.current = true;
       scale.set(1.5);
       setCursorType('pointer');
@@ -59,6 +89,7 @@ export default function CustomCursor() {
   }, [scale]);
 
   const handleMouseOut = useCallback(() => {
+<<<<<<< HEAD
     if (isHovering.current) {
       isHovering.current = false;
       scale.set(1);
@@ -76,13 +107,26 @@ export default function CustomCursor() {
     
     // Only set cursor to none if not a touch device
     document.documentElement.classList.add('cursor-none');
+=======
+    isHovering.current = false;
+    scale.set(1);
+    setCursorType('default');
+  }, [scale]);
+
+  useEffect(() => {
+    document.body.style.cursor = 'none';
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
     
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     document.addEventListener('mouseover', handleMouseOver, { passive: true });
     document.addEventListener('mouseout', handleMouseOut, { passive: true });
 
     return () => {
+<<<<<<< HEAD
       document.documentElement.classList.remove('cursor-none');
+=======
+      document.body.style.cursor = '';
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
       
       if (rafId.current) {
         cancelAnimationFrame(rafId.current);
@@ -94,13 +138,19 @@ export default function CustomCursor() {
     };
   }, [handleMouseMove, handleMouseOver, handleMouseOut]);
 
+<<<<<<< HEAD
   // Don't render anything for touch devices
   if (isTouchDevice) {
+=======
+  // Hide cursor when device doesn't support hover
+  if (window.matchMedia('(hover: none)').matches) {
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
     return null;
   }
 
   return (
     <>
+<<<<<<< HEAD
       {/* Dot element - optimized with hardware acceleration */}
       <motion.div
         className={`cursor-element ${
@@ -110,10 +160,21 @@ export default function CustomCursor() {
           x,
           y,
           scale,
+=======
+      <motion.div
+        className={`fixed pointer-events-none z-50 mix-blend-difference ${
+          cursorType === 'pointer' ? 'cursor-dot-pointer' : 'cursor-dot-default'
+        }`}
+        style={{
+          x: x,
+          y: y,
+          scale: scale,
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
           translateX: '-50%',
           translateY: '-50%'
         }}
       />
+<<<<<<< HEAD
       
       {/* Outline element - separate animation properties for better performance */}
       <motion.div
@@ -124,6 +185,16 @@ export default function CustomCursor() {
           x,
           y,
           scale,
+=======
+      <motion.div
+        className={`fixed pointer-events-none z-50 w-8 h-8 rounded-full border border-white mix-blend-difference ${
+          cursorType === 'pointer' ? 'cursor-outline-pointer' : 'cursor-outline-default'
+        }`}
+        style={{
+          x: x,
+          y: y,
+          scale: scale,
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
           translateX: '-50%',
           translateY: '-50%'
         }}

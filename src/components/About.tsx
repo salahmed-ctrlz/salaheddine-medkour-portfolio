@@ -1,5 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
+<<<<<<< HEAD
 import { Code2, Brain, Pencil, GraduationCap, Briefcase } from "lucide-react";
 import { useRef, useEffect, useState, useMemo, useCallback } from "react";
 import { AnimatePresence } from 'framer-motion';
@@ -53,11 +54,20 @@ export default function About() {
   const containerRef = useRef<HTMLDivElement>(null);
   
   // Memoize scroll progress calculation
+=======
+import { Code2, Palette, Brain, PenBoxIcon, Pencil, Calendar, GraduationCap, Briefcase } from "lucide-react";
+import profilePic from "./images/profile.jpg";
+import { useRef, useEffect } from "react";
+
+export default function About() {
+  const containerRef = useRef<HTMLDivElement>(null);
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   });
 
+<<<<<<< HEAD
   // Memoize transform calculations
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
   const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.1, 0.3, 0.1]);
@@ -75,6 +85,17 @@ export default function About() {
   }), []);
 
   const cardVariants = useMemo(() => ({
+=======
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.1, 0.3, 0.1]);
+
+  const fadeUpVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
+  const cardVariants = {
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
     hidden: { opacity: 0, y: 20, scale: 0.95 },
     visible: { 
       opacity: 1, 
@@ -89,12 +110,18 @@ export default function About() {
     hover: { 
       y: -8,
       scale: 1.02,
+<<<<<<< HEAD
+=======
+      rotateX: 5,
+      rotateY: 5,
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
       transition: {
         type: "spring",
         stiffness: 400,
         damping: 10
       }
     }
+<<<<<<< HEAD
   }), []);
 
   const Carousel3D = () => {
@@ -278,11 +305,42 @@ export default function About() {
 
   // Memoize the Carousel component
   const MemoizedCarousel = useMemo(() => <Carousel3D />, []);
+=======
+  };
+
+  const timelineData = [
+    {
+      type: "education",
+      title: "Master's Degree in Network & Telecommunications",
+      institution: "Badji Mokhtar University",
+      period: "Sep 2023 - Jun 2025",
+      description: "Studying advanced networking, cybersecurity, and secure communications.",
+      icon: GraduationCap
+    },
+    {
+      type: "work",
+      title: "Internship",
+      institution: "Algeria Telecom",
+      period: "March 2025",
+      description: "Optimized network configurations and enhanced security measures.",
+      icon: Briefcase
+    },
+    {
+      type: "education",
+      title: "Licentiate Degree in Telecommunications Engineering",
+      institution: "Badji Mokhtar University",
+      period: "Sep 2020 - Jun 2023",
+      description: "Focused on telecommunications fundamentals and engineering principles.",
+      icon: GraduationCap
+    }
+  ];
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
 
   return (
     <section 
       ref={containerRef}
       id="about" 
+<<<<<<< HEAD
       className="py-20 text-white relative overflow-hidden"
     >
       {/* Modern Animated Background */}
@@ -335,6 +393,23 @@ export default function About() {
           }}
         ></div>
       </div>
+=======
+      className="py-20 bg-gradient-to-b from-gray-900 to-gray-800 text-white relative overflow-hidden"
+    >
+      {/* Animated Background Pattern */}
+      <motion.div 
+        className="absolute inset-0 opacity-5"
+        style={{ y: backgroundY, opacity }}
+      >
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            radial-gradient(circle at 25px 25px, white 1%, transparent 0%),
+            radial-gradient(circle at 75px 75px, white 1%, transparent 0%)
+          `,
+          backgroundSize: '100px 100px'
+        }} />
+      </motion.div>
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Profile Section */}
@@ -347,7 +422,11 @@ export default function About() {
             variants={fadeUpVariants}
             className="relative group"
           >
+<<<<<<< HEAD
             <div className="relative inline-block">
+=======
+            <div className="relative inline-block perspective-1000">
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
               <motion.div
                 className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full opacity-75 group-hover:opacity-100 blur-lg transition-opacity duration-500"
                 animate={{
@@ -360,6 +439,7 @@ export default function About() {
                   ease: "linear"
                 }}
               />
+<<<<<<< HEAD
               <div className="relative rounded-full overflow-hidden w-44 h-44 sm:w-48 sm:h-48 md:w-52 md:h-52 lg:w-56 lg:h-56 mx-auto">
                 <LazyLoadImage
                   src={profilePic}
@@ -371,6 +451,27 @@ export default function About() {
                   wrapperClassName="!block !w-full !h-full"
                 />
               </div>
+=======
+              <motion.div
+                className="relative rounded-full overflow-hidden w-48 h-48 md:w-56 md:h-56 mx-auto transform-gpu"
+                whileHover={{ 
+                  scale: 1.05,
+                  rotateY: 10,
+                  rotateX: -10
+                }}
+                transition={{ 
+                  type: "spring", 
+                  stiffness: 300, 
+                  damping: 15 
+                }}
+              >
+                <img
+                  src={profilePic}
+                  alt="Medkour Salah Eddine"
+                  className="w-full h-full object-cover transition-transform duration-300"
+                />
+              </motion.div>
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
             </div>
           </motion.div>
           
@@ -386,6 +487,7 @@ export default function About() {
               Medkour Salah Eddine
             </h2>
             <p className="text-lg text-gray-400">Network Engineering graduate</p>
+<<<<<<< HEAD
             <div className="reference relative">
               {/* Location with interactive tooltip */}
               <p className="text-gray-500 relative inline-block">
@@ -436,6 +538,73 @@ export default function About() {
           </motion.div>
         </div>
 
+=======
+            <p className="text-gray-500">Annaba, Algeria</p>
+          </motion.div>
+        </div>
+
+        {/* Timeline Section */}
+        <div className="max-w-4xl mx-auto mb-20">
+          <motion.h3
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUpVariants}
+            className="text-2xl md:text-3xl font-bold text-center mb-10 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent"
+          >
+            Experience & Education
+          </motion.h3>
+
+          <div className="relative">
+            {/* Timeline Line */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-0.5 bg-gradient-to-b from-indigo-500 to-purple-500" />
+
+            {/* Timeline Items */}
+            {timelineData.map((item, index) => (
+              <motion.div
+                key={item.title}
+                initial="hidden"
+                whileInView="visible"
+                whileHover="hover"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={cardVariants}
+                className="relative mb-8 perspective-1000"
+              >
+                <div className={`flex items-center ${index % 2 === 0 ? 'md:flex-row-reverse' : ''} flex-col md:flex-row`}>
+                  {/* Timeline Point */}
+                  <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4">
+                    <div className="w-4 h-4 bg-indigo-500 rounded-full" />
+                    <div className="absolute inset-0 bg-indigo-500 rounded-full animate-ping opacity-75" />
+                  </div>
+
+                  {/* Content */}
+                  <div className={`w-full md:w-5/12 ${index % 2 === 0 ? 'md:pr-8' : 'md:pl-8'} px-4`}>
+                    <motion.div
+                      className="bg-gray-800/50 backdrop-blur-sm p-6 rounded-xl border border-gray-700/50 transform-gpu max-w-sm mx-auto md:max-w-none"
+                      whileHover={{
+                        scale: 1.02,
+                        rotateX: 5,
+                        rotateY: index % 2 === 0 ? -5 : 5
+                      }}
+                    >
+                      <div className="flex items-center mb-3">
+                        <item.icon className="w-6 h-6 mr-2 text-indigo-400 flex-shrink-0" />
+                        <h4 className="text-xl font-semibold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent break-words">
+                          {item.title}
+                        </h4>
+                      </div>
+                      <p className="text-gray-400 mb-2 break-words">{item.institution}</p>
+                      <p className="text-indigo-400 text-sm mb-3">{item.period}</p>
+                      <p className="text-gray-500 break-words">{item.description}</p>
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
         {/* Interests Section */}
         <motion.div 
           className="text-center mb-20"
@@ -464,6 +633,7 @@ export default function About() {
           </p>
         </motion.div>
 
+<<<<<<< HEAD
         {/* Timeline Section */}
         <div className="max-w-6xl mx-auto mb-20">
           <motion.h3
@@ -563,6 +733,57 @@ export default function About() {
           </motion.h3>
 
           {MemoizedCarousel}
+=======
+        {/* Skills Cards */}
+        <div className="text-center grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+          {[
+            {
+              Icon: Code2,
+              title: "Web Development",
+              description: "Building modern and efficient web applications, And designing responsive and creative website designs.",
+              gradient: "from-blue-500 to-indigo-500"
+            },
+            {
+              Icon: Pencil,
+              title: "Writing",
+              description: "Engaging and interesting stories, Creative writing, Blogs, Articles, Books.",
+              gradient: "from-purple-500 to-pink-500"
+            },
+            {
+              Icon: Brain,
+              title: "Cybersecurity",
+              description: "Exploring security and digital protection methods, Pentesting, Cloud solutions.",
+              gradient: "from-green-500 to-emerald-500"
+            }
+          ].map((item, index) => (
+            <motion.div
+              key={item.title}
+              initial="hidden"
+              whileInView="visible"
+              whileHover="hover"
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 * (index + 3) }}
+              variants={cardVariants}
+              className="group relative p-6 bg-gray-800/50 backdrop-blur-sm rounded-xl border border-gray-700/50 transform-gpu perspective-1000"
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-gray-800/50 to-gray-700/50 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="relative z-10">
+                <div className="relative inline-block">
+                  <div className={`absolute -inset-2 bg-gradient-to-r ${item.gradient} rounded-full opacity-75 group-hover:opacity-100 blur-lg transition-opacity duration-300`} />
+                  <div className="relative">
+                    <item.Icon className="w-12 h-12 mx-auto mb-4 text-white" />
+                  </div>
+                </div>
+                <h3 className="text-xl font-bold mb-3 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent group-hover:from-white group-hover:to-white transition-all duration-300">
+                  {item.title}
+                </h3>
+                <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300 leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
         </div>
       </div>
     </section>

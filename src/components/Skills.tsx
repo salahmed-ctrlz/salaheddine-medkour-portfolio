@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
@@ -168,6 +169,124 @@ export default function Skills() {
     : skills.filter(skill => skill.category === selectedCategory);
 
   const visibleSkills = filteredSkills.slice(currentIndex, currentIndex + itemsPerPage);
+=======
+import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+
+// Import logos
+import nmapLogo from "./images/Nmap.png";
+import zapLogo from "./images/zap.png";
+import burpsuiteLogo from "./images/burp.png";
+import awsLogo from "./images/AWS.png";
+import powershellLogo from "./images/powershell.png";
+import windowsLogo from "./images/windows.png"
+
+const skills = [
+  {
+    name: "React",
+    logo: "https://cdn.simpleicons.org/react"
+  },
+  {
+    name: "Node.js",
+    logo: "https://cdn.simpleicons.org/nodedotjs"
+  },
+  {
+    name: "TypeScript",
+    logo: "https://cdn.simpleicons.org/typescript"
+  },
+  {
+    name: "Python",
+    logo: "https://cdn.simpleicons.org/python"
+  },
+  {
+    name: "Docker",
+    logo: "https://cdn.simpleicons.org/docker"
+  },
+  {
+    name: "HTML",
+    logo: "https://cdn.simpleicons.org/html5"
+  },
+  {
+    name: "CSS",
+    logo: "https://cdn.simpleicons.org/css3"
+  },
+  {
+    name: "AWS",
+    logo: awsLogo // Use the imported AWS logo
+  },
+  {
+    name: "MongoDB",
+    logo: "https://cdn.simpleicons.org/mongodb"
+  },
+  {
+    name: "PostgreSQL",
+    logo: "https://cdn.simpleicons.org/postgresql"
+  },
+  {
+    name: "Github",
+    logo: "https://cdn.simpleicons.org/github"
+  },
+  {
+    name: "Windows",
+    logo: windowsLogo
+  },
+  {
+    name: "Linux",
+    logo: "https://cdn.simpleicons.org/linux"
+  },
+  {
+    name: "Kali Linux",
+    logo: "https://cdn.simpleicons.org/kalilinux"
+  },
+  {
+    name: "Ubuntu",
+    logo: "https://cdn.simpleicons.org/ubuntu"
+  },
+  {
+    name: "Google Cloud",
+    logo: "https://cdn.simpleicons.org/googlecloud"
+  },
+  {
+    name: "Bash",
+    logo: "https://cdn.simpleicons.org/gnubash"
+  },
+  {
+    name: "PowerShell",
+    logo: powershellLogo // Use the imported PowerShell logo
+  },
+  {
+    name: "Burp Suite",
+    logo: burpsuiteLogo // Use the imported Burp Suite logo
+  },
+  {
+    name: "ZAP",
+    logo: zapLogo // Use the imported ZAP logo
+  },
+  {
+    name: "Wireshark",
+    logo: "https://cdn.simpleicons.org/wireshark"
+  },
+  {
+    name: "Nmap",
+    logo: nmapLogo // Use the imported Nmap logo
+  }
+];
+
+export default function Skills() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
+  const itemsPerPage = 8;
+  const glowRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % (skills.length - itemsPerPage + 1));
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const visibleSkills = skills.slice(currentIndex, currentIndex + itemsPerPage);
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (glowRef.current) {
@@ -217,6 +336,7 @@ export default function Skills() {
           </p>
         </motion.div>
 
+<<<<<<< HEAD
         {/* Category Filter */}
         <div className="flex flex-wrap justify-center gap-2 mb-12">
           {categories.map((category) => (
@@ -240,6 +360,9 @@ export default function Skills() {
         </div>
 
         <div className="max-w-5xl mx-auto" ref={ref}>
+=======
+        <div className="max-w-5xl mx-auto">
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 md:gap-8">
             <AnimatePresence mode="wait">
               {visibleSkills.map((skill, index) => (
@@ -249,10 +372,17 @@ export default function Skills() {
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -20, scale: 0.9 }}
                   transition={{ 
+<<<<<<< HEAD
                     duration: 0.8, // Increased from 0.5
                     delay: index * 0.15, // Increased from 0.1
                     type: "spring",
                     stiffness: 80 // Reduced from 100
+=======
+                    duration: 0.5, 
+                    delay: index * 0.1,
+                    type: "spring",
+                    stiffness: 100
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
                   }}
                   className="flex flex-col items-center group"
                   onMouseEnter={() => setHoveredSkill(skill.name)}
@@ -264,8 +394,13 @@ export default function Skills() {
                       rotate: 360,
                       transition: {
                         type: "spring",
+<<<<<<< HEAD
                         stiffness: 200, // Reduced from 300
                         damping: 20 // Increased from 15
+=======
+                        stiffness: 300,
+                        damping: 15
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
                       }
                     }}
                     className="relative"
@@ -277,7 +412,10 @@ export default function Skills() {
                         alt={skill.name}
                         className="w-12 h-12 filter grayscale group-hover:grayscale-0 transition-all duration-300"
                         style={{ willChange: "filter" }}
+<<<<<<< HEAD
                         loading="lazy"
+=======
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
                       />
                     </div>
                   </motion.div>
@@ -285,7 +423,11 @@ export default function Skills() {
                     className="text-gray-400 group-hover:text-white transition-colors duration-300 text-sm md:text-base"
                     initial={{ y: 10, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
+<<<<<<< HEAD
                     transition={{ delay: index * 0.15 + 0.3 }} // Increased delay
+=======
+                    transition={{ delay: index * 0.1 + 0.2 }}
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
                   >
                     {skill.name}
                   </motion.span>
@@ -296,7 +438,11 @@ export default function Skills() {
         </div>
 
         <div className="flex justify-center mt-12 space-x-2">
+<<<<<<< HEAD
           {Array.from({ length: filteredSkills.length - itemsPerPage + 1 }).map((_, index) => (
+=======
+          {Array.from({ length: skills.length - itemsPerPage + 1 }).map((_, index) => (
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
             <motion.button
               key={index}
               onClick={() => setCurrentIndex(index)}
@@ -313,7 +459,11 @@ export default function Skills() {
                   opacity: currentIndex === index ? [0, 1, 0] : 0
                 }}
                 transition={{
+<<<<<<< HEAD
                   duration: 3, // Increased from 2
+=======
+                  duration: 2,
+>>>>>>> 7a88c03d5cf831ed95bcdcea54472365beef279b
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
