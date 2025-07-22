@@ -35,6 +35,8 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   height: 100%;
   will-change: transform, box-shadow;
+  transform: translateZ(0);
+  contain: layout style;
 }
 
 .project-card.expanded {
@@ -53,19 +55,21 @@
   }
 }
 
-.project-image-container {
+.project-image-wrapper {
   position: relative;
   width: 100%;
-  aspect-ratio: 16/9;
   overflow: hidden;
+  background: #1a1a1a;
+  
 }
 
 .project-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transform: translateZ(0);
   will-change: transform;
+  backface-visibility: hidden;
 }
 
 .project-card:hover .project-image {
@@ -264,12 +268,23 @@
   transform: translate(-50%, -50%) scale(1);
 }
 
+/* Project Image Container */
+.project-image-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  background: #1a1a1a;
+  cursor: none;
+}
+
 /* Carousel Styles */
 .carousel-container {
   position: relative;
   width: 100%;
-  height: 100%;
+  aspect-ratio: 16/9;
   overflow: hidden;
+  background: #1a1a1a;
 }
 
 .carousel-slide {
@@ -279,11 +294,17 @@
   width: 100%;
   height: 100%;
   opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.5s ease;
 }
 
 .carousel-slide.active {
   opacity: 1;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .carousel-dots {
@@ -603,4 +624,10 @@
 
 .back-to-top:hover svg {
   transform: translateY(-2px);
+}
+
+/* Prevent layout shifts during loading */
+.lazy-load-image-background {
+  width: 100% !important;
+  height: 100% !important;
 }

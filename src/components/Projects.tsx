@@ -16,11 +16,17 @@ import ecommerce from './images/Projects/ecommerce.webp';
 import weatherApp from './images/Projects/WeathApp.webp';
 import eportfolio from './images/Projects/eportfolio.webp';
 import bettercallsaul from './images/Projects/BetterCallSaul.webp';
+import graphicdesigner from './images/Projects/graphicdesigner.webp';
+import webrtcE2eeImage1 from './images/Projects/webrtcE2eeImage1.png'
+import webrtcE2eeImage2 from './images/Projects/webrtcE2eeImage2.png'
+import webrtcE2eeImage3 from './images/Projects/webrtcE2eeImage3.png'
 
 // Import preview GIFs  
 import portfolioPreview from './images/Preview/portfolio-preview.gif';
 import pchavenPreview from './images/Preview/pchaven-preview.gif';
 import bettercallsaulPreview from './images/Preview/bettercallsaul-preview.gif';
+import graphicdesignerPreview from './images/Preview/graphicdesigner-preview.gif';
+import { SiResearchgate } from 'react-icons/si';
 
 interface Project {
   id: number;
@@ -36,6 +42,32 @@ interface Project {
   featured: boolean;
   carousel?: boolean;
 }
+
+const ProjectImage = ({ src, alt, width, height }: { 
+  src: string; 
+  alt: string;
+  width: number;
+  height: number;
+}) => (
+  <div 
+    className="project-image-wrapper" 
+    style={{ 
+      contain: 'layout size style',
+      aspectRatio: `${width}/${height}`,
+    }}
+  >
+    <LazyLoadImage
+      src={src}
+      alt={alt}
+      effect="blur"
+      width={width}
+      height={height}
+      className="project-image"
+      threshold={100}
+      placeholderSrc={src}
+    />
+  </div>
+);
 
 export default function Projects() {
   const [expandedId, setExpandedId] = useState<number | null>(null);
@@ -59,8 +91,8 @@ export default function Projects() {
       image: currentPortfolio,
       previewGif: portfolioPreview,
       technologies: ["React", "TypeScript", "TailwindCSS", "Framer Motion"],
-      github: "https://github.com/salahmed-ctrlz/portfolio",
-      demo: "#",
+      github: "https://github.com/salahmed-ctrlz/salaheddine-medkour-portfolio",
+      demo: "https://salahmed-ctrlz.github.io/salaheddine-medkour-portfolio/",
       featured: true
     },
     {
@@ -72,76 +104,104 @@ export default function Projects() {
       previewGif: bettercallsaulPreview,
       technologies: ["HTML", "CSS", "JavaScript", "GSAP"],
       github: "https://github.com/salahmed-ctrlz/bettercallsaul",
-      demo: "#",
-      featured: false
+      demo: "https://salahmed-ctrlz.github.io/bettercallsaul/",
+      featured: true 
     },
+
     {
       id: 3,
+      title: "Graphic Designer Portfolio",
+      description: "A modern, responsive portfolio website for a graphic designer showcasing brand identity projects and creative work.",
+      details: "Portfolio Features\n\n• Multilingual Support: Available in English, French, German, Spanish, and Arabic\n• Responsive Design: Fully responsive layout that works on all devices\n• Dark/Light Mode: Toggle between dark and light themes\n• Interactive UI: Smooth animations and transitions\n• Project Showcase: Detailed project pages with image galleries\n• Contact Form: Integrated contact form with validation\n• Social Integration: Links to social media profiles\n• Accessibility: Built with accessibility in mind\n\nTechnical Implementation\n\n• Built with React 18 and TypeScript for type safety\n• Styled with TailwindCSS for consistent design\n• Enhanced with Radix UI and Shadcn/ui components\n• Smooth animations using Framer Motion\n• Form handling with React Hook Form\n• Data visualization with Recharts\n• Icons from Lucide React\n• Deployed on GitHub Pages",
+      image: graphicdesigner,
+      previewGif: graphicdesignerPreview,
+      technologies: ["React", "TypeScript", "TailwindCSS", "Framer Motion", "Radix UI"],
+      github: "https://github.com/salahmed-ctrlz/graphic-designer-portfolio",
+      demo: "https://salahmed-ctrlz.github.io/graphic-designer-portfolio/",
+      featured: true
+    },
+
+    {
+      id: 4,
+      title: "WebRTC Video Chat with True E2EE",
+      description: "A secure peer-to-peer WebRTC video chat application with real end-to-end encryption using insertable streams and custom cryptography.",
+      details: "Project Features\n\n• End-to-End Encryption: Media is encrypted using AES-GCM or ChaCha20, ensuring only peers can decrypt\n• Secure Signaling: Uses JWT authentication and ECDH key exchange during signaling\n• Peer-to-Peer: Built with WebRTC and Insertable Streams API\n• Multi-User Support: Allows multiple participants in a single session\n• Privacy by Design: Even the server cannot decrypt video/audio content\n• Testing Tools: Integrated OWASP ZAP, Burp Suite, Wireshark for security validation\n\nTechnical Implementation\n\n• Built with WebRTC and JavaScript APIs\n• Signaling server implemented using Node.js and Socket.IO\n• Cryptography via Web Crypto API and TweetNaCl.js\n• Browser support: Works on Chromium-based browsers with `RTCRtpScriptTransform`\n• Includes performance testing and security analysis setup\n• Modular structure for future upgrades (e.g., E2EE group calls)\n• Strong defense against MITM and replay attacks\n\nUsage Requirements\n\n• Modern browser with Insertable Streams support\n• Node.js for the signaling server\n• HTTPS setup for secure context",
+      image: webrtcE2eeImage1,
+      images: [webrtcE2eeImage1, webrtcE2eeImage2, webrtcE2eeImage3],
+      technologies: ["WebRTC", "JavaScript", "Node.js", "Socket.IO", "AES-GCM", "ECDH", "TweetNaCl.js"],
+      github: "https://github.com/salahmed-ctrlz/WebRTC-VideoChatApp-with-True-EndToEndEncryption-Enabled",
+      demo: "",
+      featured: true,
+      carousel: true
+    },
+    
+    {
+      id: 5,
       title: "Gaming & PC Parts Website (PC Haven)",
       description: "E-commerce website for PC components with a modern design, secure payment gateway, and advanced filtering.",
       details: "E-commerce Platform\n\n• Developed a full-featured e-commerce platform for PC components and peripherals\n• Integrated secure payment gateway with Stripe for safe transactions\n• Implemented advanced filtering and search functionality for easy product discovery\n• Added user account management with order history and saved preferences\n\nTechnical Details\n\n• Built with the MERN stack (MongoDB, Express, React, Node.js)\n• Implemented responsive design principles for all device sizes\n• Used Redux for state management across the application\n• Set up CI/CD pipeline for automated testing and deployment",
       image: pchavenMockup,
       previewGif: pchavenPreview,
       technologies: ["React", "Node.js", "MongoDB", "Express", "Redux"],
-      github: "https://github.com/salahmed-ctrlz/pchaven",
-      demo: "#",
+      github: "https://github.com/salahmed-ctrlz/PC-Haven",
+      demo: "https://salahmed-ctrlz.github.io/PC-Haven/",
       featured: true
     },
     {
-      id: 4,
+      id: 6,
       title: "Cybersecurity Startup Info Page (AMANE)",
       description: "Information page for a cybersecurity startup with details on services, team, and contact information.",
       details: "Startup Info Page\n\n• Developed an informative page for a cybersecurity startup\n• Highlighted services offered, team members, and contact information\n• Integrated a contact form for inquiries\n\nTechnical Details\n\n• Built with React and TailwindCSS\n• Used Formik for form handling and validation\n• Implemented responsive design for all device sizes",
       image: amaneMockup,
       technologies: ["React", "TailwindCSS", "Formik"],
-      github: "https://github.com/salahmed-ctrlz/amane",
-      demo: "#",
+      github: "https://github.com/salahmed-ctrlz/amane-cybersecurity",
+      demo: "https://salahmed-ctrlz.github.io/amane-cybersecurity/",
       featured: false
     },
     {
-      id: 5,
+      id: 7,  
       title: "Password Generator",
       description: "Secure password generator with multiple themes and customization options. Built with React and styled-components.",
       details: "Password Generator Features\n\n• Generates secure passwords with customizable length and character sets\n• Features multiple themes including light, dark, and hacker modes\n• Allows copying generated passwords to clipboard with a single click\n• Provides password strength evaluation and security tips\n\nTechnical Implementation\n\n• Built with React and styled-components for theme switching\n• Used cryptographically secure random number generation\n• Implemented responsive design for mobile and desktop usage\n• Added keyboard accessibility and screen reader support",
       image: pwdGeneratorDark,
       images: [pwdGeneratorDark, pwdGeneratorLight, pwdGeneratorHacker],
       technologies: ["React", "styled-components", "JavaScript"],
-      github: "https://github.com/salahmed-ctrlz/password-generator",
-      demo: "#",
+      github: "https://github.com/salahmed-ctrlz/Sala7-Password-Generator",
+      demo: "https://salahmed-ctrlz.github.io/Sala7-Password-Generator/",
       featured: true,
       carousel: true
     },
     {
-      id: 6,
+      id: 8,
       title: "E-commerce Website (Front End)",
       description: "Admin dashboard for e-commerce platforms with analytics, inventory management, and order processing.",
       details: "Admin Dashboard Features\n\n• Comprehensive admin dashboard for managing e-commerce operations\n• Real-time analytics with customizable date ranges and metrics\n• Inventory management system with low stock alerts\n• Order processing workflow with status tracking\n\nTechnical Implementation\n\n• Built with React and Material-UI for consistent UI components\n• Implemented data visualization with Chart.js\n• Used React Query for efficient data fetching and caching\n• Set up role-based access control for different admin levels",
       image: ecommerce,
       technologies: ["React", "TypeScript", "Material-UI", "Chart.js"],
-      github: "https://github.com/salahmed-ctrlz/ecommerce-dashboard",
-      demo: "#",
+      github: "https://github.com/salahmed-ctrlz/etopia",
+      demo: "https://salahmed-ctrlz.github.io/etopia/",
       featured: false
     },
     {
-      id: 7,
+      id: 9,
       title: "Weather Web App",
       description: "Weather application with 7-day forecast, location detection, and beautiful UI transitions.",
       details: "Weather App Features\n\n• Displays current weather conditions and 7-day forecast\n• Implements geolocation for automatic location detection\n• Allows searching for weather in any city worldwide\n• Shows additional metrics like humidity, wind speed, and UV index\n\nTechnical Details\n\n• Built with React and CSS modules for styling\n• Integrated with OpenWeatherMap API for weather data\n• Implemented error handling for API failures and location services\n• Added smooth transitions between different views and states",
       image: weatherApp,
       technologies: ["React", "CSS Modules", "OpenWeatherMap API"],
-      github: "https://github.com/salahmed-ctrlz/weather-app",
-      demo: "#",
+      github: "https://github.com/salahmed-ctrlz/WeathApp",
+      demo: "https://salahmed-ctrlz.github.io/WeathApp/",
       featured: false
     },
     {
-      id: 8,
+      id: 10,
       title: "ePortfolio",
       description: "Digital portfolio showcasing various projects and achievements.",
       details: "ePortfolio Overview\n\n• Comprehensive digital portfolio showcasing various projects and achievements\n• Includes detailed project descriptions, images, and links\n• Features a clean and modern design with easy navigation\n\nTechnical Details\n\n• Built with HTML, CSS, and JavaScript\n• Used responsive design principles for all device sizes\n• Implemented lazy loading for improved performance",
       image: eportfolio,
       technologies: ["HTML", "CSS", "JavaScript"],
       github: "https://github.com/salahmed-ctrlz/eportfolio",
-      demo: "#",
+      demo: "https://salahmed-ctrlz.github.io/eportfolio/",
       featured: false
     }
   ];
@@ -215,7 +275,7 @@ export default function Projects() {
     const yPercent = (y / rect.height) * 100;
     
     // Add bounds checking
-    const safeX = Math.max(10, Math.min(90, xPercent)); // Limit between 10% and 90%
+    const safeX = Math.max(10, Math.min(90, xPercent));
     const safeY = Math.max(10, Math.min(90, yPercent));
     
     // Get the preview element and update CSS variables
@@ -342,7 +402,7 @@ export default function Projects() {
               <div 
                 className="project-image-container"
                 onMouseMove={(e) => handleMouseMove(e, project)}
-                onMouseLeave={handleMouseLeave}
+                onMouseLeave={() => setHoveredId(null)}
               >
                 {project.carousel && project.images ? (
                   <div className="carousel-container">
@@ -351,13 +411,11 @@ export default function Projects() {
                         key={imgIndex}
                         className={`carousel-slide ${imgIndex === currentCarouselIndex ? 'active' : ''}`}
                       >
-                        <LazyLoadImage
+                        <ProjectImage 
                           src={image}
                           alt={`${project.title} - View ${imgIndex + 1}`}
-                          effect="blur"
-                          className="project-image"
-                          threshold={100}
-                          placeholderSrc={image} // Low quality placeholder
+                          width={640}
+                          height={360}
                         />
                       </div>
                     ))}
@@ -372,29 +430,25 @@ export default function Projects() {
                     </div>
                   </div>
                 ) : (
-                  <LazyLoadImage
-                    src={project.image}
-                    alt={project.title}
-                    effect="blur"
-                    className="project-image"
-                    threshold={100}
-                    placeholderSrc={project.image} // Low quality placeholder
-                  />
-                )}
-                
-                {/* Overlay gradient */}
-                <div className="project-overlay" />
-                
-                {/* Preview GIF */}
-                {project.previewGif && (
-                  <div className="preview-gif">
-                    <img 
-                      src={project.previewGif}
-                      alt={`${project.title} preview`}
-                      loading="lazy"
+                  <>
+                    <ProjectImage 
+                      src={project.image}
+                      alt={project.title}
+                      width={640}
+                      height={360}
                     />
-                  </div>
+                    {project.previewGif && (
+                      <div className="preview-gif">
+                        <img 
+                          src={project.previewGif}
+                          alt={`${project.title} preview`}
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                  </>
                 )}
+                <div className="project-overlay" />
               </div>
 
               {/* Project Content */}
@@ -463,16 +517,30 @@ export default function Projects() {
                       <Github className="w-4 h-4" />
                       <span>Code</span>
                     </a>
-                    <a
-                      href={project.demo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="project-link"
-                      data-hover="true"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      <span>Demo</span>
-                    </a>
+                    {project.id === 4 ? (
+                      <a
+                        href="https://www.researchgate.net/publication/392926889_Implementation_of_an_End-to-End_Encryption_Mechanism_in_WebRTC_Video_Streaming"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-link"
+                        data-hover="true"
+                        style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                      >
+                        <SiResearchgate size={18} style={{ marginRight: '0.25rem', verticalAlign: 'middle' }} />
+                        <span>Research</span>
+                      </a>
+                    ) : (
+                      <a
+                        href={project.demo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="project-link"
+                        data-hover="true"
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        <span>Demo</span>
+                      </a>
+                    )}
                   </div>
                   <button
                     onClick={() => {

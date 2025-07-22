@@ -24,20 +24,22 @@ const timelineData = [
   },
   {
     type: "education",
-    title: "Master's Degree in Network & Telecommunications",
-    institution: "Badji Mokhtar University",
-    period: "Sep 2023 - Jun 2025",
-    description: "Studying advanced networking, cybersecurity, and secure communications.",
+    title: "Master's in Network & Telecommunications",
+    institution: "Badji Mokhtar University of Annaba, Algeria",
+    period: "Sep 2023 – Jun 2025",
+    description: "Focused on network architecture, secure communications, and cybersecurity. Graduated with strong academic standing. Final project: 'Implementation of an End-to-End Encryption Mechanism in WebRTC Video Streaming', covering real-time encryption, key exchange protocols, and security testing.",
     icon: GraduationCap
   },
+  
   {
     type: "work",
-    title: "Internship",
-    institution: "Algeria Telecom",
-    period: "March 2025",
-    description: "Optimized network configurations and enhanced security measures.",
+    title: "Network & Cybersecurity Self-Learner",
+    institution: "Personal Development",
+    period: "Present",
+    description: "Learning through a home lab using virtual machines to explore networking, operating systems, and cybersecurity. Practicing hands-on tasks using platforms like TryHackMe, Coursera, and YouTube. Focused on real-world skills like system setup, basic hardening, and secure configurations.",
     icon: Briefcase
   },
+  
   {
     type: "education",
     title: "Licentiate Degree in Telecommunications Engineering",
@@ -100,33 +102,63 @@ export default function About() {
   const Carousel3D = () => {
     const [currentIndex, setCurrentIndex] = useState(1);
     
-    // Memoize cards data to prevent unnecessary re-renders
     const cards = useMemo(() => [
       {
         Icon: Pencil,
-        title: "Technical Writing",
-        subtitle: "Documentation & Content",
-        description: "Creating comprehensive technical documentation and engaging content.",
-        skills: ["Technical Documentation", "API Documentation", "Blog Writing", "User Guides", "Knowledge Base", "Content Strategy"],
+        title: "Writing",
+        subtitle: "Technical & Literature",
+        description: "I write documentation, tutorials, cybersecurity articles, and sometimes literature in Arabic, French, or English.",
+        skills: [
+          "Technical Docs",
+          "API Guides",
+          "Tutorials",
+          "Cybersecurity Writeups",
+          "Essays",
+          "Research Papers",
+          "Poetry",
+          "Articles",
+          "Literary Pieces",
+          "Multilingual Writing"
+        ],
         gradient: "from-purple-500 to-pink-500",
       },
       {
         Icon: Code2,
         title: "Web Development",
-        subtitle: "Frontend & Backend Solutions",
-        description: "Building modern and efficient web applications with cutting-edge technologies.",
-        skills: ["React.js", "Next.js", "TypeScript", "Node.js", "Tailwind CSS", "MongoDB"],
+        subtitle: "Frontend & Backend",
+        description: "I build web apps that are fast, simple, and easy to maintain. I write clean code and use tools I trust, and I'm comfortable with AI tools and agents.",
+        skills: [
+          "React / Next.js",
+          "Node.js",
+          "REST APIs",
+          "Tailwind CSS",
+          "MongoDB / Firebase",
+          "AI",
+          "JWT Auth",
+          "Responsive Design",
+          "Deployments"
+        ],
         gradient: "from-blue-500 to-indigo-500",
       },
       {
         Icon: Brain,
         title: "Cybersecurity",
-        subtitle: "Network & System Security",
-        description: "Implementing robust security measures and conducting penetration testing.",
-        skills: ["Network Security", "Penetration Testing", "Security Auditing", "Cloud Security", "Encryption", "Firewall Configuration"],
+        subtitle: "Practice & Tools",
+        description: "I'm constantly practicing real security tasks like packet analysis, encryption, and testing systems for weak spots. But I'm interested in acquiring real-life experience in the field.",
+        skills: [
+          "Pentesting (Web / Network)",
+          "Wireshark",
+          "Burp Suite / OWASP ZAP",
+          "E2EE / AES / ChaCha20",
+          "Linux Tools (Kali)",
+          "SSH / VPN / Proxychains",
+          "Firewall Configs",
+          "AI"
+        ],
         gradient: "from-emerald-500 to-green-500",
       }
     ], []);
+    
 
     // Memoize handlers
     const handleNext = useCallback(() => {
@@ -385,7 +417,7 @@ export default function About() {
             <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
               Medkour Salah Eddine
             </h2>
-            <p className="text-lg text-gray-400">Network Engineering graduate</p>
+            <p className="text-lg text-gray-400">Network Engineer</p>
             <div className="reference relative">
               {/* Location with interactive tooltip */}
               <p className="text-gray-500 relative inline-block">

@@ -14,7 +14,7 @@ export default function Footer() {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [typedText, setTypedText] = useState("Me");
   const typeInterval = useRef<NodeJS.Timeout | null>(null);
-  const fullName = "Medkour Salah Eddine";
+  const fullName = "Medkour Salahuddin";
 
   // Update the time every second
   useEffect(() => {
@@ -461,6 +461,7 @@ export default function Footer() {
                 <motion.div 
                   className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 font-medium"
                   animate={{ opacity: 1 }}
+                  style={{ fontSize: '0.85rem' }}
                 >
                   Portfolio by: {typedText}
                 </motion.div>

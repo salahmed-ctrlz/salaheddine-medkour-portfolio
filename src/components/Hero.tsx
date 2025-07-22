@@ -2,11 +2,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Download, Mail, Github, Linkedin } from "lucide-react";
 import { useState, useEffect, useCallback, useRef } from "react";
 import background2 from "./images/blackhole.webp";
-import Resume from "./Medkour Salah Eddine - Resume Feb 2025.pdf";
+import Resume from "./Medkour_Salah_Eddine_Resume June 2025.pdf";
 import { initParallaxEffect } from "../utils/parallax";
 import Particles from 'react-tsparticles';
 import { loadFull } from "tsparticles";
 import type { Engine } from "tsparticles-engine";
+import { scrambleText } from '../utils/scrambleText'; // Adjust the path as necessary
 
 // Text animation component with improved Arabic text handling
 const TextAnimate = ({ 
@@ -426,6 +427,8 @@ export default function Hero() {
 
   const floatingElementsRef = useRef<HTMLDivElement>(null);
   const backgroundRef = useRef<HTMLDivElement>(null);
+
+  const [displayLanguage, setDisplayLanguage] = useState('en');
 
   // Content based on language with phonetic pronunciation
   const content = {
@@ -864,7 +867,7 @@ export default function Hero() {
           {/* Download Resume Button */}
           <motion.a
             href={Resume}
-            download="Medkour Salah Eddine - Resume.pdf"
+            download="Medkour_Salah_Eddine_Resume_June_2025.pdf"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}

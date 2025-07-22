@@ -13,7 +13,7 @@ import windowsLogo from "./images/Logos/Windows.png";
 interface Skill {
   name: string;
   logo: string;
-  category: 'frontend' | 'backend' | 'devops' | 'security' | 'other';
+  category: 'frontend' | 'backend' | 'devops' | 'security' | 'other' | 'ai';
 }
 
 const skills: Skill[] = [
@@ -49,7 +49,7 @@ const skills: Skill[] = [
   },
   {
     name: "CSS",
-    logo: "https://cdn.simpleicons.org/css3",
+    logo: "https://cdn.simpleicons.org/css",
     category: "frontend"
   },
   {
@@ -126,7 +126,23 @@ const skills: Skill[] = [
     name: "Nmap",
     logo: nmapLogo,
     category: "security"
-  }
+  },
+  // AI Tools
+  {
+    name: "OpenAI",
+    logo: "https://cdn.simpleicons.org/openai",
+    category: "ai"
+  },
+  {
+    name: "Claude",
+    logo: "https://cdn.simpleicons.org/claude",
+    category: "ai"
+  },
+  {
+    name: "Google Gemini",
+    logo: "https://cdn.simpleicons.org/googlegemini",
+    category: "ai"
+  },
 ];
 
 const categories = [
@@ -135,6 +151,7 @@ const categories = [
   { id: 'backend', label: 'Backend' },
   { id: 'devops', label: 'DevOps' },
   { id: 'security', label: 'Security' },
+  { id: 'ai', label: 'AI Tools' },
   { id: 'other', label: 'Other' }
 ];
 
@@ -272,13 +289,17 @@ export default function Skills() {
                   >
                     <div className="absolute -inset-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-75 blur-lg transition-opacity duration-300" />
                     <div className="relative w-20 h-20 mb-4 p-4 bg-gray-800/50 backdrop-blur-sm rounded-full flex items-center justify-center border border-gray-700/50 transition-all duration-300 group-hover:border-indigo-500/50">
-                      <motion.img
-                        src={skill.logo}
-                        alt={skill.name}
-                        className="w-12 h-12 filter grayscale group-hover:grayscale-0 transition-all duration-300"
-                        style={{ willChange: "filter" }}
-                        loading="lazy"
-                      />
+                      {skill.name === 'Google Gemini' ? (
+                        <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="48" height="48"><title>Google Gemini</title><path d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/></svg>
+                      ) : (
+                        <motion.img
+                          src={skill.logo}
+                          alt={skill.name}
+                          className="w-12 h-12 filter grayscale group-hover:grayscale-0 transition-all duration-300"
+                          style={{ willChange: "filter" }}
+                          loading="lazy"
+                        />
+                      )}
                     </div>
                   </motion.div>
                   <motion.span 
