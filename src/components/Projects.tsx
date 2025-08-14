@@ -103,8 +103,8 @@ export default function Projects() {
       image: bettercallsaul,
       previewGif: bettercallsaulPreview,
       technologies: ["HTML", "CSS", "JavaScript", "GSAP"],
-      github: "https://github.com/salahmed-ctrlz/bettercallsaul",
-      demo: "https://salahmed-ctrlz.github.io/bettercallsaul/",
+      github: "https://github.com/salahmed-ctrlz/BetterCallSaul",
+      demo: "https://salahmed-ctrlz.github.io/BetterCallSaul/",
       featured: true 
     },
 
