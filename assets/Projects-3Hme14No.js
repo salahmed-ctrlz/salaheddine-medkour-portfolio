@@ -1,4 +1,4 @@
-import{j as e,m as f,A as $,b as q}from"./utils-B0KkcerK.js";import{R as u,r as c}from"./vendor-CIP6LD3P.js";/* empty css             */import{c as M,G as J,E as Q}from"./index-CEMpqaGq.js";import{C as X}from"./chevron-down-6AMGAauX.js";/**
+import{j as e,m as f,A as $,b as q}from"./utils-B0KkcerK.js";import{R as u,r as c}from"./vendor-CIP6LD3P.js";/* empty css             */import{c as M,G as J,E as Q}from"./index-C9xmTmiR.js";import{C as X}from"./chevron-down-BHFwVxhV.js";/**
  * @license lucide-react v0.344.0 - ISC
  *
  * This source code is licensed under the ISC license.
@@ -32,7 +32,7 @@ Technical Details
 • Built with HTML, CSS, and JavaScript
 • Used CSS Grid and Flexbox for responsive layouts
 • Implemented lazy loading for improved performance
-• Added animations and transitions for enhanced user experience`,image:oe,previewGif:he,technologies:["HTML","CSS","JavaScript","GSAP"],github:"https://github.com/salahmed-ctrlz/bettercallsaul",demo:"https://salahmed-ctrlz.github.io/bettercallsaul/",featured:!0},{id:3,title:"Graphic Designer Portfolio",description:"A modern, responsive portfolio website for a graphic designer showcasing brand identity projects and creative work.",details:`Portfolio Features
+• Added animations and transitions for enhanced user experience`,image:oe,previewGif:he,technologies:["HTML","CSS","JavaScript","GSAP"],github:"https://github.com/salahmed-ctrlz/BetterCallSaul",demo:"https://salahmed-ctrlz.github.io/BetterCallSaul/",featured:!0},{id:3,title:"Graphic Designer Portfolio",description:"A modern, responsive portfolio website for a graphic designer showcasing brand identity projects and creative work.",details:`Portfolio Features
 
 • Multilingual Support: Available in English, French, German, Spanish, and Arabic
 • Responsive Design: Fully responsive layout that works on all devices
