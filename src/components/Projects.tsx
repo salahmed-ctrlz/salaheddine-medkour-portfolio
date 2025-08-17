@@ -20,6 +20,7 @@ import graphicdesigner from './images/Projects/graphicdesigner.webp';
 import webrtcE2eeImage1 from './images/Projects/webrtcE2eeImage1.png'
 import webrtcE2eeImage2 from './images/Projects/webrtcE2eeImage2.png'
 import webrtcE2eeImage3 from './images/Projects/webrtcE2eeImage3.png'
+import saktool from './images/Projects/saktool.png';
 
 // Import preview GIFs  
 import portfolioPreview from './images/Preview/portfolio-preview.gif';
@@ -135,8 +136,20 @@ export default function Projects() {
       carousel: true
     },
     
+        {
+  id: 5,
+  title: "999SAK Tool",
+  description: "Swiss Army Knife CLI tool for Windows (PowerShell-based).",
+  details: "999SAK Tool Overview\n\n• Multi-purpose CLI utility designed to centralize productivity, system tools, and entertainment in one interface\n• Features quick access to networking tools, file management utilities, and system monitoring commands\n• Includes fun additions like mini text-based games, ASCII art, and hidden easter eggs for users\n\nTechnical Details\n\n• Built entirely with PowerShell scripting\n• Modular design with expandable command sets\n• Menu-driven interface for easy navigation\n• Supports both automation scripts and interactive utilities",
+  image: saktool,
+  technologies: ["PowerShell"],
+  github: "https://github.com/salahmed-ctrlz/99SAK-PowershellSwissArmyKnife",
+  demo: "https://github.com/salahmed-ctrlz/99SAK-PowershellSwissArmyKnife",
+  featured: true
+},
+
     {
-      id: 5,
+      id: 6,
       title: "Gaming & PC Parts Website (PC Haven)",
       description: "E-commerce website for PC components with a modern design, secure payment gateway, and advanced filtering.",
       details: "E-commerce Platform\n\n• Developed a full-featured e-commerce platform for PC components and peripherals\n• Integrated secure payment gateway with Stripe for safe transactions\n• Implemented advanced filtering and search functionality for easy product discovery\n• Added user account management with order history and saved preferences\n\nTechnical Details\n\n• Built with the MERN stack (MongoDB, Express, React, Node.js)\n• Implemented responsive design principles for all device sizes\n• Used Redux for state management across the application\n• Set up CI/CD pipeline for automated testing and deployment",
@@ -148,7 +161,7 @@ export default function Projects() {
       featured: true
     },
     {
-      id: 6,
+      id: 7,
       title: "Cybersecurity Startup Info Page (AMANE)",
       description: "Information page for a cybersecurity startup with details on services, team, and contact information.",
       details: "Startup Info Page\n\n• Developed an informative page for a cybersecurity startup\n• Highlighted services offered, team members, and contact information\n• Integrated a contact form for inquiries\n\nTechnical Details\n\n• Built with React and TailwindCSS\n• Used Formik for form handling and validation\n• Implemented responsive design for all device sizes",
@@ -159,7 +172,7 @@ export default function Projects() {
       featured: false
     },
     {
-      id: 7,  
+      id: 8,  
       title: "Password Generator",
       description: "Secure password generator with multiple themes and customization options. Built with React and styled-components.",
       details: "Password Generator Features\n\n• Generates secure passwords with customizable length and character sets\n• Features multiple themes including light, dark, and hacker modes\n• Allows copying generated passwords to clipboard with a single click\n• Provides password strength evaluation and security tips\n\nTechnical Implementation\n\n• Built with React and styled-components for theme switching\n• Used cryptographically secure random number generation\n• Implemented responsive design for mobile and desktop usage\n• Added keyboard accessibility and screen reader support",
@@ -172,7 +185,7 @@ export default function Projects() {
       carousel: true
     },
     {
-      id: 8,
+      id: 9,
       title: "E-commerce Website (Front End)",
       description: "Admin dashboard for e-commerce platforms with analytics, inventory management, and order processing.",
       details: "Admin Dashboard Features\n\n• Comprehensive admin dashboard for managing e-commerce operations\n• Real-time analytics with customizable date ranges and metrics\n• Inventory management system with low stock alerts\n• Order processing workflow with status tracking\n\nTechnical Implementation\n\n• Built with React and Material-UI for consistent UI components\n• Implemented data visualization with Chart.js\n• Used React Query for efficient data fetching and caching\n• Set up role-based access control for different admin levels",
@@ -183,7 +196,7 @@ export default function Projects() {
       featured: false
     },
     {
-      id: 9,
+      id: 10,
       title: "Weather Web App",
       description: "Weather application with 7-day forecast, location detection, and beautiful UI transitions.",
       details: "Weather App Features\n\n• Displays current weather conditions and 7-day forecast\n• Implements geolocation for automatic location detection\n• Allows searching for weather in any city worldwide\n• Shows additional metrics like humidity, wind speed, and UV index\n\nTechnical Details\n\n• Built with React and CSS modules for styling\n• Integrated with OpenWeatherMap API for weather data\n• Implemented error handling for API failures and location services\n• Added smooth transitions between different views and states",
@@ -194,7 +207,7 @@ export default function Projects() {
       featured: false
     },
     {
-      id: 10,
+      id: 11,
       title: "ePortfolio",
       description: "Digital portfolio showcasing various projects and achievements.",
       details: "ePortfolio Overview\n\n• Comprehensive digital portfolio showcasing various projects and achievements\n• Includes detailed project descriptions, images, and links\n• Features a clean and modern design with easy navigation\n\nTechnical Details\n\n• Built with HTML, CSS, and JavaScript\n• Used responsive design principles for all device sizes\n• Implemented lazy loading for improved performance",

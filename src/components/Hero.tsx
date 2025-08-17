@@ -2,7 +2,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Download, Mail, Github, Linkedin } from "lucide-react";
 import { useState, useEffect, useCallback, useRef } from "react";
 import background2 from "./images/blackhole.webp";
-import Resume from "./Medkour_Salah_Eddine_Resume June 2025.pdf";
+//import Resume from "./Medkour_Salah_Eddine_Resume June 2025.pdf";
+import Resume from "./MEDKOUR_SALAH_EDDINE_CV_EN.pdf";
 import { initParallaxEffect } from "../utils/parallax";
 import Particles from 'react-tsparticles';
 import { loadFull } from "tsparticles";
@@ -867,7 +868,7 @@ export default function Hero() {
           {/* Download Resume Button */}
           <motion.a
             href={Resume}
-            download="Medkour_Salah_Eddine_Resume_June_2025.pdf"
+            download="Medkour_Salah_Eddine_Resume.pdf"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}

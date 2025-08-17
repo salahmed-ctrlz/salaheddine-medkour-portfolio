@@ -2,7 +2,8 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { Mail, Linkedin, Github, Download, Send, Check, Loader2, ArrowRight, MessageSquare, ChevronDown } from 'lucide-react';
 import confetti from 'canvas-confetti';
-import Resume from "./Medkour_Salah_Eddine_Resume June 2025.pdf";
+//import Resume from "./Medkour_Salah_Eddine_Resume June 2025.pdf";
+import Resume from "./MEDKOUR_SALAH_EDDINE_CV_EN.pdf";
 
 export default function Contact() {
   // Form state management
@@ -604,7 +605,7 @@ export default function Contact() {
                 <motion.a
                   whileHover={{ scale: 1.05, x: 10 }}
                   href={Resume}
-                  download="Medkour_Salah_Eddine_Resume_June_2025.pdf"
+                  download="Medkour_Salah_Eddine_Resume.pdf"
                   className="flex items-center text-gray-300 transition-all duration-300 relative group bg-gray-800/30 backdrop-blur-sm rounded-xl p-4 border border-gray-700/30 overflow-hidden"
                 >
                   <div className="w-10 h-10 bg-purple-500/10 rounded-full flex items-center justify-center mr-3 flex-shrink-0 relative z-10">

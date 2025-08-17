@@ -487,7 +487,7 @@ export default function Footer() {
           </div>
           
           <div className="text-sm text-gray-500">
-            <span>Let's collaborate to create an outstanding website.</span>
+            <span>Let's collaborate on a project or to create an outstanding website.</span>
           </div>
         </div>
       </div>
