@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, ExternalLink, ChevronDown, ChevronUp, ArrowUp } from 'lucide-react';
-import { useState, useEffect, useRef } from 'react';
+import { Github, ExternalLink, ChevronDown, ChevronUp, ArrowUp, Globe, Wrench, Shield } from 'lucide-react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import './Projects.css';
@@ -42,7 +42,40 @@ interface Project {
   demo: string;
   featured: boolean;
   carousel?: boolean;
+  category: 'web' | 'tools' | 'security';
+  categories?: ('web' | 'tools' | 'security')[]; // Support multiple categories
 }
+
+// Category configuration - Easy to edit in the future
+const categories = [
+  {
+    id: 'web',
+    name: 'Web Development',
+    shortName: 'WebDev',
+    description: 'All websites and web apps',
+    icon: Globe,
+    gradient: 'from-blue-500 to-indigo-500',
+    color: 'blue'
+  },
+  {
+    id: 'tools',
+    name: 'Tools & Scripts',
+    shortName: 'Tools & Scripts',
+    description: 'Standalone tools and utilities',
+    icon: Wrench,
+    gradient: 'from-emerald-500 to-green-500',
+    color: 'emerald'
+  },
+  {
+    id: 'security',
+    name: 'Cybersecurity Projects',
+    shortName: 'Cybersecurity',
+    description: 'Security-focused work',
+    icon: Shield,
+    gradient: 'from-purple-500 to-pink-500',
+    color: 'purple'
+  }
+];
 
 const ProjectImage = ({ src, alt, width, height }: { 
   src: string; 
@@ -71,7 +104,7 @@ const ProjectImage = ({ src, alt, width, height }: {
 );
 
 export default function Projects() {
-  const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [expandedId, setExpandedId] = useState<string | number | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -80,10 +113,13 @@ export default function Projects() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
   
   const sectionRef = useRef<HTMLElement>(null);
   
+  // Projects data organized by categories - Easy to edit in the future
   const projects: Project[] = [
+    // Featured Projects (First 3 - Pinned)
     {
       id: 1,
       title: "Current Portfolio",
@@ -94,7 +130,8 @@ export default function Projects() {
       technologies: ["React", "TypeScript", "TailwindCSS", "Framer Motion"],
       github: "https://github.com/salahmed-ctrlz/salaheddine-medkour-portfolio",
       demo: "https://salahmed-ctrlz.github.io/salaheddine-medkour-portfolio/",
-      featured: true
+      featured: true,
+      category: 'web'
     },
     {
       id: 2,
@@ -106,9 +143,9 @@ export default function Projects() {
       technologies: ["HTML", "CSS", "JavaScript", "GSAP"],
       github: "https://github.com/salahmed-ctrlz/BetterCallSaul",
       demo: "https://salahmed-ctrlz.github.io/BetterCallSaul/",
-      featured: true 
+      featured: true,
+      category: 'web'
     },
-
     {
       id: 3,
       title: "Graphic Designer Portfolio",
@@ -119,9 +156,9 @@ export default function Projects() {
       technologies: ["React", "TypeScript", "TailwindCSS", "Framer Motion", "Radix UI"],
       github: "https://github.com/salahmed-ctrlz/graphic-designer-portfolio",
       demo: "https://salahmed-ctrlz.github.io/graphic-designer-portfolio/",
-      featured: true
+      featured: true,
+      category: 'web'
     },
-
     {
       id: 4,
       title: "WebRTC Video Chat with True E2EE",
@@ -132,22 +169,22 @@ export default function Projects() {
       technologies: ["WebRTC", "JavaScript", "Node.js", "Socket.IO", "AES-GCM", "ECDH", "TweetNaCl.js"],
       github: "https://github.com/salahmed-ctrlz/WebRTC-VideoChatApp-with-True-EndToEndEncryption-Enabled",
       demo: "",
-      featured: true,
-      carousel: true
+      featured: false,
+      carousel: true,
+      category: 'security'
     },
-    
-        {
-  id: 5,
-  title: "999SAK Tool",
-  description: "Swiss Army Knife CLI tool for Windows (PowerShell-based).",
-  details: "999SAK Tool Overview\n\n• Multi-purpose CLI utility designed to centralize productivity, system tools, and entertainment in one interface\n• Features quick access to networking tools, file management utilities, and system monitoring commands\n• Includes fun additions like mini text-based games, ASCII art, and hidden easter eggs for users\n\nTechnical Details\n\n• Built entirely with PowerShell scripting\n• Modular design with expandable command sets\n• Menu-driven interface for easy navigation\n• Supports both automation scripts and interactive utilities",
-  image: saktool,
-  technologies: ["PowerShell"],
-  github: "https://github.com/salahmed-ctrlz/99SAK-PowershellSwissArmyKnife",
-  demo: "https://github.com/salahmed-ctrlz/99SAK-PowershellSwissArmyKnife",
-  featured: true
-},
-
+    {
+      id: 5,
+      title: "99SAK Tool",
+      description: "Swiss Army Knife CLI tool for Windows (PowerShell-based).",
+      details: "99SAK Tool Overview\n\n• Multi-purpose CLI utility designed to centralize productivity, system tools, and entertainment in one interface\n• Features quick access to networking tools, file management utilities, and system monitoring commands\n• Includes fun additions like mini text-based games, ASCII art, and hidden easter eggs for users\n\nTechnical Details\n\n• Built entirely with PowerShell scripting\n• Modular design with expandable command sets\n• Menu-driven interface for easy navigation\n• Supports both automation scripts and interactive utilities",
+      image: saktool,
+      technologies: ["PowerShell"],
+      github: "https://github.com/salahmed-ctrlz/99SAK-PowershellSwissArmyKnife",
+      demo: "https://github.com/salahmed-ctrlz/99SAK-PowershellSwissArmyKnife",
+      featured: false,
+      category: 'tools'
+    },
     {
       id: 6,
       title: "Gaming & PC Parts Website (PC Haven)",
@@ -158,7 +195,8 @@ export default function Projects() {
       technologies: ["React", "Node.js", "MongoDB", "Express", "Redux"],
       github: "https://github.com/salahmed-ctrlz/PC-Haven",
       demo: "https://salahmed-ctrlz.github.io/PC-Haven/",
-      featured: true
+      featured: false,
+      category: 'web'
     },
     {
       id: 7,
@@ -169,7 +207,8 @@ export default function Projects() {
       technologies: ["React", "TailwindCSS", "Formik"],
       github: "https://github.com/salahmed-ctrlz/amane-cybersecurity",
       demo: "https://salahmed-ctrlz.github.io/amane-cybersecurity/",
-      featured: false
+      featured: false,
+      category: 'web'
     },
     {
       id: 8,  
@@ -181,8 +220,9 @@ export default function Projects() {
       technologies: ["React", "styled-components", "JavaScript"],
       github: "https://github.com/salahmed-ctrlz/Sala7-Password-Generator",
       demo: "https://salahmed-ctrlz.github.io/Sala7-Password-Generator/",
-      featured: true,
-      carousel: true
+      featured: false,
+      carousel: true,
+      category: 'security'
     },
     {
       id: 9,
@@ -193,7 +233,8 @@ export default function Projects() {
       technologies: ["React", "TypeScript", "Material-UI", "Chart.js"],
       github: "https://github.com/salahmed-ctrlz/etopia",
       demo: "https://salahmed-ctrlz.github.io/etopia/",
-      featured: false
+      featured: false,
+      category: 'web'
     },
     {
       id: 10,
@@ -204,7 +245,8 @@ export default function Projects() {
       technologies: ["React", "CSS Modules", "OpenWeatherMap API"],
       github: "https://github.com/salahmed-ctrlz/WeathApp",
       demo: "https://salahmed-ctrlz.github.io/WeathApp/",
-      featured: false
+      featured: false,
+      category: 'web'
     },
     {
       id: 11,
@@ -215,12 +257,85 @@ export default function Projects() {
       technologies: ["HTML", "CSS", "JavaScript"],
       github: "https://github.com/salahmed-ctrlz/eportfolio",
       demo: "https://salahmed-ctrlz.github.io/eportfolio/",
-      featured: false
+      featured: false,
+      category: 'web'
     }
   ];
 
-  const visibleProjects = showAllProjects ? projects : projects.slice(0, 3);
+  // Coming Soon cards for Tools & Scripts and Cybersecurity
+  const comingSoonCards = [
+    {
+      id: 'tools-coming-soon-1',
+      title: "Network Scanner Tool",
+      description: "Advanced network scanning and monitoring utility",
+      category: 'tools'
+    },
+    {
+      id: 'tools-coming-soon-2', 
+      title: "System Automation Suite",
+      description: "Comprehensive system automation and management tools",
+      category: 'tools'
+    },
+    {
+      id: 'security-coming-soon-1',
+      title: "Penetration Testing Framework",
+      description: "Automated penetration testing and vulnerability assessment",
+      category: 'security'
+    },
+    {
+      id: 'security-coming-soon-2',
+      title: "Security Monitoring Dashboard",
+      description: "Real-time security monitoring and alerting system",
+      category: 'security'
+    }
+  ];
 
+  // Filter projects based on selected category
+  const filteredProjects = useMemo(() => {
+    if (selectedCategory === 'all') {
+      return projects;
+    }
+    
+    const categoryProjects = projects.filter(project => project.category === selectedCategory);
+    
+    // Add coming soon cards for specific categories
+    if (selectedCategory === 'tools' || selectedCategory === 'security') {
+      const comingSoon = comingSoonCards.filter(card => card.category === selectedCategory);
+      return [...categoryProjects, ...comingSoon];
+    }
+    
+    return categoryProjects;
+  }, [projects, selectedCategory, comingSoonCards]);
+
+  const visibleProjects = showAllProjects ? filteredProjects : filteredProjects.slice(0, 3);
+
+  // Get category info for display
+  const getCategoryInfo = (categoryId: string) => {
+    return categories.find(cat => cat.id === categoryId) || categories[0];
+  };
+
+  // Get project categories (support for multiple categories)
+  const getProjectCategories = (project: Project) => {
+    if (project.categories && project.categories.length > 0) {
+      return project.categories;
+    }
+    return [project.category];
+  };
+
+  // Check if project is a coming soon card
+  const isComingSoonCard = (project: any) => {
+    return project.id && typeof project.id === 'string' && project.id.includes('coming-soon');
+  };
+
+  // Count projects per category
+  const categoryCounts = useMemo(() => {
+    const counts: { [key: string]: number } = { all: projects.length };
+    categories.forEach(cat => {
+      counts[cat.id] = projects.filter(p => p.category === cat.id).length;
+    });
+    return counts;
+  }, [projects]);
+  
   // Simulate image preloading
   useEffect(() => {
     const imagePromises = projects.map(project => {
@@ -344,7 +459,7 @@ export default function Projects() {
     ));
   };
 
-  const scrollToSection = (sectionId) => {
+  const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       const yOffset = -80; // Adjust based on your navbar height
@@ -360,7 +475,7 @@ export default function Projects() {
       images.forEach((img) => {
         const src = img.getAttribute('data-src');
         if (src) {
-          img.src = src;
+          (img as HTMLImageElement).src = src;
         }
       });
     };
@@ -393,194 +508,353 @@ export default function Projects() {
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
             Featured Projects
           </h2>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-8">
             Here are some of my recent works, ranging from web applications to cybersecurity tools.
           </p>
+
+          {/* Category Filter Tabs */}
+          <div className="flex flex-wrap justify-center gap-2 mb-8">
+            {/* All Projects Tab */}
+            <button
+              onClick={() => setSelectedCategory('all')}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border ${
+                selectedCategory === 'all'
+                  ? 'bg-white text-gray-900 border-white shadow-lg'
+                  : 'bg-transparent text-gray-300 border-gray-600 hover:border-gray-400 hover:text-white'
+              }`}
+            >
+              All Projects ({categoryCounts.all})
+            </button>
+
+            {/* Category Tabs */}
+            {categories.map((category) => {
+              const Icon = category.icon;
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => setSelectedCategory(category.id)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border flex items-center gap-2 ${
+                    selectedCategory === category.id
+                      ? `bg-gradient-to-r ${category.gradient} text-white border-transparent shadow-lg`
+                      : 'bg-transparent text-gray-300 border-gray-600 hover:border-gray-400 hover:text-white'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
+                  {category.name} ({categoryCounts[category.id]})
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Category Description */}
+          {selectedCategory !== 'all' && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="mb-8"
+            >
+              <div className="inline-flex items-center gap-3 px-4 py-2 bg-gray-800/50 rounded-lg border border-gray-700/50">
+                {(() => {
+                  const category = getCategoryInfo(selectedCategory);
+                  const Icon = category.icon;
+                  return (
+                    <>
+                      <div className={`p-2 rounded-full bg-gradient-to-r ${category.gradient}`}>
+                        <Icon className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="text-left">
+                        <p className="text-white font-medium">{category.name}</p>
+                        <p className="text-gray-400 text-sm">{category.description}</p>
+                      </div>
+                    </>
+                  );
+                })()}
+              </div>
+            </motion.div>
+          )}
         </motion.div>
 
         {/* Projects Grid */}
         <div className="project-grid">
           {isInView && !imagesLoaded && renderSkeletons()}
           
-          {isInView && imagesLoaded && visibleProjects.map((project) => (
-            <motion.div
-              key={project.id}
-              layout
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
-              className={`project-card ${expandedId === project.id ? 'expanded' : ''}`}
-            >
-              {/* Project Image */}
-              <div 
-                className="project-image-container"
-                onMouseMove={(e) => handleMouseMove(e, project)}
-                onMouseLeave={() => setHoveredId(null)}
-              >
-                {project.carousel && project.images ? (
-                  <div className="carousel-container">
-                    {project.images.map((image, imgIndex) => (
-                      <div
-                        key={imgIndex}
-                        className={`carousel-slide ${imgIndex === currentCarouselIndex ? 'active' : ''}`}
-                      >
-                        <ProjectImage 
-                          src={image}
-                          alt={`${project.title} - View ${imgIndex + 1}`}
-                          width={640}
-                          height={360}
-                        />
-                      </div>
-                    ))}
-                    <div className="carousel-dots">
-                      {project.images.map((_, dotIndex) => (
-                        <span
-                          key={dotIndex}
-                          className={`carousel-dot ${dotIndex === currentCarouselIndex ? 'active' : ''}`}
-                          onClick={() => setCurrentCarouselIndex(dotIndex)}
-                        />
-                      ))}
-                    </div>
+          {isInView && imagesLoaded && visibleProjects.length > 0 ? (
+            visibleProjects.map((project) => {
+              const isComingSoon = isComingSoonCard(project);
+              const projectCategories = isComingSoon ? [project.category] : getProjectCategories(project as Project);
+              
+              return (
+                <motion.div
+                  key={project.id}
+                  layout
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className={`project-card ${expandedId === project.id ? 'expanded' : ''}`}
+                >
+                  {/* Project Image */}
+                  <div 
+                    className="project-image-container"
+                    onMouseMove={!isComingSoon ? (e) => handleMouseMove(e, project as Project) : undefined}
+                    onMouseLeave={!isComingSoon ? () => setHoveredId(null) : undefined}
+                  >
+                    {isComingSoon ? (
+                       // Coming Soon Card - Same structure as normal cards
+                       <>
+                         {/* Blurred Image Placeholder */}
+                         <div className="relative w-full h-full bg-gradient-to-br from-gray-700/50 to-gray-800/50 rounded-2xl overflow-hidden">
+                           <div className="absolute inset-0 bg-gray-800/80 backdrop-blur-xl" />
+                           <div className="absolute inset-0 flex items-center justify-center">
+                             <div className="w-16 h-16 bg-gray-600/50 rounded-full flex items-center justify-center">
+                               <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                               </svg>
+                             </div>
+                           </div>
+                         </div>
+                       </>
+                     ) : (
+                       // Regular Project Card
+                       <>
+                         {(project as Project).carousel && (project as Project).images ? (
+                           <div className="carousel-container">
+                             {(project as Project).images!.map((image: string, imgIndex: number) => (
+                               <div
+                                 key={imgIndex}
+                                 className={`carousel-slide ${imgIndex === currentCarouselIndex ? 'active' : ''}`}
+                               >
+                                 <ProjectImage 
+                                   src={image}
+                                   alt={`${project.title} - View ${imgIndex + 1}`}
+                                   width={640}
+                                   height={360}
+                                 />
+                               </div>
+                             ))}
+                             <div className="carousel-dots">
+                               {(project as Project).images!.map((_: string, dotIndex: number) => (
+                                 <span
+                                   key={dotIndex}
+                                   className={`carousel-dot ${dotIndex === currentCarouselIndex ? 'active' : ''}`}
+                                   onClick={() => setCurrentCarouselIndex(dotIndex)}
+                                 />
+                               ))}
+                             </div>
+                           </div>
+                         ) : (
+                           <>
+                             <ProjectImage 
+                               src={(project as Project).image}
+                               alt={project.title}
+                               width={640}
+                               height={360}
+                             />
+                             {(project as Project).previewGif && (
+                               <div className="preview-gif">
+                                 <img 
+                                   src={(project as Project).previewGif}
+                                   alt={`${project.title} preview`}
+                                   loading="lazy"
+                                 />
+                               </div>
+                             )}
+                           </>
+                         )}
+                       </>
+                     )}
+                    <div className="project-overlay" />
                   </div>
-                ) : (
-                  <>
-                    <ProjectImage 
-                      src={project.image}
-                      alt={project.title}
-                      width={640}
-                      height={360}
-                    />
-                    {project.previewGif && (
-                      <div className="preview-gif">
-                        <img 
-                          src={project.previewGif}
-                          alt={`${project.title} preview`}
-                          loading="lazy"
-                        />
-                      </div>
-                    )}
-                  </>
-                )}
-                <div className="project-overlay" />
-              </div>
 
-              {/* Project Content */}
-              <div className="project-content">
-                <h3 className="project-title">
-                  {project.title}
-                </h3>
-                
-                <div className={`project-description-wrapper ${expandedId === project.id ? 'expanded' : ''}`}>
-                  <div className={`project-description ${expandedId === project.id ? 'expanded' : ''}`}>
-                    {expandedId === project.id ? (
-                      <div className="space-y-4">
-                        {project.details.split('\n\n').map((section, index) => (
-                          <div key={index}>
-                            {section.includes('•') ? (
-                              <>
-                                <h4 className="font-semibold text-white mb-2">
-                                  {section.split('\n')[0]}
-                                </h4>
-                                <ul className="space-y-2 ml-2">
-                                  {section
-                                    .split('\n')
-                                    .slice(1)
-                                    .map((item, i) => (
-                                      <li key={i} className="flex items-start gap-2">
-                                        <span className="text-indigo-400 mt-1">•</span>
-                                        <span>{item.replace('•', '').trim()}</span>
-                                      </li>
-                                    ))}
-                                </ul>
-                              </>
+                  {/* Project Content */}
+                  <div className="project-content">
+                    <div className="flex items-center justify-between mb-2">
+                      <h3 className="project-title">
+                        {isComingSoon ? "Coming Soon" : project.title}
+                      </h3>
+                      {/* Category Badge(s) */}
+                      <div className="flex flex-col gap-1">
+                        {projectCategories.map((cat, index) => {
+                          const categoryInfo = getCategoryInfo(cat);
+                          return (
+                            <span 
+                              key={cat}
+                              className={`px-2 py-1 rounded-full text-xs font-medium ${
+                                cat === 'web' ? 'bg-blue-500/20 text-blue-300' :
+                                cat === 'tools' ? 'bg-emerald-500/20 text-emerald-300' :
+                                'bg-purple-500/20 text-purple-300'
+                              }`}
+                            >
+                              {categoryInfo.shortName}
+                            </span>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    
+                    {isComingSoon ? (
+                      // Mock content for coming soon cards
+                      <>
+                        <div className="project-description-wrapper">
+                          <div className="project-description">
+                            <p className="text-gray-400">
+                              This project is currently in development. Stay tuned for updates on this exciting new tool that will revolutionize the way we approach {project.category === 'tools' ? 'system automation and productivity' : 'cybersecurity and threat detection'}.
+                            </p>
+                          </div>
+                        </div>
+                        
+                        {/* Mock Technologies */}
+                        <div className="project-tags">
+                          <span className="project-tag">In Development</span>
+                          <span className="project-tag">Coming Soon</span>
+                          <span className="project-tag">Stay Tuned</span>
+                        </div>
+
+                        {/* Mock Project Links */}
+                        <div className="project-footer">
+                          <div className="project-links">
+                            <div className="project-link opacity-50 cursor-not-allowed">
+                              <Github className="w-4 h-4" />
+                              <span>Code</span>
+                            </div>
+                            <div className="project-link opacity-50 cursor-not-allowed">
+                              <ExternalLink className="w-4 h-4" />
+                              <span>Demo</span>
+                            </div>
+                          </div>
+                          <div className="view-more-link opacity-50 cursor-not-allowed">
+                            <span className="text-sm">Coming Soon</span>
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className={`project-description-wrapper ${expandedId === project.id ? 'expanded' : ''}`}>
+                          <div className={`project-description ${expandedId === project.id ? 'expanded' : ''}`}>
+                            {expandedId === project.id ? (
+                              <div className="space-y-4">
+                                {(project as Project).details.split('\n\n').map((section: string, index: number) => (
+                                  <div key={index}>
+                                    {section.includes('•') ? (
+                                      <>
+                                        <h4 className="font-semibold text-white mb-2">
+                                          {section.split('\n')[0]}
+                                        </h4>
+                                        <ul className="space-y-2 ml-2">
+                                          {section
+                                            .split('\n')
+                                            .slice(1)
+                                            .map((item: string, i: number) => (
+                                              <li key={i} className="flex items-start gap-2">
+                                                <span className="text-indigo-400 mt-1">•</span>
+                                                <span>{item.replace('•', '').trim()}</span>
+                                              </li>
+                                            ))}
+                                        </ul>
+                                      </>
+                                    ) : (
+                                      <p>{section}</p>
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
                             ) : (
-                              <p>{section}</p>
+                              <p>{project.description}</p>
                             )}
                           </div>
-                        ))}
-                      </div>
-                    ) : (
-                      <p>{project.description}</p>
-                    )}
-                  </div>
-                </div>
-                
-                {/* Technologies */}
-                <div className="project-tags">
-                  {project.technologies.map((tech, index) => (
-                    <span
-                      key={index}
-                      className="project-tag"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+                        </div>
+                        
+                        {/* Technologies */}
+                        <div className="project-tags">
+                          {(project as Project).technologies.map((tech: string, index: number) => (
+                            <span
+                              key={index}
+                              className="project-tag"
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
 
-                {/* Project Links & Toggle */}
-                <div className="project-footer">
-                  <div className="project-links">
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="project-link"
-                      data-hover="true"
-                    >
-                      <Github className="w-4 h-4" />
-                      <span>Code</span>
-                    </a>
-                    {project.id === 4 ? (
-                      <a
-                        href="https://www.researchgate.net/publication/392926889_Implementation_of_an_End-to-End_Encryption_Mechanism_in_WebRTC_Video_Streaming"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="project-link"
-                        data-hover="true"
-                        style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}
-                      >
-                        <SiResearchgate size={18} style={{ marginRight: '0.25rem', verticalAlign: 'middle' }} />
-                        <span>Research</span>
-                      </a>
-                    ) : (
-                      <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="project-link"
-                        data-hover="true"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                        <span>Demo</span>
-                      </a>
+                        {/* Project Links & Toggle */}
+                        <div className="project-footer">
+                          <div className="project-links">
+                            <a
+                              href={(project as Project).github}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="project-link"
+                              data-hover="true"
+                            >
+                              <Github className="w-4 h-4" />
+                              <span>Code</span>
+                            </a>
+                            {(project as Project).id === 4 ? (
+                              <a
+                                href="https://www.researchgate.net/publication/392926889_Implementation_of_an_End-to-End_Encryption_Mechanism_in_WebRTC_Video_Streaming"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="project-link"
+                                data-hover="true"
+                                style={{ display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+                              >
+                                <SiResearchgate size={18} style={{ marginRight: '0.25rem', verticalAlign: 'middle' }} />
+                                <span>Research</span>
+                              </a>
+                            ) : (
+                              <a
+                                href={(project as Project).demo}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="project-link"
+                                data-hover="true"
+                              >
+                                <ExternalLink className="w-4 h-4" />
+                                <span>Demo</span>
+                              </a>
+                            )}
+                          </div>
+                          <button
+                            onClick={() => {
+                              setIsTransitioning(true);
+                              setExpandedId(expandedId === project.id ? null : project.id);
+                              setTimeout(() => setIsTransitioning(false), 300);
+                            }}
+                            className="view-more-link"
+                            data-hover="true"
+                            aria-expanded={expandedId === project.id}
+                          >
+                            <span className="text-sm">
+                              {expandedId === project.id ? "View Less" : "View More"}
+                            </span>
+                            {expandedId === project.id ? (
+                              <ChevronUp className="w-4 h-4" />
+                            ) : (
+                              <ChevronDown className="w-4 h-4" />
+                            )}
+                          </button>
+                        </div>
+                      </>
                     )}
                   </div>
-                  <button
-                    onClick={() => {
-                      setIsTransitioning(true);
-                      setExpandedId(expandedId === project.id ? null : project.id);
-                      setTimeout(() => setIsTransitioning(false), 300);
-                    }}
-                    className="view-more-link"
-                    data-hover="true"
-                    aria-expanded={expandedId === project.id}
-                  >
-                    <span className="text-sm">
-                      {expandedId === project.id ? "View Less" : "View More"}
-                    </span>
-                    {expandedId === project.id ? (
-                      <ChevronUp className="w-4 h-4" />
-                    ) : (
-                      <ChevronDown className="w-4 h-4" />
-                    )}
-                  </button>
-                </div>
-              </div>
+                </motion.div>
+              );
+            })
+          ) : (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="col-span-full text-center py-12"
+            >
+              <p className="text-gray-400 text-lg">No projects found in this category.</p>
             </motion.div>
-          ))}
+          )}
         </div>
 
-        {!showAllProjects && projects.length > 3 && (
+        {!showAllProjects && filteredProjects.length > 3 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

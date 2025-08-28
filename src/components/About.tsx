@@ -1,13 +1,16 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence as FMAnimatePresence } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
 import { Code2, Brain, Pencil, GraduationCap, Briefcase } from "lucide-react";
-import { useRef, useEffect, useState, useMemo, useCallback } from "react";
+import { useRef, useState, useMemo, useCallback } from "react";
 import { AnimatePresence } from 'framer-motion';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
 // Import image
-import profilePic from "./images/profile.webp";
+// removed unused circular profile image
+import portrait1 from './images/Portraits/portrait1.webp';
+import portrait2 from './images/Portraits/portrait2.webp';
+import portrait3 from './images/Portraits/portrait3.webp';
 
 // Import CSS
 import './About.css';
@@ -54,19 +57,6 @@ export default function About() {
   // Memoize the container ref to prevent unnecessary re-renders
   const containerRef = useRef<HTMLDivElement>(null);
   
-  // Memoize scroll progress calculation
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start end", "end start"]
-  });
-
-  // Memoize transform calculations
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.1, 0.3, 0.1]);
-
-  // State for Annaba hover effect
-  const [isAnnabaHovered, setIsAnnabaHovered] = useState(false);
-  
   // State for expanded timeline items
   const [expandedItems, setExpandedItems] = useState(Array(timelineData.length).fill(false));
 
@@ -76,28 +66,175 @@ export default function About() {
     visible: { opacity: 1, y: 0 }
   }), []);
 
-  const cardVariants = useMemo(() => ({
-    hidden: { opacity: 0, y: 20, scale: 0.95 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      scale: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 15
+  // removed unused cardVariants
+
+  // Glassmorphism Profile Card with slideshow
+  const ProfileCard = () => {
+    const cards = useMemo(() => [
+      { src: portrait1, alt: 'Portrait 1', title: 'Salah Eddine Medkour', line2: 'Network Engineer', line3: 'Annaba, Algeria' },
+      { src: portrait2, alt: 'Portrait 2', title: 'صَلَاحُ الدّينْ مَذكُورْ', line2: 'مهندس شبكات', line3: 'عنابة، الجزائر' },
+      { src: portrait3, alt: 'Portrait 3', title: 'Salahuddin', line2: 'Jack Of All Trades', line3: '' }
+    ], []);
+
+    const [activeIndex, setActiveIndex] = useState(0);
+    const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null);
+    const next = useCallback(() => {
+      setSwipeDirection('left');
+      setActiveIndex((p) => (p + 1) % cards.length);
+    }, [cards.length]);
+    const prev = useCallback(() => {
+      setSwipeDirection('right');
+      setActiveIndex((p) => (p - 1 + cards.length) % cards.length);
+    }, [cards.length]);
+
+    // removed auto-rotation per request
+
+    // Basic swipe support
+    const touchStartX = useRef<number | null>(null);
+    const touchEndX = useRef<number | null>(null);
+
+    const onTouchStart = (e: React.TouchEvent) => {
+      touchStartX.current = e.changedTouches[0].clientX;
+    };
+    const onTouchMove = (e: React.TouchEvent) => {
+      touchEndX.current = e.changedTouches[0].clientX;
+    };
+    const onTouchEnd = () => {
+      if (touchStartX.current === null || touchEndX.current === null) return;
+      const delta = touchEndX.current - touchStartX.current;
+      const threshold = 40; // px
+      if (delta > threshold) {
+        setSwipeDirection('right');
+        prev();
+      } else if (delta < -threshold) {
+        setSwipeDirection('left');
+        next();
       }
-    },
-    hover: { 
-      y: -8,
-      scale: 1.02,
-      transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 10
-      }
-    }
-  }), []);
+      touchStartX.current = null;
+      touchEndX.current = null;
+    };
+
+    const activeCard = cards[activeIndex];
+
+    return (
+      <div className="w-full relative flex justify-center items-center">
+        {/* External nav arrows (desktop/tablet) */}
+        <div className="hidden sm:block absolute left-[-28px] top-1/2 -translate-y-1/2 rotate-180 z-20" onClick={prev} aria-label="Previous">
+          <div className="arrow">
+            <div className="arrow-top"></div>
+            <div className="arrow-bottom"></div>
+          </div>
+        </div>
+        <div className="hidden sm:block absolute right-[-28px] top-1/2 -translate-y-1/2 z-20" onClick={next} aria-label="Next">
+          <div className="arrow">
+            <div className="arrow-top"></div>
+            <div className="arrow-bottom"></div>
+          </div>
+        </div>
+
+        {/* Outer card with requested style and hover interaction */}
+        <div className="group relative z-10 w-full max-w-[300px] sm:max-w-[340px] md:max-w-[380px] max-h-[80vh] rounded-2xl overflow-hidden drop-shadow-xl bg-[#3d3c3d] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_25px_50px_-12px_rgba(168,85,247,0.4)]">
+          {/* Glow effect under card on hover */}
+          <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-[90%] h-8 bg-purple-500/40 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full shadow-[0_0_20px_rgba(168,85,247,0.6)]" />
+          
+          {/* Blurred glow element */}
+          <div className="pointer-events-none absolute w-56 h-48 bg-white blur-[50px] -left-1/2 -top-1/2 opacity-20 group-hover:opacity-40 transition-opacity" />
+
+          {/* Inset inner panel turns into the image card */}
+          <div className="relative m-0.5 z-[1] rounded-2xl bg-[#323132] text-white/90 flex flex-col border border-white/10">
+            {/* Image as the card */}
+            <div
+              className="relative w-full h-[50vh] sm:h-[54vh] md:h-[58vh] min-h-[420px] rounded-2xl overflow-hidden bg-[#2b2a2b]"
+              onTouchStart={onTouchStart}
+              onTouchMove={onTouchMove}
+              onTouchEnd={onTouchEnd}
+              onMouseDown={(e) => {
+                // Desktop swipe support
+                const startX = e.clientX;
+                const handleMouseMove = (e: MouseEvent) => {
+                  const deltaX = e.clientX - startX;
+                  if (Math.abs(deltaX) > 50) {
+                    if (deltaX > 0) {
+                      setSwipeDirection('right');
+                      prev();
+                    } else {
+                      setSwipeDirection('left');
+                      next();
+                    }
+                    document.removeEventListener('mousemove', handleMouseMove);
+                    document.removeEventListener('mouseup', handleMouseUp);
+                  }
+                };
+                const handleMouseUp = () => {
+                  document.removeEventListener('mousemove', handleMouseMove);
+                  document.removeEventListener('mouseup', handleMouseUp);
+                };
+                document.addEventListener('mousemove', handleMouseMove);
+                document.addEventListener('mouseup', handleMouseUp);
+              }}
+              style={{ cursor: 'grab' }}
+            >
+              <FMAnimatePresence mode="wait">
+                <motion.div
+                  key={activeCard.src}
+                  className="absolute inset-0"
+                  initial={{ 
+                    opacity: 0,
+                    x: swipeDirection === 'left' ? 100 : swipeDirection === 'right' ? -100 : 0
+                  }}
+                  animate={{ 
+                    opacity: 1,
+                    x: 0
+                  }}
+                  exit={{ 
+                    opacity: 0,
+                    x: swipeDirection === 'left' ? -100 : swipeDirection === 'right' ? 100 : 0
+                  }}
+                  transition={{ 
+                    duration: 0.6, 
+                    ease: 'easeInOut',
+                    type: "spring",
+                    stiffness: 300,
+                    damping: 30
+                  }}
+                  onAnimationComplete={() => setSwipeDirection(null)}
+                >
+                  <LazyLoadImage
+                    src={activeCard.src}
+                    alt={activeCard.alt}
+                    width={1920}
+                    height={1080}
+                    effect="blur"
+                    className="w-full h-full object-cover"
+                    wrapperClassName="!block !w-full !h-full"
+                  />
+
+                  {/* Stronger bottom gradient for readability */}
+                  <div className="pointer-events-none absolute inset-0 transition-all duration-300 group-hover:opacity-30" style={{ 
+                    background: 'linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 40%, rgba(0,0,0,0.2) 60%, transparent 80%)',
+                    backgroundSize: '100% 100%'
+                  }} />
+
+                  {/* Overlay text centered near bottom */}
+                  <div className="absolute inset-x-0 bottom-0 p-4 pb-5 text-center group-hover:opacity-30 transition-opacity duration-300">
+                    <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                      {activeCard.title}
+                    </h2>
+                    {activeCard.line2 && (
+                      <p className="text-base md:text-lg text-gray-200">{activeCard.line2}</p>
+                    )}
+                    {activeCard.line3 && (
+                      <p className="text-sm md:text-base text-gray-300">{activeCard.line3}</p>
+                    )}
+                  </div>
+                </motion.div>
+              </FMAnimatePresence>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
 
   const Carousel3D = () => {
     const [currentIndex, setCurrentIndex] = useState(1);
@@ -369,104 +506,17 @@ export default function About() {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Profile Section */}
-        <div className="text-center mb-20">
+        {/* Profile Card */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
             variants={fadeUpVariants}
-            className="relative group"
-          >
-            <div className="relative inline-block">
-              <motion.div
-                className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full opacity-75 group-hover:opacity-100 blur-lg transition-opacity duration-500"
-                animate={{
-                  scale: [1, 1.02, 1],
-                  rotate: [0, 5, -5, 0]
-                }}
-                transition={{
-                  duration: 5,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-              />
-              <div className="relative rounded-full overflow-hidden w-44 h-44 sm:w-48 sm:h-48 md:w-52 md:h-52 lg:w-56 lg:h-56 mx-auto">
-                <LazyLoadImage
-                  src={profilePic}
-                  alt="Medkour Salah Eddine"
-                  width={224}
-                  height={224}
-                  effect="blur"
-                  className="w-full h-full object-cover"
-                  wrapperClassName="!block !w-full !h-full"
-                />
-              </div>
-            </div>
+          className="mb-20"
+        >
+          <ProfileCard />
           </motion.div>
-          
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            variants={fadeUpVariants}
-            className="mt-8 space-y-2"
-          >
-            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-              Medkour Salah Eddine
-            </h2>
-            <p className="text-lg text-gray-400">Network Engineer</p>
-            <div className="reference relative">
-              {/* Location with interactive tooltip */}
-              <p className="text-gray-500 relative inline-block">
-                <span 
-                  className="hover-card relative inline-block"
-                  onMouseEnter={() => setIsAnnabaHovered(true)}
-                  onMouseLeave={() => setIsAnnabaHovered(false)}
-                >
-                  Annaba
-                </span>, Algeria
-                
-                {/* Location Tooltip */}
-                <div className="location-tooltip">
-                  {/* Map background */}
-                  <div className="location-map"></div>
-                  <div className="location-dots"></div>
-                  
-                  {/* Animated pin */}
-                  <div className="location-pin"></div>
-                  
-                  {/* Content */}
-                  <div className="location-content">
-                    <h4 className="location-title">From Annaba</h4>
-                    <p className="location-subtitle">Coastal city in northeastern Algeria</p>
-                    
-                    {/* Stats */}
-                    <div className="location-stats">
-                      <div className="location-stat">
-                        <div className="location-stat-value">650K+</div>
-                        <div className="location-stat-label">Population</div>
-                      </div>
-                      <div className="location-stat">
-                        <div className="location-stat-value">80 km²</div>
-                        <div className="location-stat-label">Area</div>
-                      </div>
-                      <div className="location-stat">
-                        <div className="location-stat-value">1830</div>
-                        <div className="location-stat-label">Founded</div>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Decorative wave */}
-                  <div className="location-wave"></div>
-                </div>
-              </p>
-            </div>
-          </motion.div>
-        </div>
 
         {/* Interests Section */}
         <motion.div 

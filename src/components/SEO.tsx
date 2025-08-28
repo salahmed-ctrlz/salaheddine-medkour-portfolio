@@ -1,5 +1,7 @@
 import { Helmet } from 'react-helmet';
 
+import Image from "../components/images/Portraits/portrait3.webp";
+
 interface SEOProps {
   title?: string;
   description?: string;
@@ -8,16 +10,16 @@ interface SEOProps {
 }
 
 export default function SEO({
-  title = "Medkour Salah Eddine – Full-Stack Developer, Cybersecurity Specialist & Writer",
-  description = "Full-Stack Developer, Cybersecurity Specialist, and Writer focused on building secure, scalable web applications. Proficient in React, Next.js, Node.js, TypeScript, and security best practices.",
-  image = "/images/og-image.jpg",
+  title = "Salah Eddine Medkour – Network Engineer, Web Developer, Cybersecurity Specialist & Writer",
+  description = "Network engineer and cybersecurity specialist skilled in secure web apps, penetration testing, and scalable development.",
+  image = Image,
   url = "https://salahmed-ctrlz.github.io/salaheddine-medkour-portfolio/"
 }: SEOProps) {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "Medkour Salah Eddine",
-    jobTitle: "Full-Stack Developer, Cybersecurity Specialist & Writer",
+    name: "Salah Eddine Medkour",
+    jobTitle: "Network Engineer, Web Developer, Cybersecurity Specialist & Writer",
     url: url,
     sameAs: [
       "https://github.com/salahmed-ctrlz",
@@ -30,7 +32,7 @@ export default function SEO({
     },
     email: "medkoursalaheddine@gmail.com",
     telephone: "+213551964262",
-    description: description
+    description: "Network Engineer, Web Developer, Cybersecurity Specialist & Writer"
   };
 
   return (
@@ -63,9 +65,9 @@ export default function SEO({
       <meta name="theme-color" content="#000000" />
       <meta
         name="keywords"
-        content="full-stack development, cybersecurity, writing, React, Next.js, TypeScript, Node.js, penetration testing, secure applications"
-      />
-      <meta name="author" content="Medkour Salah Eddine" />
+        content="network engineering, cybersecurity, web development, React, Next.js, TypeScript, Node.js, penetration testing, secure systems"
+        />
+      <meta name="author" content="Salah Eddine Medkour" />
       <meta name="robots" content="index, follow" />
       <meta name="language" content="English" />
       <meta name="revisit-after" content="7 days" />
