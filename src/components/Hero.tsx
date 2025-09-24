@@ -1,14 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Download, Mail, Github, Linkedin } from "lucide-react";
+import { Download, Mail, Github, Linkedin } from "lucide-react";
 import { useState, useEffect, useCallback, useRef } from "react";
-import background2 from "./images/blackhole.webp";
-//import Resume from "./Medkour_Salah_Eddine_Resume June 2025.pdf";
 import Resume from "./MEDKOUR_SALAH_EDDINE_CV_EN.pdf";
-import { initParallaxEffect } from "../utils/parallax";
-import Particles from 'react-tsparticles';
-import { loadFull } from "tsparticles";
-import type { Engine } from "tsparticles-engine";
-import { scrambleText } from '../utils/scrambleText'; // Adjust the path as necessary
 
 // Text animation component with improved Arabic text handling
 const TextAnimate = ({ 
@@ -98,310 +91,6 @@ const TextAnimate = ({
   );
 };
 
-// Constellation effect component
-const ConstellationEffect = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const particlesRef = useRef<Array<{
-    x: number;
-    y: number;
-    size: number;
-    color: string;
-    alpha: number;
-    vx: number;
-    vy: number;
-  }>>([]);
-  const mousePositionRef = useRef({ x: 0, y: 0 });
-  const interactiveDistanceRef = useRef(150);
-  const frameRef = useRef<number>(0);
-  const isInitializedRef = useRef(false);
-  const [isInView, setIsInView] = useState(false);
-
-  // Colors for particles with increased variety
-  const particleColors = [
-    'rgba(99, 102, 241, 0.8)',   // indigo
-    'rgba(139, 92, 246, 0.8)',   // violet
-    'rgba(168, 85, 247, 0.8)',   // purple
-    'rgba(217, 70, 239, 0.8)',   // fuchsia
-    'rgba(236, 72, 153, 0.8)',   // pink
-    'rgba(79, 70, 229, 0.8)',    // indigo-dark
-    'rgba(99, 179, 237, 0.8)',   // light blue
-    'rgba(129, 140, 248, 0.8)'   // indigo-light
-  ];
-
-  // Setup intersection observer to detect when component is in view
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting);
-      },
-      { 
-        threshold: 0.1,
-        rootMargin: "0px 0px 100px 0px" // Load when closer to viewport
-      }
-    );
-
-    if (canvasRef.current) {
-      observer.observe(canvasRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  const initParticles = useCallback(() => {
-    if (!canvasRef.current) return;
-    
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    
-    // Resize canvas to match window size
-    const updateCanvasSize = () => {
-      if (canvas) {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      }
-    };
-    
-    updateCanvasSize();
-    window.addEventListener('resize', updateCanvasSize);
-    
-    // Create particles with reduced count for better performance
-    // Calculate particle count based on screen size with lower density
-    const particleCount = Math.min(Math.floor(window.innerWidth * window.innerHeight / 15000), 80);
-    
-    particlesRef.current = Array.from({ length: particleCount }).map(() => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      size: Math.random() * 2 + 1,
-      color: particleColors[Math.floor(Math.random() * particleColors.length)],
-      alpha: Math.random() * 0.5 + 0.3,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4
-    }));
-    
-    // Track mouse position
-    const handleMouseMove = (e: MouseEvent) => {
-      mousePositionRef.current = {
-        x: e.clientX,
-        y: e.clientY
-      };
-    };
-    
-    window.addEventListener('mousemove', handleMouseMove);
-    
-    // Add touch support
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length > 0) {
-        mousePositionRef.current = {
-          x: e.touches[0].clientX,
-          y: e.touches[0].clientY
-        };
-      }
-    };
-    
-    window.addEventListener('touchmove', handleTouchMove);
-    
-    // Animation loop
-    const animate = () => {
-      if (!canvasRef.current || !isInView) {
-        // Skip animation if component is not visible
-        frameRef.current = requestAnimationFrame(animate);
-        return;
-      }
-      
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
-      if (!ctx) return;
-      
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      
-      // Update and draw particles
-      particlesRef.current.forEach((particle, i) => {
-        // Update position
-        particle.x += particle.vx;
-        particle.y += particle.vy;
-        
-        // Boundary check with wrap-around
-        if (particle.x < 0) particle.x = canvas.width;
-        if (particle.x > canvas.width) particle.x = 0;
-        if (particle.y < 0) particle.y = canvas.height;
-        if (particle.y > canvas.height) particle.y = 0;
-        
-        // Calculate distance to mouse
-        const dx = mousePositionRef.current.x - particle.x;
-        const dy = mousePositionRef.current.y - particle.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        
-        // Interactive effect - particles move away from mouse
-        if (distance < interactiveDistanceRef.current) {
-          const angle = Math.atan2(dy, dx);
-          const force = (interactiveDistanceRef.current - distance) / interactiveDistanceRef.current;
-          
-          // Push particle away from mouse
-          particle.vx -= Math.cos(angle) * force * 0.05;
-          particle.vy -= Math.sin(angle) * force * 0.05;
-          
-          // Limit velocity
-          const speed = Math.sqrt(particle.vx * particle.vx + particle.vy * particle.vy);
-          if (speed > 1.5) {
-            particle.vx = (particle.vx / speed) * 1.5;
-            particle.vy = (particle.vy / speed) * 1.5;
-          }
-          
-          // Highlight particles near mouse
-          ctx.globalAlpha = Math.min(1, particle.alpha + force * 0.5);
-          ctx.beginPath();
-          ctx.arc(particle.x, particle.y, particle.size + force * 2, 0, Math.PI * 2); // Larger highlight effect
-          ctx.fillStyle = particle.color;
-          ctx.fill();
-        } else {
-          // Gradually return to normal velocity
-          particle.vx *= 0.99;
-          particle.vy *= 0.99;
-          
-          // Draw normal particle
-          ctx.globalAlpha = particle.alpha;
-          ctx.beginPath();
-          ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-          ctx.fillStyle = particle.color;
-          ctx.fill();
-        }
-        
-        // Draw connections between nearby particles
-        // Reduced connection distance for better performance
-        const connectionDistance = 100;
-        for (let j = i + 1; j < particlesRef.current.length; j++) {
-          const p2 = particlesRef.current[j];
-          const dx2 = particle.x - p2.x;
-          const dy2 = particle.y - p2.y;
-          const distance2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
-          
-          if (distance2 < connectionDistance) {
-            // Determine if this connection is near the mouse
-            const mouseInfluence = Math.max(
-              0,
-              1 - Math.min(
-                Math.sqrt(Math.pow(mousePositionRef.current.x - particle.x, 2) + 
-                         Math.pow(mousePositionRef.current.y - particle.y, 2)), 
-                Math.sqrt(Math.pow(mousePositionRef.current.x - p2.x, 2) + 
-                         Math.pow(mousePositionRef.current.y - p2.y, 2))
-              ) / interactiveDistanceRef.current
-            );
-            
-            ctx.beginPath();
-            ctx.moveTo(particle.x, particle.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(255, 255, 255, ${(1 - distance2 / connectionDistance) * 0.2 + mouseInfluence * 0.3})`;
-            ctx.lineWidth = 0.6 + mouseInfluence * 1.2;
-            ctx.stroke();
-          }
-        }
-        
-        // Reset global alpha
-        ctx.globalAlpha = 1;
-      });
-      
-      frameRef.current = requestAnimationFrame(animate);
-    };
-    
-    frameRef.current = requestAnimationFrame(animate);
-    isInitializedRef.current = true;
-    
-    return () => {
-      cancelAnimationFrame(frameRef.current);
-      window.removeEventListener('resize', updateCanvasSize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('touchmove', handleTouchMove);
-    };
-  }, [isInView]);
-
-  // Handle visibility changes to improve performance
-  useEffect(() => {
-    let cleanupFn: (() => void) | undefined;
-    
-    if (isInView) {
-      if (!isInitializedRef.current) {
-        // Initialize particles when component comes into view for the first time
-        cleanupFn = initParticles();
-      } else {
-        // Restart animation if already initialized
-        const canvas = canvasRef.current;
-        if (canvas) {
-          const ctx = canvas.getContext('2d');
-          if (ctx) {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-          }
-        }
-        
-        frameRef.current = requestAnimationFrame(function animate() {
-          if (!canvasRef.current || !isInView) return;
-          
-          const canvas = canvasRef.current;
-          const ctx = canvas.getContext('2d');
-          if (!ctx) return;
-          
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          
-          // Draw particles
-          particlesRef.current.forEach((particle, i) => {
-            // Update position
-            particle.x += particle.vx;
-            particle.y += particle.vy;
-            
-            // Boundary check
-            if (particle.x < 0) particle.x = canvas.width;
-            if (particle.x > canvas.width) particle.x = 0;
-            if (particle.y < 0) particle.y = canvas.height;
-            if (particle.y > canvas.height) particle.y = 0;
-            
-            // Draw particle
-            ctx.globalAlpha = particle.alpha;
-            ctx.beginPath();
-            ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-            ctx.fillStyle = particle.color;
-            ctx.fill();
-            
-            // Draw connections (simplified for performance)
-            const connectionDistance = 100;
-            for (let j = i + 1; j < particlesRef.current.length; j++) {
-              const p2 = particlesRef.current[j];
-              const dx2 = particle.x - p2.x;
-              const dy2 = particle.y - p2.y;
-              const distance2 = Math.sqrt(dx2 * dx2 + dy2 * dy2);
-              
-              if (distance2 < connectionDistance) {
-                ctx.beginPath();
-                ctx.moveTo(particle.x, particle.y);
-                ctx.lineTo(p2.x, p2.y);
-                ctx.strokeStyle = `rgba(255, 255, 255, ${(1 - distance2 / connectionDistance) * 0.2})`;
-                ctx.lineWidth = 0.6;
-                ctx.stroke();
-              }
-            }
-          });
-          
-          frameRef.current = requestAnimationFrame(animate);
-        });
-      }
-    } else {
-      // Stop animation when not in view
-      cancelAnimationFrame(frameRef.current);
-    }
-    
-    return () => {
-      cancelAnimationFrame(frameRef.current);
-      if (cleanupFn) cleanupFn();
-    };
-  }, [isInView, initParticles]);
-
-  return (
-    <canvas 
-      ref={canvasRef} 
-      className={`absolute inset-0 z-0 pointer-events-none transition-opacity duration-500 ${isInView ? 'opacity-100' : 'opacity-0'}`}
-      style={{ touchAction: 'none' }}
-    />
-  );
-};
 
 // Main Hero component
 export default function Hero() {
@@ -413,26 +102,17 @@ export default function Hero() {
   ];
 
   const [currentTitle, setCurrentTitle] = useState(0);
-  const [displayName, setDisplayName] = useState("Medkour Salah Eddine");
-  const [displayGreeting, setDisplayGreeting] = useState("Hello there I'm");
-  const [isTransitioning, setIsTransitioning] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [mobileLanguageToggle, setMobileLanguageToggle] = useState(false);
-  const [isContactClicked, setIsContactClicked] = useState(false);
   const [isResumeClicked, setIsResumeClicked] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isContactHovered, setIsContactHovered] = useState(false);
   const [isResumeHovered, setIsResumeHovered] = useState(false);
-  const [isInView, setIsInView] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
-
-  const floatingElementsRef = useRef<HTMLDivElement>(null);
-  const backgroundRef = useRef<HTMLDivElement>(null);
 
   const [displayLanguage, setDisplayLanguage] = useState('en');
 
   // Content based on language with phonetic pronunciation
-  const content = {
+  const content: Record<string, { greeting: string; name: string; phonetic?: string }> = {
     en: {
       greeting: "Hello World! I am",
       name: "Salahuddin",
@@ -444,22 +124,6 @@ export default function Hero() {
     }
   };
 
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: { 
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.05
-      }
-    },
-    exit: { 
-      opacity: 0,
-      transition: {
-        staggerChildren: 0.03
-      }
-    }
-  };
 
   const itemVariants = {
     hidden: {
@@ -512,15 +176,26 @@ export default function Hero() {
     };
   }, []);
 
-  // Check if device is mobile
+  // Check if device is mobile - using 640px for better tablet handling
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= 640);
     };
     
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Handle scroll to show/hide back to top button
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      setShowBackToTop(scrollTop > 100);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Handle title rotation and language toggle
@@ -529,150 +204,56 @@ export default function Hero() {
       setCurrentTitle((prev) => (prev + 1) % titles.length);
     }, 3000);
 
-    // Different animation handling for mobile vs desktop
-    let languageInterval;
+    // Language switching - timed for mobile, manual for desktop
+    let languageInterval: NodeJS.Timeout | undefined;
     
     if (isMobile) {
-      // Mobile animation (simple swap with slide)
+      // Mobile animation (timed switching)
       languageInterval = setInterval(() => {
-        setMobileLanguageToggle(prev => !prev);
-        if (mobileLanguageToggle) {
-          setDisplayName("Medkour Salah Eddine");
-          setDisplayGreeting("Hello there I'm");
-        } else {
-          setDisplayName("صَلَاحُ الدّينْ مَذكُورْ");
-          setDisplayGreeting("السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ");
-        }
-      }, 3500);
-    } else {
-      // Desktop animation (scramble effect)
-      languageInterval = setInterval(() => {
-        if (!isTransitioning) {
-          if (displayName === "Medkour Salah Eddine") {
-            scrambleText("Medkour Salah Eddine", "صَلَاحُ الدّينْ مَذكُورْ", setDisplayName);
-            scrambleText("Hello there I'm", "السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ", setDisplayGreeting);
-          } else {
-            scrambleText("صَلَاحُ الدّينْ مَذكُورْ", "Medkour Salah Eddine", setDisplayName);
-            scrambleText("السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ", "Hello there I'm", setDisplayGreeting);
-          }
-        }
-      }, 5000);
+        setDisplayLanguage(prev => prev === 'en' ? 'ar' : 'en');
+      }, 4000);
     }
+    // Desktop will be handled by hover events only
 
     return () => {
       clearInterval(titleInterval);
-      clearInterval(languageInterval);
+      if (languageInterval) clearInterval(languageInterval);
     };
-  }, [isMobile, displayName, isTransitioning, scrambleText, mobileLanguageToggle]);
+  }, [isMobile]);
 
-  // Track mouse movement for background parallax effect
-  useEffect(() => {
-    if (floatingElementsRef.current) {
-      const cleanup = initParallaxEffect(floatingElementsRef.current, {
-        intensity: 0.03,
-        bounds: 20
-      });
-      return cleanup;
-    }
-  }, []);
 
-  useEffect(() => {
-    if (backgroundRef.current) {
-      const cleanup = initParallaxEffect(backgroundRef.current, {
-        intensity: 0.01,
-        reverse: true
-      });
-      return cleanup;
-    }
-  }, []);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    setMousePosition({
-      x: e.clientX,
-      y: e.clientY
-    });
-  }, []);
 
   // Toggle language on hover (desktop only)
   const handleLanguageToggle = useCallback(() => {
-    if (!isMobile && !isTransitioning) {
-      setIsTransitioning(true);
+    if (!isMobile) {
       setDisplayLanguage(prev => prev === 'en' ? 'ar' : 'en');
-      setTimeout(() => setIsTransitioning(false), 1000);
     }
-  }, [isMobile, isTransitioning]);
+  }, [isMobile]);
 
   // Handle contact button click
   const scrollToContact = () => {
-    setIsContactClicked(true);
-    setTimeout(() => setIsContactClicked(false), 1000);
     document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Intersection Observer for particles
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting);
-      },
-      { threshold: 0.1 }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-
-    return () => observer.disconnect();
-  }, []);
-
-  const particlesInit = async (engine: Engine) => {
-    await loadFull(engine);
+  // Handle back to top
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
 
   return (
     <section 
       ref={sectionRef}
       className="min-h-screen relative flex flex-col items-center justify-center overflow-hidden"
-      onMouseMove={handleMouseMove}
     >
-      {/* Animated background */}
-      <motion.div
-        ref={backgroundRef}
-        initial={{ scale: 1.1 }}
-        animate={{ scale: 1 }}
-        transition={{ duration: 20, repeat: Infinity, repeatType: "reverse" }}
-        className="absolute inset-0"
-      >
-        <div
-          className="absolute inset-0 bg-gradient-to-br"
-          style={{
-            backgroundImage: `url(${background2})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundBlendMode: "overlay",
-            opacity: 0.15
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/50 to-black" />
-      </motion.div>
       
-      {/* Interactive Constellation Effect */}
-      <ConstellationEffect />
 
-      {/* Radial gradient that follows mouse */}
+      {/* Static radial gradient - centered in main content area (ignoring sidebar) */}
       <motion.div 
         className="absolute pointer-events-none"
-        animate={{
-          x: mousePosition.x,
-          y: mousePosition.y,
-          opacity: 0.8
-        }}
-        transition={{
-          type: "spring",
-          damping: 30,
-          stiffness: 200,
-          mass: 0.5
-        }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.8 }}
+        transition={{ duration: 2 }}
         style={{
           width: '40vw',
           height: '40vw',
@@ -680,92 +261,108 @@ export default function Hero() {
           background: 'radial-gradient(circle, rgba(139, 92, 246, 0.06) 0%, rgba(79, 70, 229, 0.04) 40%, transparent 70%)',
           transform: 'translate(-50%, -50%)',
           filter: 'blur(40px)',
-          mixBlendMode: 'screen'
+          mixBlendMode: 'screen',
+          left: 'calc(50% + 80px)', // Offset by full sidebar width (80px)
+          top: '50%'
         }}
       />
 
       {/* Main content container */}
-      <div className="relative z-10 text-center px-4 max-w-7xl mx-auto w-full flex flex-col justify-center">
+      <div className="relative z-10 text-center px-4 max-w-7xl mx-auto w-full flex flex-col justify-center pb-16 lg:pb-0">
+        {/* Available to work label - at the top */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="flex items-center justify-center gap-2 mb-8"
+        >
+          <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50"></div>
+          <span className="text-green-400 text-sm font-medium">Available to work</span>
+        </motion.div>
+
         {/* Greeting text */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`greeting-${displayLanguage}`}
-            className="h-16 flex items-center justify-center"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <TextAnimate
-              variants={itemVariants}
-              className="text-2xl md:text-3xl text-gray-300"
-              direction={displayLanguage === 'ar' ? 'rtl' : 'ltr'}
-              isArabic={displayLanguage === 'ar'}
-              animationType={displayLanguage === 'en' ? "tracking-in-expand" : "focus-in-expand"}
-              style={{ 
-                fontFamily: displayLanguage === 'ar' ? 'Neo Sans Arabic, sans-serif' : 'inherit',
-                textAlign: 'center'
-              }}
+        <div className="h-16 flex items-center justify-center">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`greeting-${displayLanguage}`}
+              className="absolute"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
             >
-              {content[displayLanguage].greeting}
-            </TextAnimate>
-          </motion.div>
-        </AnimatePresence>
+              <TextAnimate
+                variants={itemVariants}
+                className="text-2xl md:text-3xl text-gray-300"
+                direction={displayLanguage === 'ar' ? 'rtl' : 'ltr'}
+                isArabic={displayLanguage === 'ar'}
+                animationType={displayLanguage === 'en' ? "tracking-in-expand" : "focus-in-expand"}
+                style={{ 
+                  fontFamily: displayLanguage === 'ar' ? 'Neo Sans Arabic, sans-serif' : 'inherit',
+                  textAlign: 'center'
+                }}
+              >
+                {content[displayLanguage].greeting}
+              </TextAnimate>
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
         {/* Name with phonetic pronunciation */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={`name-${displayLanguage}`}
-            className="relative group"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            onMouseEnter={!isMobile ? handleLanguageToggle : undefined}
-          >
-            {displayLanguage === 'en' ? (
-              <div className="flex flex-col items-center space-y-2">
+        <div className="relative h-32 md:h-40 flex items-center justify-center">
+          <div className="relative group" onMouseEnter={!isMobile ? handleLanguageToggle : undefined}>
+            <AnimatePresence mode="wait">
+              {displayLanguage === 'en' ? (
+                <motion.div
+                  key="name-en"
+                  className="absolute inset-0 flex flex-col items-center justify-center space-y-2"
+                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -20, scale: 0.9 }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
+                >
+                  <motion.h1
+                    className="text-5xl md:text-7xl font-bold text-white tracking-in-expand"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.7, delay: 0.1 }}
+                  >
+                    {content.en.name}
+                  </motion.h1>
+                  <motion.p 
+                    className="text-sm md:text-base text-gray-300/80 italic font-light whitespace-nowrap"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 0.8, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.4 }}
+                  >
+                    {content.en.phonetic}
+                  </motion.p>
+                </motion.div>
+              ) : (
                 <motion.h1
-                  className="text-5xl md:text-7xl font-bold text-white tracking-in-expand"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.7 }}
+                  key="name-ar"
+                  className="absolute inset-0 text-5xl md:text-7xl font-bold text-white focus-in-expand flex items-center justify-center"
+                  style={{ 
+                    fontFamily: 'Neo Sans Arabic, sans-serif',
+                    direction: 'rtl',
+                    whiteSpace: 'nowrap'
+                  }}
+                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -20, scale: 0.9 }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
                 >
-                  {content.en.name}
+                  {content.ar.name}
                 </motion.h1>
-                <motion.p 
-                  className="text-sm md:text-base text-gray-400/60 italic font-light"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 0.6, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ delay: 0.3, duration: 0.4 }}
-                >
-                  {content.en.phonetic}
-                </motion.p>
-              </div>
-            ) : (
-              <motion.h1
-                className="text-5xl md:text-7xl font-bold text-white focus-in-expand"
-                style={{ 
-                  fontFamily: 'Neo Sans Arabic, sans-serif',
-                  direction: 'rtl'
-                }}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.8 }}
-              >
-                {content.ar.name}
-              </motion.h1>
-            )}
+              )}
+            </AnimatePresence>
             
             <motion.div
               className="absolute inset-0 -z-10 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 rounded-xl blur-2xl opacity-0 group-hover:opacity-100"
               transition={{ duration: 0.3 }}
             />
-          </motion.div>
-        </AnimatePresence>
+          </div>
+        </div>
 
         {/* Rotating titles */}
         <div className="h-16 my-12">
@@ -775,7 +372,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20, scale: 0.9 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -20, scale: 0.9 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
               className="text-xl md:text-2xl bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent font-semibold"
             >
               {titles[currentTitle]}
@@ -784,7 +381,7 @@ export default function Hero() {
         </div>
 
         {/* Action buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+        <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6" role="group" aria-label="Main action buttons">
           {/* Contact Me Button */}
           <motion.button
             initial={{ opacity: 0, y: 20 }}
@@ -796,6 +393,8 @@ export default function Hero() {
             onMouseLeave={() => setIsContactHovered(false)}
             onClick={scrollToContact}
             className="relative flex items-center justify-center overflow-hidden cursor-pointer w-[180px] h-[50px] bg-[#1a1a1a]/60 backdrop-blur-sm rounded-full border border-white/10 transition-all duration-300"
+            aria-label="Contact me - navigate to contact section"
+            aria-describedby="contact-button-description"
           >
             {/* Button Text */}
             <motion.span
@@ -881,6 +480,8 @@ export default function Hero() {
               setTimeout(() => setIsResumeClicked(false), 2000);
             }}
             className="relative overflow-hidden h-[50px] px-8 rounded-full bg-transparent border-none border-white/10 flex items-center justify-center"
+            aria-label="Download resume PDF"
+            aria-describedby="resume-button-description"
           >
             {/* Button Content */}
             <motion.span
@@ -930,76 +531,46 @@ export default function Hero() {
         </div>
       </div>
       
-      {/* Scroll indicator */}
+      {/* Static scroll indicator with gradient lines - centered with main content */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 1 }}
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
-        style={{ zIndex: 20 }}
+        className="absolute bottom-10 left-2/2 -translate-x-1/2 flex items-center gap-4"
+        style={{ 
+          zIndex: 20
+        }}
       >
-        <motion.div 
-          className="relative w-[30px] h-[50px] rounded-[30px] flex items-center justify-center bg-transparent"
-          animate={{ y: [0, 5, 0] }}
-          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <div className="absolute inset-0 rounded-[30px] outline-[2px] outline outline-[#697fff] shadow-[0px_0px_10px_rgb(105,127,255)]"></div>
-          <motion.div 
-            className="w-[5px] h-[10px] rounded-[10px] bg-[#697fff] shadow-[0px_0px_10px_rgb(105,127,255)]"
-            animate={{ y: ['40%', '90%', '40%'] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <span className="absolute top-[140%] text-white uppercase tracking-[1.5px] text-xs">scroll</span>
-        </motion.div>
+        {/* Left gradient line */}
+        <div className="w-16 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent"></div>
+        
+        {/* Scroll text */}
+        <span className="text-white uppercase tracking-[2px] text-xs font-medium">SCROLL</span>
+        
+        {/* Right gradient line */}
+        <div className="w-16 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent"></div>
       </motion.div>
 
-      {/* Particles Background */}
-      <Particles
-        id="tsparticles"
-        init={particlesInit}
-        options={{
-          background: {
-            color: {
-              value: "transparent",
-            },
-          },
-          fpsLimit: 60,
-          particles: {
-            color: {
-              value: "#ffffff",
-            },
-            links: {
-              color: "#ffffff",
-              distance: 150,
-              enable: true,
-              opacity: 0.2,
-              width: 1,
-            },
-            move: {
-              enable: isInView,
-              speed: 1,
-            },
-            number: {
-              density: {
-                enable: true,
-                area: 800,
-              },
-              value: 80,
-            },
-            opacity: {
-              value: 0.3,
-            },
-            shape: {
-              type: "circle",
-            },
-            size: {
-              value: { min: 1, max: 3 },
-            },
-          },
-          detectRetina: true,
-        }}
-        style={{ position: 'absolute', top: '10%' }}
-      />
+      {/* Back to Top Button */}
+      <AnimatePresence>
+        {showBackToTop && (
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            transition={{ duration: 0.3 }}
+            onClick={scrollToTop}
+            className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-1 text-white/70 hover:text-white transition-all duration-300 group"
+            style={{ zIndex: 100 }}
+          >
+            <svg className="w-6 h-6 transition-transform duration-300 group-hover:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 10l7-7m0 0l7 7m-7-7v18" />
+            </svg>
+            <span className="text-xs">back to top</span>
+          </motion.button>
+        )}
+      </AnimatePresence>
+
     </section>
   );
 }

@@ -48,10 +48,19 @@ export default defineConfig({
       output: {
         manualChunks: {
           vendor: ['react', 'react-dom'],
-          utils: ['framer-motion', 'react-lazy-load-image-component']
+          motion: ['framer-motion'],
+          utils: ['react-lazy-load-image-component', 'react-simple-typewriter', 'react-icons'],
+          ui: ['lucide-react', '@tabler/icons-react']
         }
       }
     },
-    chunkSizeWarningLimit: 1000
+    chunkSizeWarningLimit: 1000,
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true
+      }
+    }
   }
 });

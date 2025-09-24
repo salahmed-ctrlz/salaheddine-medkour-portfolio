@@ -1,4 +1,4 @@
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 import Image from "../components/images/Portraits/portrait3.webp";
 

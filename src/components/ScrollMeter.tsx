@@ -7,51 +7,65 @@ const ScrollMeter: React.FC = () => {
   const [scrollDirection, setScrollDirection] = useState<'up' | 'down' | null>(null);
   const [lastScrollY, setLastScrollY] = useState(0);
   const [scrollSpeed, setScrollSpeed] = useState(0);
+  const rafId = React.useRef<number>();
+  const lastUpdateTime = React.useRef(0);
   
   // Smooth out the scroll speed value
   const smoothScrollSpeed = useSpring(0, {
-    stiffness: 100,
-    damping: 20,
-    mass: 0.5
+    stiffness: 200,
+    damping: 15,
+    mass: 0.3
   });
 
   const handleScroll = useCallback(() => {
-    const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const currentScroll = window.scrollY;
-    const percentage = Math.round((currentScroll / scrollHeight) * 100);
+    // Throttle scroll updates for better performance
+    const now = performance.now();
+    if (now - lastUpdateTime.current < 16) return;
     
-    // Update scroll percentage
-    setScrollPercentage(percentage);
-    
-    // Calculate scroll direction
-    const direction = currentScroll > lastScrollY ? 'down' : 'up';
-    setScrollDirection(direction);
-    setLastScrollY(currentScroll);
-    
-    // Calculate scroll speed
-    const speed = Math.abs(currentScroll - lastScrollY);
-    setScrollSpeed(speed);
-    smoothScrollSpeed.set(speed);
+    if (rafId.current) {
+      cancelAnimationFrame(rafId.current);
+    }
+
+    rafId.current = requestAnimationFrame(() => {
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const currentScroll = window.scrollY;
+      const percentage = Math.round((currentScroll / scrollHeight) * 100);
+      
+      // Update scroll percentage
+      setScrollPercentage(percentage);
+      
+      // Calculate scroll direction
+      const direction = currentScroll > lastScrollY ? 'down' : 'up';
+      setScrollDirection(direction);
+      setLastScrollY(currentScroll);
+      
+      // Calculate scroll speed
+      const speed = Math.abs(currentScroll - lastScrollY);
+      setScrollSpeed(speed);
+      smoothScrollSpeed.set(speed);
+      
+      lastUpdateTime.current = now;
+    });
   }, [lastScrollY, smoothScrollSpeed]);
 
   const adjustPosition = (x: number, y: number) => {
-    const margin = 50; // pixels from edge
+    const margin = 40; // pixels from edge
     const width = window.innerWidth;
     const height = window.innerHeight;
     
-    let adjustedX = x + 30;
-    let adjustedY = y - 10;
+    let adjustedX = x + 20;
+    let adjustedY = y + 20;
     
     // Adjust X if too close to right edge
     if (adjustedX > width - margin) {
-      adjustedX = x - 60;
+      adjustedX = x - 50;
     }
     
     // Adjust Y if too close to bottom or top
     if (adjustedY > height - margin) {
-      adjustedY = y - 60;
+      adjustedY = y - 50;
     } else if (adjustedY < margin) {
-      adjustedY = y + 40;
+      adjustedY = y + 50;
     }
     
     return { x: adjustedX, y: adjustedY };
@@ -68,6 +82,9 @@ const ScrollMeter: React.FC = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
+      if (rafId.current) {
+        cancelAnimationFrame(rafId.current);
+      }
     };
   }, [handleScroll]);
 
@@ -83,9 +100,9 @@ const ScrollMeter: React.FC = () => {
       }}
       transition={{
         type: "spring",
-        damping: 30,
-        stiffness: 200,
-        mass: 0.2,
+        damping: 20,
+        stiffness: 300,
+        mass: 0.1,
       }}
     >
       <motion.div 

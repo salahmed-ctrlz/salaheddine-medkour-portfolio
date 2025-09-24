@@ -31,8 +31,8 @@
   inset: 0;
   z-index: -1;
   background: linear-gradient(45deg, 
-    rgba(79, 70, 229, 0.1) 0%, 
-    rgba(0, 208, 255, 0.1) 100%
+    rgba(255, 255, 255, 0.05) 0%, 
+    rgba(255, 255, 255, 0.02) 100%
   );
   filter: blur(15px);
   opacity: 0;
@@ -75,11 +75,11 @@
 
 /* Different underline colors for education vs work */
 .experience-card[data-type="education"] h4::after {
-  background: linear-gradient(90deg, #10b981, #5eead4);
+  background: linear-gradient(90deg, #ffffff, #d1d5db);
 }
 
 .experience-card[data-type="work"] h4::after {
-  background: linear-gradient(90deg, #3b82f6, #93c5fd);
+  background: linear-gradient(90deg, #ffffff, #d1d5db);
 }
 
 /* Subtle card tilt effect */
@@ -87,7 +87,7 @@
   transform: translateY(-5px) perspective(1000px) rotateX(2deg);
   box-shadow: 
     0 10px 20px -5px rgba(0, 0, 0, 0.3),
-    0 0 15px rgba(79, 70, 229, 0.2);
+    0 0 15px rgba(255, 255, 255, 0.1);
 }
 
 /* Animate the date badge */
@@ -110,13 +110,13 @@
 .hover-card {
   position: relative;
   cursor: pointer;
-  color: #818cf8; 
+  color: #d1d5db; 
   transition: color 0.32s ease-in-out;
   cursor: text;
 }
 
 .hover-card:hover {
-  color: #00d0ff;
+  color: #ffffff;
   text-decoration: underline;
   cursor: text !important;
 }
@@ -131,8 +131,8 @@
   background: rgba(30, 30, 40, 0.85);
   backdrop-filter: blur(10px);
   border-radius: 12px;
-  border: 1px solid rgba(99, 102, 241, 0.3);
-  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(99, 102, 241, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 255, 255, 0.1);
   padding: 1rem;
   z-index: 50;
   opacity: 0;
@@ -164,7 +164,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background-image: radial-gradient(circle, rgba(99, 102, 241, 0.3) 1px, transparent 1px);
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
   background-size: 20px 20px;
   animation: pulseBackground 5s linear infinite;
 }
@@ -204,7 +204,7 @@
   transform: translateX(-50%);
   width: 14px;
   height: 14px;
-  background-color: #4f46e5;
+  background-color: #ffffff;
   border-radius: 50%;
   z-index: 2;
 }
@@ -213,7 +213,7 @@
   content: '';
   position: absolute;
   inset: -4px;
-  background-color: rgba(79, 70, 229, 0.5);
+  background-color: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   animation: pingPulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
@@ -257,7 +257,7 @@
   left: 0;
   width: 100%;
   height: 20px;
-  background: linear-gradient(90deg, #4f46e5, #818cf8);
+  background: linear-gradient(90deg, #ffffff, #d1d5db);
   opacity: 0.3;
   clip-path: polygon(
     0% 0%,
@@ -277,21 +277,23 @@
 /* Arrow controls (desktop/mobile) */
 .arrow {
   cursor: pointer;
-  height: 60px;
+  height: 70px;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
   transition: transform 0.1s;
-  width: 50px;
+  width: 60px;
+  z-index: 30;
 }
 
 .arrow-top, .arrow-bottom {
-  background-color: rgba(148, 163, 184, 0.9); /* slate-400 */
-  height: 4px;
+  background-color: rgba(255, 255, 255, 0.8); /* More visible white */
+  height: 5px;
   left: -5px;
   position: absolute;
   top: 50%;
   width: 100%;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
 }
 
 .arrow-top:after, .arrow-bottom:after {
@@ -348,7 +350,119 @@
   position: absolute;
   inset: -2px;
   border-radius: 1rem; /* matches rounded-2xl visual radius */
-  background: radial-gradient(120% 120% at 50% 0%, rgba(99,102,241,0.25), rgba(168,85,247,0.15) 40%, transparent 70%);
+  background: radial-gradient(120% 120% at 50% 0%, rgba(255,255,255,0.1), rgba(255,255,255,0.05) 40%, transparent 70%);
   filter: blur(16px);
   z-index: -1;
+}
+
+/* Tooltip Styles */
+.tooltip-container {
+  --background: rgba(0, 0, 0, 0.9);
+  position: relative;
+  cursor: pointer;
+  display: inline-flex;
+  transition: all 0.2s;
+  padding: 0 0.2em;
+  border: 1px solid transparent;
+}
+
+.tooltip {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5em 0.8em;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s;
+  color: #fff;
+  background: var(--background);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 0.375em;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 1000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.tooltip::before {
+  position: absolute;
+  content: "";
+  height: 0.6em;
+  width: 0.6em;
+  bottom: -0.2em;
+  left: 50%;
+  transform: translate(-50%) rotate(45deg);
+  background: var(--background);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.tooltip-container:hover .tooltip {
+  top: -150%;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.tooltip-container .text {
+  margin-right: 4px;
+  height: fit-content;
+  border-bottom: 2px solid #00eaff;
+  text-decoration: none;
+  color: inherit;
+}
+
+.tooltip-container:hover .text {
+  animation: none;
+}
+
+@keyframes bounce {
+  50% { color: #cda8d6; }
+  75% { scale: 0.98; transform: rotate(1deg); }
+  100% { scale: 1.01; }
+}
+
+/* Neon glow effects for cards */
+.neon-glow {
+  box-shadow: 
+    0 0 5px var(--neon-color),
+    0 0 10px var(--neon-color),
+    0 0 15px var(--neon-color),
+    0 0 20px var(--neon-color);
+}
+
+.neon-glow:hover {
+  box-shadow: 
+    0 0 10px var(--neon-color),
+    0 0 20px var(--neon-color),
+    0 0 30px var(--neon-color),
+    0 0 40px var(--neon-color);
+}
+
+/* Cursor-following glow effect for Interests cards */
+.group\/card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.1),
+    transparent 40%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.group\/card:hover::before {
+  opacity: 1;
 }

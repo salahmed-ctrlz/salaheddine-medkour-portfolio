@@ -1,10 +1,12 @@
 import { useEffect, useState, lazy, Suspense } from "react";
-import Navbar from './components/Navbar';
+import { Navigation } from './components/Navigation';
 import Hero from './components/Hero';
 import CustomCursor from './components/CustomCursor';
 import ScrollMeter from './components/ScrollMeter';
 import Footer from './components/Footer';
 import SEO from './components/SEO';
+import Orb from './components/Orb';
+import LoadingScreen from './components/LoadingScreen';
 
 const Projects = lazy(() => import('./components/Projects'));
 const About = lazy(() => import('./components/About'));
@@ -18,79 +20,75 @@ const LoadingSpinner = () => (
   </div>
 );
 
+
 function App() {
   const [mounted, setMounted] = useState(false);
+  const [showLoadingScreen, setShowLoadingScreen] = useState(true);
 
   useEffect(() => {
+    // Always show loading screen on page load/refresh
+    setShowLoadingScreen(true);
     setMounted(true);
-    updateTimeBasedTheme();
-    const interval = setInterval(updateTimeBasedTheme, 60000); // Update every minute
-    return () => clearInterval(interval);
   }, []);
-
-  const updateTimeBasedTheme = () => {
-    const hour = new Date().getHours();
-    const root = document.documentElement;
-    
-    // Update background hue based on time (0-360 degrees)
-    const bgHue = Math.floor((hour / 24) * 360);
-    root.style.setProperty('--time-based-bg', `${bgHue}deg`);
-    
-    // Update accent hue (offset from bg)
-    const accentHue = (bgHue + 40) % 360;
-    root.style.setProperty('--time-based-accent', `${accentHue}deg`);
-  };
 
   useEffect(() => {
-    document.querySelector('a[href="#contact"]').addEventListener('click', function(e) {
-      e.preventDefault();
-      document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+    const contactLink = document.querySelector('a[href="#contact"]');
+    const contactElement = document.getElementById('contact');
+    
+    if (contactLink && contactElement) {
+      contactLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        contactElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
   }, []);
+
+  const handleLoadingComplete = () => {
+    setShowLoadingScreen(false);
+  };
 
   return (
     <>
       <SEO />
-      <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white min-h-screen relative">
-        {/* Grain overlay */}
-        <div className="grain-overlay" aria-hidden="true" />
-        
-        {/* Dynamic background gradient */}
-        <div 
-          className="fixed inset-0 transition-colors duration-1000 ease-in-out z-[-1]"
-          style={{
-            background: `
-              radial-gradient(circle at 50% 50%, 
-                hsl(var(--time-based-bg), 70%, 20%) 0%,
-                hsl(var(--time-based-bg), 70%, 10%) 100%
-              )
-            `
-          }}
+      {/* Loading Screen */}
+      {showLoadingScreen && (
+        <LoadingScreen onComplete={handleLoadingComplete} />
+      )}
+      
+      {/* Main App */}
+      <div className="bg-black text-white min-h-screen relative">
+        {/* Orb Background */}
+        <Orb
+          hoverIntensity={0.5}
+          rotateOnHover={true}
+          hue={0}
+          forceHoverState={false}
         />
 
         {/* Content */}
         <div className="relative z-10">
-          <ScrollMeter />
-          <CustomCursor />
-          <Navbar />
-          <Hero />
-          <Suspense fallback={<LoadingSpinner />}>
-            <About />
-          </Suspense>
-          <Suspense fallback={<LoadingSpinner />}>
-            <Skills />
-          </Suspense>
-          <Suspense fallback={<LoadingSpinner />}>
-            <Projects />
-          </Suspense>
-          <Suspense fallback={<LoadingSpinner />}>
-            <Contact />
-          </Suspense>
-          <Footer />
+          <Navigation>
+            <ScrollMeter />
+            <CustomCursor />
+            <Hero />
+            <Suspense fallback={<LoadingSpinner />}>
+              <About />
+            </Suspense>
+            <Suspense fallback={<LoadingSpinner />}>
+              <Skills />
+            </Suspense>
+            <Suspense fallback={<LoadingSpinner />}>
+              <Projects />
+            </Suspense>
+            <Suspense fallback={<LoadingSpinner />}>
+              <Contact />
+            </Suspense>
+            <Footer />
+          </Navigation>
         </div>
 
         {/* Progressive loading overlay */}
-        {!mounted && (
+        {!mounted && !showLoadingScreen && (
           <div className="fixed inset-0 bg-gray-900 z-50 flex items-center justify-center">
             <div className="loading-skeleton w-32 h-32 rounded-full" />
           </div>

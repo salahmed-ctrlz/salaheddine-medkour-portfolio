@@ -107,11 +107,9 @@ export default function Projects() {
   const [expandedId, setExpandedId] = useState<string | number | null>(null);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [showAllProjects, setShowAllProjects] = useState(false);
-  const [showBackToTop, setShowBackToTop] = useState(false);
   const [currentCarouselIndex, setCurrentCarouselIndex] = useState(0);
   const [isInView, setIsInView] = useState(false);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   
@@ -373,24 +371,9 @@ export default function Projects() {
     return () => observer.disconnect();
   }, []);
 
-  // Add scroll handler for Back to Top button
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowBackToTop(window.scrollY > 500);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  };
 
   
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>, project: Project) => {
     if (!project.previewGif) return;
     
@@ -487,14 +470,16 @@ export default function Projects() {
     <section 
       ref={sectionRef}
       id="projects" 
-      className="py-20 bg-gradient-to-b from-gray-900 to-black relative overflow-hidden"
+      className="section relative overflow-hidden"
     >
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 25px 25px, white 1%, transparent 0%), radial-gradient(circle at 75px 75px, white 1%, transparent 0%)`,
-          backgroundSize: '100px 100px'
-        }} />
+      {/* Enhanced Blurry Background with Fade Edges */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute inset-0 backdrop-blur-3xl bg-black/70" 
+             style={{
+               filter: 'blur(20px)',
+               maskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)',
+               WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)'
+             }}></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -895,24 +880,6 @@ export default function Projects() {
           </motion.div>
         )}
 
-        {/* Back to Top Button */}
-        <AnimatePresence>
-          {showBackToTop && (
-            <motion.button
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              onClick={scrollToTop}
-              className="back-to-top"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              data-hover="true"
-              aria-label="Back to top"
-            >
-              <ArrowUp className="w-5 h-5" />
-            </motion.button>
-          )}
-        </AnimatePresence>
       </div>
     </section>
   );

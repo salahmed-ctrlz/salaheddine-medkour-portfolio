@@ -222,51 +222,18 @@ export default function Contact() {
   return (
     <section 
       id="contact" 
-      className="pb-16 pt-20 text-white relative overflow-hidden"
+      className="section text-white relative overflow-hidden"
       style={{ scrollMarginTop: '80px' }} // Adjust based on your navbar height
     >
-      {/* Optimized background animation */}
-      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none">
-        {/* Simplified gradient background for better performance */}
-        <div className="absolute inset-0 bg-gradient-to-b from-gray-900 to-gray-900/90"></div>
-        
-        {/* Reduced number of animated elements */}
-        {bubbles.map(bubble => (
-          <motion.div
-            key={bubble.id}
-            className="absolute rounded-full bg-gradient-to-br from-indigo-500/5 to-purple-600/5 will-change-transform"
-            style={{
-              width: bubble.size,
-              height: bubble.size,
-              left: `${bubble.x}%`,
-              top: `${bubble.y}%`,
-              opacity: 0.1,
-            }}
-            animate={{
-              x: [0, 10, -10, 5, -5, 0],
-              y: [0, -10, 10, -5, 5, 0],
-            }}
-            transition={{
-              duration: bubble.duration,
-              repeat: Infinity,
-              repeatType: "reverse",
-              ease: "linear",
-              delay: bubble.delay,
-            }}
-          />
-        ))}
-        
-        {/* Subtle grid overlay with reduced opacity */}
-        <div 
-          className="absolute inset-0 opacity-[0.03]"
-          style={{
-            backgroundImage: `
-              linear-gradient(to right, rgba(255,255,255,0.1) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(255,255,255,0.1) 1px, transparent 1px)
-            `,
-            backgroundSize: '40px 40px'
-          }}
-        ></div>
+      
+      {/* Enhanced Blurry Background with Fade Edges */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+        <div className="absolute inset-0 backdrop-blur-3xl bg-black/70" 
+             style={{
+               filter: 'blur(20px)',
+               maskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)',
+               WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)'
+             }}></div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
@@ -534,7 +501,7 @@ export default function Contact() {
                   </div>
                   
                   <div className="relative z-10 flex items-center">
-                    <AnimatePresence mode="wait">
+                    <AnimatePresence mode="sync">
                       {copied ? (
                         <motion.div
                           initial={{ opacity: 0, scale: 0.8 }}
