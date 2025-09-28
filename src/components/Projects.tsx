@@ -44,6 +44,7 @@ interface Project {
   carousel?: boolean;
   category: 'web' | 'tools' | 'security';
   categories?: ('web' | 'tools' | 'security')[]; // Support multiple categories
+  hidden?: boolean;
 }
 
 // Category configuration - Easy to edit in the future
@@ -134,11 +135,11 @@ export default function Projects() {
     {
       id: 2,
       title: "Better Call Saul - Portfolio",
-      description: "Fan tribute website for Better Call Saul with character information, timeline, and quotes.",
-      details: "Fan Tribute Website\n\n• Created an interactive fan tribute for the Better Call Saul TV series\n• Implemented character profiles with detailed information and visuals\n• Added an interactive timeline of key events from the show\n• Featured a quote generator with memorable lines from the series\n\nTechnical Details\n\n• Built with HTML, CSS, and JavaScript\n• Used CSS Grid and Flexbox for responsive layouts\n• Implemented lazy loading for improved performance\n• Added animations and transitions for enhanced user experience",
+      description: "A fully responsive and immersive portfolio website inspired by Saul Goodman, built with a modern tech stack.",
+      details: "Tribute Portfolio Features\n\n• Custom gavel cursor for an interactive legal touch\n• Fully responsive design, optimized for all devices\n• Smooth animations and dynamic UI elements\n• Themed aesthetic with Saul Goodman’s iconic red & yellow branding\n• Interactive testimonials from iconic Breaking Bad characters\n\nTechnical Highlights\n\n• Built with React & Vite for high performance\n• Styled with Tailwind CSS for rapid development\n• TypeScript for type safety and scalability\n• Framer Motion for fluid animations\n• React Router for seamless navigation\n• Open Graph meta optimization for social media sharing",
       image: bettercallsaul,
       previewGif: bettercallsaulPreview,
-      technologies: ["HTML", "CSS", "JavaScript", "GSAP"],
+      technologies: ["React", "TypeScript", "TailwindCSS", "Framer Motion"],
       github: "https://github.com/salahmed-ctrlz/BetterCallSaul",
       demo: "https://salahmed-ctrlz.github.io/BetterCallSaul/",
       featured: true,
@@ -232,7 +233,8 @@ export default function Projects() {
       github: "https://github.com/salahmed-ctrlz/etopia",
       demo: "https://salahmed-ctrlz.github.io/etopia/",
       featured: false,
-      category: 'web'
+      category: 'web',
+      hidden: true
     },
     {
       id: 10,
@@ -244,7 +246,8 @@ export default function Projects() {
       github: "https://github.com/salahmed-ctrlz/WeathApp",
       demo: "https://salahmed-ctrlz.github.io/WeathApp/",
       featured: false,
-      category: 'web'
+      category: 'web',
+      hidden: true
     },
     {
       id: 11,
@@ -256,7 +259,8 @@ export default function Projects() {
       github: "https://github.com/salahmed-ctrlz/eportfolio",
       demo: "https://salahmed-ctrlz.github.io/eportfolio/",
       featured: false,
-      category: 'web'
+      category: 'web',
+      hidden: true
     }
   ];
 
@@ -290,11 +294,12 @@ export default function Projects() {
 
   // Filter projects based on selected category
   const filteredProjects = useMemo(() => {
+    const activeProjects = projects.filter(p => !p.hidden);
     if (selectedCategory === 'all') {
-      return projects;
+      return activeProjects;
     }
     
-    const categoryProjects = projects.filter(project => project.category === selectedCategory);
+    const categoryProjects = activeProjects.filter(project => project.category === selectedCategory);
     
     // Add coming soon cards for specific categories
     if (selectedCategory === 'tools' || selectedCategory === 'security') {
@@ -303,7 +308,7 @@ export default function Projects() {
     }
     
     return categoryProjects;
-  }, [projects, selectedCategory, comingSoonCards]);
+  }, [projects, selectedCategory]);
 
   const visibleProjects = showAllProjects ? filteredProjects : filteredProjects.slice(0, 3);
 
@@ -327,9 +332,10 @@ export default function Projects() {
 
   // Count projects per category
   const categoryCounts = useMemo(() => {
-    const counts: { [key: string]: number } = { all: projects.length };
+    const activeProjects = projects.filter(p => !p.hidden);
+    const counts: { [key: string]: number } = { all: activeProjects.length };
     categories.forEach(cat => {
-      counts[cat.id] = projects.filter(p => p.category === cat.id).length;
+      counts[cat.id] = activeProjects.filter(p => p.category === cat.id).length;
     });
     return counts;
   }, [projects]);

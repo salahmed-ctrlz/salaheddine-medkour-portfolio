@@ -1,8 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { Typewriter } from "react-simple-typewriter";
-import { Code2, Brain, Pencil, Globe, ChevronDown } from "lucide-react";
+import { Code2, Pencil, ChevronDown } from "lucide-react";
 import { SiDuolingo } from "react-icons/si";
-import { FaGraduationCap, FaShoppingCart, FaShieldAlt, FaCode, FaCrown } from "react-icons/fa";
+import { FaGraduationCap, FaShoppingCart, FaShieldAlt, FaCode, FaCrown, FaRedhat } from "react-icons/fa";
+import { HiMiniLanguage } from "react-icons/hi2";
 import { useRef, useState, useMemo, useCallback } from "react";
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -32,7 +33,7 @@ const timelineData = [
     title: "Web Developer",
     institution: "Freelance",
     period: "July 2024 - Present",
-    description: "Developing modern, high-performance web applications using React, Next.js, TypeScript, Tailwind CSS, and Node.js. Crafting custom solutions with pixel-perfect designs while leveraging technologies like Express.js, MongoDB, Firebase, and WebRTC to ensure seamless user experiences, scalability, and security.",
+    description: "I’m a freelance web developer, and my favorite kind of work is setting up fellow freelancers and individuals with their own custom online portfolios. I cover the whole stack, starting with UI/UX design to make sure the site not only looks great but is intuitive to use. I build everything on a stable, secure foundation using technologies like React, Next.js, and Node.js to guarantee it runs fast and securely.",
     icon: FaCode,
     color: "#00eaff", // Neon Blue
     isPeak: false
@@ -180,7 +181,7 @@ export default function About() {
 
     return (
       <div 
-        className="w-full relative flex justify-center items-center"
+        className="w-full relative flex flex-col justify-center items-center"
         onKeyDown={handleKeyDown}
         tabIndex={0}
         role="region"
@@ -189,18 +190,18 @@ export default function About() {
       >
         {/* External nav arrows (laptop and up) */}
         <button 
-          className="hidden lg:block absolute left-[-28px] top-1/2 -translate-y-1/2 rotate-180 z-20" 
+          className="hidden md:block absolute left-[-32px] top-1/2 -translate-y-1/2 z-20" 
           onClick={prev} 
           aria-label="Previous profile card"
           aria-describedby="profile-card-info"
         >
-          <div className="arrow">
-            <div className="arrow-top"></div>
-            <div className="arrow-bottom"></div>
+          <div className="arrow" style={{ transform: 'rotate(180deg)' }}>
+            <div className="arrow-top" />
+            <div className="arrow-bottom" />
           </div>
         </button>
         <button 
-          className="hidden lg:block absolute right-[-28px] top-1/2 -translate-y-1/2 z-20" 
+          className="hidden md:block absolute right-[-32px] top-1/2 -translate-y-1/2 z-20" 
           onClick={next} 
           aria-label="Next profile card"
           aria-describedby="profile-card-info"
@@ -210,45 +211,6 @@ export default function About() {
             <div className="arrow-bottom"></div>
           </div>
         </button>
-
-        {/* Simple arrows for laptop view (md:lg range) */}
-        <button 
-          className="hidden md:block lg:hidden absolute left-[-20px] top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-gray-800/80 hover:bg-gray-700/80 text-white/80 hover:text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 border border-gray-600/50 shadow-xl hover:scale-110"
-          onClick={prev} 
-          aria-label="Previous profile card"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        <button 
-          className="hidden md:block lg:hidden absolute right-[-20px] top-1/2 -translate-y-1/2 z-20 w-8 h-8 rounded-full bg-gray-800/80 hover:bg-gray-700/80 text-white/80 hover:text-white flex items-center justify-center backdrop-blur-md transition-all duration-300 border border-gray-600/50 shadow-xl hover:scale-110"
-          onClick={next} 
-          aria-label="Next profile card"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-
-        {/* Mobile navigation dots */}
-        <div className="md:hidden flex justify-center space-x-2 mb-4" role="tablist" aria-label="Profile card navigation">
-          {cards.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setActiveIndex(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                index === activeIndex 
-                  ? 'bg-purple-400 w-6' 
-                  : 'bg-gray-600 hover:bg-gray-500'
-              }`}
-              aria-label={`Go to profile card ${index + 1}`}
-              role="tab"
-              aria-selected={index === activeIndex}
-              aria-controls={`profile-card-${index}`}
-            />
-          ))}
-        </div>
 
         {/* Hidden description for screen readers */}
         <div id="profile-card-info" className="sr-only">
@@ -362,6 +324,25 @@ export default function About() {
             </div>
           </div>
         </div>
+
+        {/* Mobile navigation dots */}
+        <div className="md:hidden flex justify-center space-x-2 mt-4" role="tablist" aria-label="Profile card navigation">
+          {cards.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveIndex(index)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                index === activeIndex 
+                  ? 'bg-purple-400 w-6' 
+                  : 'bg-gray-600 hover:bg-gray-500'
+              }`}
+              aria-label={`Go to profile card ${index + 1}`}
+              role="tab"
+              aria-selected={index === activeIndex}
+              aria-controls={`profile-card-${index}`}
+            />
+          ))}
+        </div>
       </div>
     );
   };
@@ -394,15 +375,14 @@ export default function About() {
         Icon: Code2,
         title: "Web Development",
         subtitle: "Frontend & Backend",
-        description: "I build web apps that are fast, simple, and easy to maintain. I write clean code and use tools I trust, and I'm comfortable with AI tools and agents.",
+        description: "I'm more focused on front-end dev and UI design. I also build full-stack web apps but mostly for research and testing, and I'm comfortable with AI tools and agents.", 
         skills: [
           "React / Next.js",
-          "Node.js",
-          "REST APIs",
+          "TypeScript",
           "Tailwind CSS",
-          "MongoDB / Firebase",
+          "Firebase",
           "AI",
-          "JWT Auth",
+          "UI/UX",
           "Responsive Design",
           "Deployments"
         ],
@@ -410,11 +390,10 @@ export default function About() {
         neonColor: "#00eaff"
       },
       {
-        Icon: Brain,
+        Icon: FaRedhat,
         title: "Cybersecurity",
         subtitle: "Practice & Tools",
-        description: "I'm constantly practicing real security tasks like packet analysis, encryption, and testing systems for weak spots. But I'm interested in acquiring real-life experience in the field.",
-        skills: [
+        description: "I'm constantly practicing real security tasks like packet analysis, encryption, and testing systems. But I'm interested in acquiring real-life experience in the field.",        skills: [
           "Pentesting (Web / Network)",
           "Wireshark",
           "Burp Suite / OWASP ZAP",
@@ -621,8 +600,8 @@ export default function About() {
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
             About Me
           </h2>
-          <p className="text-lg text-gray-400 max-w-3xl mx-auto leading-loose tracking-wide hyphens-auto text-justify px-4">
-            My name is <span className="font-bold text-white">Salahuddin Medkour</span>, a <span className="font-bold text-white">23-year-old</span> from <span className="font-bold text-white">Annaba, Algeria</span>. I hold a degree in <span className="font-bold text-white">Network Engineering</span> and I'm currently looking for new opportunities. My main interests are <span className="font-bold text-white">Cybersecurity</span>, <span className="font-bold text-white">Networking</span>, <span className="font-bold text-white">Web Development</span>, and <span className="font-bold text-white">AI</span>.
+          <p className="text-lg text-gray-400 max-w-5xl mx-auto leading-loose tracking-wide hyphens-auto text-justify px-4">
+            My name is <span className="font-bold text-white">Salahuddin Medkour</span>, a <span className="font-bold text-white">23-year-old</span> from <span className="font-bold text-white">Annaba, Algeria</span>. I hold a Master's degree in <span className="font-bold text-white">Networks Engineering</span> and I'm currently looking for new opportunities. My main interests are <span className="font-bold text-white">Cybersecurity</span>, <span className="font-bold text-white">Networking</span>, <span className="font-bold text-white">Freelance Web Development</span>, and <span className="font-bold text-white">AI</span>. I'm very motivated and eager to learn and grow in these fields.
           </p>
         </motion.div>
 
@@ -654,7 +633,7 @@ export default function About() {
               <span className="absolute -inset-1 bg-gradient-to-r from-indigo-500/20 to-purple-500/20 blur-lg" />
               <span className="relative text-transparent bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text font-bold">
                 <Typewriter 
-                  words={["Web Development", "Cybersecurity", "Scriptwriting & Automation", "Writing"]} 
+                  words={["Web Development", "Cybersecurity", "Network Engineering", "Writing"]} 
                   loop 
                   cursor 
                   cursorStyle="_"
@@ -693,7 +672,7 @@ export default function About() {
             <div className="relative z-10 flex flex-col sm:flex-row items-center justify-between mb-8">
               <div className="flex items-center gap-4 mb-4 sm:mb-0">
                 <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
-                  <Globe className="w-5 h-5 text-blue-400" />
+                  <HiMiniLanguage className="w-5 h-5 text-blue-400" />
                 </div>
                 <span className="text-xl font-semibold text-white">Language Proficiency</span>
               </div>

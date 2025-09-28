@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 
 // Import logos
@@ -17,15 +17,145 @@ interface Skill {
 }
 
 const skills: Skill[] = [
-  // Frontend Technologies
+  // Security Tools
+  {
+    name: "Kali Linux",
+    logo: "https://cdn.simpleicons.org/kalilinux",
+    category: "security"
+  },
+  {
+    name: "Wireshark",
+    logo: "https://cdn.simpleicons.org/wireshark",
+    category: "security"
+  },
+  // Frontend
   {
     name: "React",
     logo: "https://cdn.simpleicons.org/react",
     category: "frontend"
   },
   {
+    name: "TypeScript",
+    logo: "https://cdn.simpleicons.org/typescript",
+    category: "frontend"
+  },
+  // Other
+  {
+    name: "Github",
+    logo: "https://cdn.simpleicons.org/github",
+    category: "other"
+  },
+  {
+    name: "Bash",
+    logo: "https://cdn.simpleicons.org/gnubash",
+    category: "other"
+  },
+  {
+    name: "Windows",
+    logo: windowsLogo,
+    category: "other"
+  },
+  // Backend
+  {
+    name: "Python",
+    logo: "https://cdn.simpleicons.org/python",
+    category: "backend"
+  },
+  // Security
+  {
+    name: "Burp Suite",
+    logo: burpsuiteLogo,
+    category: "security"
+  },
+  {
+    name: "Nmap",
+    logo: nmapLogo,
+    category: "security"
+  },
+  // Frontend
+  {
     name: "Next.js",
     logo: "https://cdn.simpleicons.org/nextdotjs",
+    category: "frontend"
+  },
+  // DevOps
+  {
+    name: "Git",
+    logo: "https://cdn.simpleicons.org/git",
+    category: "devops"
+  },
+  {
+    name: "Docker",
+    logo: "https://cdn.simpleicons.org/docker",
+    category: "devops"
+  },
+  // Other
+  {
+    name: "Linux",
+    logo: "https://cdn.simpleicons.org/linux",
+    category: "other"
+  },
+  // DevOps
+  {
+    name: "AWS",
+    logo: awsLogo,
+    category: "devops"
+  },
+  // Security
+  {
+    name: "ZAP",
+    logo: zapLogo,
+    category: "security"
+  },
+  // Backend
+  {
+    name: "Node.js",
+    logo: "https://cdn.simpleicons.org/nodedotjs",
+    category: "backend"
+  },
+  // DevOps
+  {
+    name: "Google Cloud",
+    logo: "https://cdn.simpleicons.org/googlecloud",
+    category: "devops"
+  },
+  // Other
+  {
+    name: "Ubuntu",
+    logo: "https://cdn.simpleicons.org/ubuntu",
+    category: "other"
+  },
+  {
+    name: "Arch Linux",
+    logo: "https://cdn.simpleicons.org/archlinux",
+    category: "other"
+  },
+  // Backend
+  {
+    name: "PostgreSQL",
+    logo: "https://cdn.simpleicons.org/postgresql",
+    category: "backend"
+  },
+  {
+    name: "MongoDB",
+    logo: "https://cdn.simpleicons.org/mongodb",
+    category: "backend"
+  },
+  // Other
+  {
+    name: "PowerShell",
+    logo: powershellLogo,
+    category: "other"
+  },
+  // Frontend
+  {
+    name: "HTML",
+    logo: "https://cdn.simpleicons.org/html5",
+    category: "frontend"
+  },
+  {
+    name: "CSS",
+    logo: "https://cdn.simpleicons.org/css",
     category: "frontend"
   },
   {
@@ -38,92 +168,20 @@ const skills: Skill[] = [
     logo: "https://cdn.simpleicons.org/threedotjs",
     category: "frontend"
   },
+  // AI
   {
-    name: "TypeScript",
-    logo: "https://cdn.simpleicons.org/typescript",
-    category: "frontend"
+    name: "Hugging Face",
+    logo: "https://cdn.simpleicons.org/huggingface",
+    category: "ai"
   },
-  {
-    name: "HTML",
-    logo: "https://cdn.simpleicons.org/html5",
-    category: "frontend"
-  },
-  {
-    name: "CSS",
-    logo: "https://cdn.simpleicons.org/css",
-    category: "frontend"
-  },
-  
-  // Backend Technologies
-  {
-    name: "Node.js",
-    logo: "https://cdn.simpleicons.org/nodedotjs",
-    category: "backend"
-  },
-  {
-    name: "Python",
-    logo: "https://cdn.simpleicons.org/python",
-    category: "backend"
-  },
-  {
-    name: "MongoDB",
-    logo: "https://cdn.simpleicons.org/mongodb",
-    category: "backend"
-  },
-  {
-    name: "PostgreSQL",
-    logo: "https://cdn.simpleicons.org/postgresql",
-    category: "backend"
-  },
-  
-  // DevOps & Cloud
-  {
-    name: "Docker",
-    logo: "https://cdn.simpleicons.org/docker",
-    category: "devops"
-  },
-  {
-    name: "AWS",
-    logo: awsLogo,
-    category: "devops"
-  },
-  {
-    name: "Google Cloud",
-    logo: "https://cdn.simpleicons.org/googlecloud",
-    category: "devops"
-  },
-  
-  // Security Tools
-  {
-    name: "Kali Linux",
-    logo: "https://cdn.simpleicons.org/kalilinux",
-    category: "security"
-  },
-  {
-    name: "Burp Suite",
-    logo: burpsuiteLogo,
-    category: "security"
-  },
-  {
-    name: "ZAP",
-    logo: zapLogo,
-    category: "security"
-  },
-  {
-    name: "Wireshark",
-    logo: "https://cdn.simpleicons.org/wireshark",
-    category: "security"
-  },
-  {
-    name: "Nmap",
-    logo: nmapLogo,
-    category: "security"
-  },
-  
-  // AI Tools
   {
     name: "OpenAI",
     logo: "https://cdn.simpleicons.org/openai",
+    category: "ai"
+  },
+  {
+    name: "Google Gemini",
+    logo: "https://cdn.simpleicons.org/googlegemini",
     category: "ai"
   },
   {
@@ -132,42 +190,10 @@ const skills: Skill[] = [
     category: "ai"
   },
   {
-    name: "Google Gemini",
-    logo: "https://cdn.simpleicons.org/googlegemini",
+    name: "Windsurf",
+    logo: "https://cdn.simpleicons.org/windsurf",
     category: "ai"
-  },
-  
-  // Other Tools & Systems
-  {
-    name: "Github",
-    logo: "https://cdn.simpleicons.org/github",
-    category: "other"
-  },
-  {
-    name: "Windows",
-    logo: windowsLogo,
-    category: "other"
-  },
-  {
-    name: "Linux",
-    logo: "https://cdn.simpleicons.org/linux",
-    category: "other"
-  },
-  {
-    name: "Ubuntu",
-    logo: "https://cdn.simpleicons.org/ubuntu",
-    category: "other"
-  },
-  {
-    name: "Bash",
-    logo: "https://cdn.simpleicons.org/gnubash",
-    category: "other"
-  },
-  {
-    name: "PowerShell",
-    logo: powershellLogo,
-    category: "other"
-  },
+  }
 ];
 
 const categories = [
@@ -191,6 +217,8 @@ export default function Skills() {
     triggerOnce: true
   });
 
+  const logosToStyle = ['Github', 'Next.js', 'Three.js', 'Windsurf', 'OpenAI', 'Google Cloud'];
+
   useEffect(() => {
     setIsInView(inView);
   }, [inView]);
@@ -200,24 +228,29 @@ export default function Skills() {
     : skills.filter(skill => skill.category === selectedCategory);
 
   useEffect(() => {
-    if (isInView && filteredSkills.length > 0) {
+    // Only run the animation if there are more than 2 rows (8 skills)
+    if (isInView && filteredSkills.length > 8) {
       const interval = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 4) % filteredSkills.length); // Move by 4 (one row)
-      }, 4000); // Change every 4 seconds
+        setCurrentIndex((prev) => {
+          const nextIndex = prev + 4;
+          
+          // Loop back to 0 only when the next index exceeds the total length.
+          if (nextIndex >= filteredSkills.length) {
+            return 0; 
+          }
+          return nextIndex;
+        });
+      }, 3500);
       return () => clearInterval(interval);
     }
   }, [isInView, filteredSkills.length]);
 
-  // Create two rows of skills for smooth sliding animation
-  const topRowSkills = Array.from({ length: 4 }, (_, i) => {
-    const index = (currentIndex + i) % filteredSkills.length;
-    return filteredSkills[index];
-  });
+  // Determine which skills to show based on whether the animation is active
+  const skillsToShow = filteredSkills.length > 8
+    ? [...filteredSkills.slice(currentIndex, currentIndex + 4), ...filteredSkills.slice(currentIndex + 4, currentIndex + 8)]
+    : filteredSkills;
 
-  const bottomRowSkills = Array.from({ length: 4 }, (_, i) => {
-    const index = (currentIndex + 4 + i) % filteredSkills.length;
-    return filteredSkills[index];
-  });
+
 
   const handleGlowMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (glowRef.current) {
@@ -233,6 +266,14 @@ export default function Skills() {
       id="skills" 
       className="section text-white relative overflow-hidden"
     >
+      <svg width="0" height="0" className="absolute">
+        <defs>
+          <linearGradient id="grayGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style={{ stopColor: '#FFFFFF', stopOpacity: 1 }} />
+            <stop offset="100%" style={{ stopColor: '#A0AEC0', stopOpacity: 1 }} />
+          </linearGradient>
+        </defs>
+      </svg>
       {/* Enhanced Blurry Background with Fade Edges */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <div className="absolute inset-0 backdrop-blur-3xl bg-black/70" 
@@ -265,7 +306,7 @@ export default function Skills() {
             Skills & Technologies
           </h2>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Technologies I work with to bring ideas to life
+            Tech stack I have experience with, ranging from frontend/backend development to DevOps, security tools, Operating Systems and AI technologies. (Constantly Experimenting-with and Learning New Tools.)
           </p>
         </motion.div>
 
@@ -280,8 +321,8 @@ export default function Skills() {
               }}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                 selectedCategory === category.id
-                  ? 'bg-indigo-500 text-white'
-                  : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
+                  ? 'bg-white text-black'
+                  : 'bg-gray-800 text-gray-400 hover:bg-gray-700 hover:text-white'
               }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -306,8 +347,7 @@ export default function Skills() {
                   ease: "easeInOut"
                 }}
               >
-                {/* Show all 8 skills in 4x2 grid layout on mobile */}
-                {[...topRowSkills, ...bottomRowSkills].map((skill, index) => (
+                {skillsToShow.map((skill, index) => (
                   <motion.div
                     key={`mobile-${skill.name}-${currentIndex}-${index}`}
                     className="flex flex-col items-center group"
@@ -335,7 +375,7 @@ export default function Skills() {
                       <div className="absolute -inset-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-75 blur-lg transition-opacity duration-300" />
                       <div className="relative w-16 h-16 mb-3 p-3 bg-gray-800/50 backdrop-blur-sm rounded-full flex items-center justify-center border border-gray-700/50 transition-all duration-300 group-hover:border-indigo-500/50">
                         {skill.name === 'Google Gemini' ? (
-                          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="40" height="40"><title>Google Gemini</title><path d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/></svg>
+                          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="url(#grayGradient)"><title>Google Gemini</title><path d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/></svg>
                         ) : (
                           <motion.img
                             src={skill.logo}
@@ -343,9 +383,9 @@ export default function Skills() {
                             className="w-10 h-10 transition-all duration-300"
                             style={{ 
                               willChange: "filter",
-                              filter: skill.name === 'AWS' 
-                                ? 'brightness(0) invert(1)' 
-                                : 'none'
+                              filter: logosToStyle.includes(skill.name)
+                                ? 'grayscale(100%) brightness(1.2) contrast(0.9)'
+                                : skill.name === 'AWS' ? 'brightness(0) invert(1)' : 'none'
                             }}
                             loading="lazy"
                           />
@@ -368,146 +408,144 @@ export default function Skills() {
 
           {/* Desktop: Horizontal Layout */}
           <div className="hidden md:block">
-            {/* Container for smooth sliding animation */}
-            <div className="relative h-64 overflow-hidden">
-              {/* Top Row */}
-              <motion.div
-                key={`top-${currentIndex}`}
-                className="absolute top-0 left-0 w-full grid grid-cols-4 gap-8"
-                initial={{ y: -50, opacity: 0, filter: "blur(10px)" }}
-                animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                exit={{ y: -50, opacity: 0, filter: "blur(10px)" }}
-                transition={{ 
-                  duration: 1.2,
-                  ease: "easeInOut"
-                }}
-              >
-                {topRowSkills.map((skill, index) => (
-                  <motion.div
-                    key={`top-${skill.name}-${currentIndex}-${index}`}
-                    className="flex flex-col items-center group"
-                    onMouseEnter={() => setHoveredSkill(skill.name)}
-                    onMouseLeave={() => setHoveredSkill(null)}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ 
-                      duration: 0.8,
-                      delay: index * 0.1
-                    }}
-                  >
+            <AnimatePresence mode="wait">
+              {/* Container for smooth sliding animation */}
+              <div className="relative h-64 overflow-hidden">
+                {/* Top Row */}
+                <motion.div
+                  key={`top-${currentIndex}`}
+                  className="absolute top-0 left-0 w-full grid grid-cols-4 gap-8"
+                  initial={{ opacity: 0 }}
+                  animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+                  exit={{ y: "-100%", opacity: 0, filter: "blur(10px)" }}
+                  transition={{ duration: 1.2, ease: "easeInOut" }}
+                > 
+                  {filteredSkills.slice(currentIndex, currentIndex + 4).map((skill, index) => (
                     <motion.div
-                      whileHover={{ 
-                        scale: 1.1,
-                        rotate: 360,
-                        transition: {
-                          type: "spring",
-                          stiffness: 200,
-                          damping: 20
-                        }
+                      key={`top-${skill.name}-${currentIndex}-${index}`}
+                      className="flex flex-col items-center group"
+                      onMouseEnter={() => setHoveredSkill(skill.name)}
+                      onMouseLeave={() => setHoveredSkill(null)}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.8,
+                        delay: index * 0.1
                       }}
-                      className="relative"
                     >
-                      <div className="absolute -inset-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-75 blur-lg transition-opacity duration-300" />
-                      <div className="relative w-20 h-20 mb-4 p-4 bg-gray-800/50 backdrop-blur-sm rounded-full flex items-center justify-center border border-gray-700/50 transition-all duration-300 group-hover:border-indigo-500/50">
-                        {skill.name === 'Google Gemini' ? (
-                          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="48" height="48"><title>Google Gemini</title><path d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/></svg>
-                        ) : (
-                          <motion.img
-                            src={skill.logo}
-                            alt={skill.name}
-                            className="w-12 h-12 transition-all duration-300"
-                            style={{ 
-                              willChange: "filter",
-                              filter: skill.name === 'AWS' 
-                                ? 'brightness(0) invert(1)' 
-                                : 'none'
-                            }}
-                            loading="lazy"
-                          />
-                        )}
-                      </div>
+                      <motion.div
+                        whileHover={{
+                          scale: 1.1,
+                          rotate: 360,
+                          transition: {
+                            type: "spring",
+                            stiffness: 200,
+                            damping: 20
+                          }
+                        }}
+                        className="relative"
+                      >
+                        <div className="absolute -inset-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-75 blur-lg transition-opacity duration-300" />
+                        <div className="relative w-20 h-20 mb-4 p-4 bg-gray-800/50 backdrop-blur-sm rounded-full flex items-center justify-center border border-gray-700/50 transition-all duration-300 group-hover:border-indigo-500/50">
+                          {skill.name === 'Google Gemini' ? (
+                            <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="url(#grayGradient)"><title>Google Gemini</title><path d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81" /></svg>
+                          ) : (
+                            <motion.img
+                              src={skill.logo}
+                              alt={skill.name}
+                              className="w-12 h-12 transition-all duration-300"
+                              style={{
+                                willChange: "filter",
+                                filter: logosToStyle.includes(skill.name)
+                                  ? 'grayscale(100%) brightness(1.2) contrast(0.9)'
+                                  : skill.name === 'AWS' ? 'brightness(0) invert(1)' : 'none'
+                              }}
+                              loading="lazy"
+                            />
+                          )}
+                        </div>
+                      </motion.div>
+                      <motion.span
+                        className="text-gray-400 group-hover:text-white transition-colors duration-300 text-base"
+                        initial={{ y: 10, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: index * 0.1 + 0.3 }}
+                      >
+                        {skill.name}
+                      </motion.span>
                     </motion.div>
-                    <motion.span 
-                      className="text-gray-400 group-hover:text-white transition-colors duration-300 text-base"
-                      initial={{ y: 10, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: index * 0.1 + 0.3 }}
-                    >
-                      {skill.name}
-                    </motion.span>
-                  </motion.div>
-                ))}
-              </motion.div>
+                  ))}
+                </motion.div>
 
-              {/* Bottom Row */}
-              <motion.div
-                key={`bottom-${currentIndex}`}
-                className="absolute bottom-0 left-0 w-full grid grid-cols-4 gap-8"
-                initial={{ y: 50, opacity: 0, filter: "blur(10px)" }}
-                animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-                exit={{ y: 50, opacity: 0, filter: "blur(10px)" }}
-                transition={{ 
-                  duration: 1.2,
-                  ease: "easeInOut"
-                }}
-              >
-                {bottomRowSkills.map((skill, index) => (
+                {/* Bottom Row */}
+                {filteredSkills.length > 4 && (
                   <motion.div
-                    key={`bottom-${skill.name}-${currentIndex}-${index}`}
-                    className="flex flex-col items-center group"
-                    onMouseEnter={() => setHoveredSkill(skill.name)}
-                    onMouseLeave={() => setHoveredSkill(null)}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ 
-                      duration: 0.8,
-                      delay: index * 0.1
-                    }}
+                    key={`bottom-${currentIndex}`}
+                    className="absolute bottom-0 left-0 w-full grid grid-cols-4 gap-8"
+                    initial={{ y: "100%", opacity: 0, filter: "blur(10px)" }}
+                    animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
+                    exit={{ y: "-100%", opacity: 0, filter: "blur(10px)" }}
+                    transition={{ duration: 0.5, ease: "easeInOut" }} 
                   >
-                    <motion.div
-                      whileHover={{ 
-                        scale: 1.1,
-                        rotate: 360,
-                        transition: {
-                          type: "spring",
-                          stiffness: 200,
-                          damping: 20
-                        }
-                      }}
-                      className="relative"
-                    >
-                      <div className="absolute -inset-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-75 blur-lg transition-opacity duration-300" />
-                      <div className="relative w-20 h-20 mb-4 p-4 bg-gray-800/50 backdrop-blur-sm rounded-full flex items-center justify-center border border-gray-700/50 transition-all duration-300 group-hover:border-indigo-500/50">
-                        {skill.name === 'Google Gemini' ? (
-                          <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="48" height="48"><title>Google Gemini</title><path d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/></svg>
-                        ) : (
-                          <motion.img
-                            src={skill.logo}
-                            alt={skill.name}
-                            className="w-12 h-12 transition-all duration-300"
-                            style={{ 
-                              willChange: "filter",
-                              filter: skill.name === 'AWS' 
-                                ? 'brightness(0) invert(1)' 
-                                : 'none'
-                            }}
-                            loading="lazy"
-                          />
-                        )}
-                      </div>
-                    </motion.div>
-                    <motion.span 
-                      className="text-gray-400 group-hover:text-white transition-colors duration-300 text-base"
-                      initial={{ y: 10, opacity: 0 }}
-                      animate={{ y: 0, opacity: 1 }}
-                      transition={{ delay: index * 0.1 + 0.3 }}
-                    >
-                      {skill.name}
-                    </motion.span>
+                    {filteredSkills.slice(currentIndex + 4, currentIndex + 8).map((skill, index) => (
+                      <motion.div
+                        key={`bottom-${skill.name}-${currentIndex}-${index}`}
+                        className="flex flex-col items-center group"
+                        onMouseEnter={() => setHoveredSkill(skill.name)}
+                        onMouseLeave={() => setHoveredSkill(null)}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          duration: 1,
+                          delay: index * 0.1
+                        }}
+                      >
+                        <motion.div
+                          whileHover={{
+                            scale: 1.1,
+                            rotate: 360,
+                            transition: {
+                              type: "spring",
+                              stiffness: 200,
+                              damping: 20
+                            }
+                          }}
+                          className="relative"
+                        >
+                          <div className="absolute -inset-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full opacity-0 group-hover:opacity-75 blur-lg transition-opacity duration-300" />
+                          <div className="relative w-20 h-20 mb-4 p-4 bg-gray-800/50 backdrop-blur-sm rounded-full flex items-center justify-center border border-gray-700/50 transition-all duration-300 group-hover:border-indigo-500/50">
+                            {skill.name === 'Google Gemini' ? (
+                              <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="url(#grayGradient)"><title>Google Gemini</title><path d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81" /></svg>
+                            ) : (
+                              <motion.img
+                                src={skill.logo}
+                                alt={skill.name}
+                                className="w-12 h-12 transition-all duration-300"
+                                style={{
+                                  willChange: "filter",
+                                  filter: logosToStyle.includes(skill.name)
+                                    ? 'grayscale(100%) brightness(1.2) contrast(0.9)'
+                                    : skill.name === 'AWS' ? 'brightness(0) invert(1)' : 'none'
+                                }}
+                                loading="lazy"
+                              />
+                            )}
+                          </div>
+                        </motion.div>
+                        <motion.span
+                          className="text-gray-400 group-hover:text-white transition-colors duration-300 text-base"
+                          initial={{ y: 10, opacity: 0 }}
+                          animate={{ y: 0, opacity: 1 }}
+                          transition={{ delay: index * 0.1 + 0.3 }}
+                        >
+                          {skill.name}
+                        </motion.span>
+                      </motion.div>
+                    ))}
                   </motion.div>
-                ))}
-              </motion.div>
-            </div>
+                )}
+              </div>
+            </AnimatePresence>
           </div>
         </div>
 
@@ -515,14 +553,14 @@ export default function Skills() {
         <div className="flex justify-center mt-12">
           <div className="flex items-center space-x-2 bg-gray-800/50 backdrop-blur-sm rounded-full px-4 py-2">
             <span className="text-sm text-gray-400">
-              Row {Math.floor(currentIndex / 4) + 1} of {Math.ceil(filteredSkills.length / 4)} rows
+              {filteredSkills.length > 8 ? `Row ${Math.floor(currentIndex / 4) + 1} of ${Math.ceil(filteredSkills.length / 4)}` : `Total`}
             </span>
             <div className="w-32 h-1 bg-gray-700 rounded-full overflow-hidden">
               <motion.div
                 className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"
                 initial={{ width: 0 }}
                 animate={{ 
-                  width: `${((currentIndex / 4) / Math.ceil(filteredSkills.length / 4)) * 100}%` 
+                  width: `${(currentIndex / filteredSkills.length) * 100}%`
                 }}
                 transition={{ duration: 0.3 }}
               />
