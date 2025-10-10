@@ -1,13 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
-import { Clock, MapPin, Mail, Phone, Github, Linkedin, Copy, Check, ExternalLink } from 'lucide-react';
+import { Clock, MapPin, Mail, Github, Linkedin, Copy, Check, ExternalLink } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { motion, AnimatePresence } from 'framer-motion';
+import { SiWhatsapp } from 'react-icons/si';
 
 export default function Footer() {
   // State management
   const [currentTime, setCurrentTime] = useState(new Date());
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const [copiedPhone, setCopiedPhone] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [typedText, setTypedText] = useState("Me");
@@ -62,15 +62,10 @@ export default function Footer() {
     });
   };
 
-  const handleCopy = async (text: string, type: 'email' | 'phone') => {
+  const handleCopy = async (text: string) => {
     await navigator.clipboard.writeText(text);
-    if (type === 'email') {
-      setCopiedEmail(true);
-      setTimeout(() => setCopiedEmail(false), 2000);
-    } else {
-      setCopiedPhone(true);
-      setTimeout(() => setCopiedPhone(false), 2000);
-    }
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2000);
     
     // Enhanced confetti effect
     confetti({
@@ -193,7 +188,7 @@ export default function Footer() {
             {/* Email */}
             <motion.div 
               className="flex items-center space-x-4 group bg-gray-800/20 rounded-2xl p-4 backdrop-blur-sm border border-gray-700/20 cursor-pointer relative"
-              onClick={() => handleCopy('medkoursalaheddine@gmail.com', 'email')}
+              onClick={() => handleCopy('medkoursalaheddine@gmail.com')}
               whileHover={{ y: -4, transition: { type: "spring", stiffness: 300, damping: 20 } }}
               whileTap={{ scale: 0.98 }}
               onMouseEnter={() => setHoveredItem('email')}
@@ -241,54 +236,33 @@ export default function Footer() {
             </motion.div>
             
             {/* Phone */}
-            <motion.div 
+            <motion.a 
+              href="https://wa.me/213551964262"
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex items-center space-x-4 group bg-gray-800/20 rounded-2xl p-4 backdrop-blur-sm border border-gray-700/20 cursor-pointer relative"
-              onClick={() => handleCopy('+213551964262', 'phone')}
               whileHover={{ y: -4, transition: { type: "spring", stiffness: 300, damping: 20 } }}
               whileTap={{ scale: 0.98 }}
               onMouseEnter={() => setHoveredItem('phone')}
               onMouseLeave={() => setHoveredItem(null)}
             >
               <div className="flex-shrink-0 relative">
-                <Phone className="w-5 h-5 text-indigo-400" />
+                <SiWhatsapp className="w-5 h-5 text-green-400" />
                 <AnimatePresence>
-                  {hoveredItem === 'phone' && !copiedPhone && (
+                  {hoveredItem === 'phone' && (
                     <motion.span 
                       className="absolute -top-10 left-1/2 transform -translate-x-1/2 bg-gray-800/90 text-white text-xs px-2.5 py-1 rounded-lg whitespace-nowrap z-20"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 5 }}
                       transition={{ duration: 0.2 }}
-                    >
-                      Click to copy
-                    </motion.span>
+                    >DM me on Whatsapp</motion.span>
                   )}
                 </AnimatePresence>
               </div>
-              <div className="flex-1 text-white">+213551964262</div>
-              <AnimatePresence mode="sync">
-                {copiedPhone ? (
-                  <motion.div
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.8, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex-shrink-0"
-                  >
-                    <Check className="w-4 h-4 text-green-500" />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="opacity-0 group-hover:opacity-100 flex-shrink-0"
-                  >
-                    <Copy className="w-4 h-4 text-gray-400" />
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
+              <div className="flex-1 text-white">DM me on Whatsapp</div>
+              <ExternalLink className="w-4 h-4 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+            </motion.a>
           </div>
 
           {/* Right Column: Status & Social */}
@@ -377,7 +351,7 @@ export default function Footer() {
                   animate={{ opacity: 1 }}
                   style={{ fontSize: '0.85rem' }}
                 >
-                  Portfolio by: {typedText}
+                  Made by: {typedText}
                 </motion.div>
                 <motion.div 
                   className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-indigo-400 to-transparent"
