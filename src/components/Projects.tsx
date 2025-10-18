@@ -798,7 +798,7 @@ export default function Projects() {
                               <Github className="w-4 h-4" />
                               <span>Code</span>
                             </a>
-                            {(project as Project).id === 4 ? (
+                            {(project as Project).id === 5 ? (
                               <a
                                 href="https://www.researchgate.net/publication/392926889_Implementation_of_an_End-to-End_Encryption_Mechanism_in_WebRTC_Video_Streaming"
                                 target="_blank"
@@ -815,7 +815,7 @@ export default function Projects() {
                                 href={(project as Project).demo}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="project-link"
+                                className={`project-link ${(project as Project).demo ? '' : 'opacity-50 cursor-not-allowed'}`}
                                 data-hover="true"
                               >
                                 <ExternalLink className="w-4 h-4" />

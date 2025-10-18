@@ -600,8 +600,11 @@ export default function About() {
           <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
             About Me
           </h2>
-          <p className="text-lg text-gray-400 max-w-5xl mx-auto leading-loose tracking-wide hyphens-auto text-justify px-4">
-            My name is <span className="font-bold text-white">Salahuddin Medkour</span>, a <span className="font-bold text-white">23-year-old</span> from <span className="font-bold text-white">Annaba, Algeria</span>. I hold a Master's degree in <span className="font-bold text-white">Networks Engineering</span> and I'm currently looking for new opportunities. My main interests are <span className="font-bold text-white">Cybersecurity</span>, <span className="font-bold text-white">Networking</span>, <span className="font-bold text-white">Freelance Web Development</span>, and <span className="font-bold text-white">AI</span>. I'm very motivated and eager to learn and grow in these fields.
+          <p className="text-base md:text-lg text-gray-200 max-w-3xl mx-auto leading-relaxed md:leading-loose tracking-normal text-left sm:text-center px-4">
+            My name is <span className="font-bold text-white transition-all duration-300 hover:text-shadow-[0_0_8px_rgba(255,255,255,0.6)]">Salahuddin Medkour</span>, a <span className="font-bold text-white transition-all duration-300 hover:text-shadow-[0_0_8px_rgba(255,255,255,0.6)]">23-year-old</span> from <span className="font-bold text-white transition-all duration-300 hover:text-shadow-[0_0_8px_rgba(255,255,255,0.6)]">Annaba, Algeria</span>. 
+            I hold a Master's degree in <span className="font-bold text-white transition-all duration-300 hover:text-shadow-[0_0_8px_rgba(255,255,255,0.6)]">Networks Engineering</span> and I'm currently looking for new opportunities. 
+            My main interests are <span className="font-bold text-white transition-all duration-300 hover:text-shadow-[0_0_8px_rgba(255,255,255,0.6)]">Cybersecurity</span>, <span className="font-bold text-white transition-all duration-300 hover:text-shadow-[0_0_8px_rgba(255,255,255,0.6)]">Networking</span>, <span className="font-bold text-white transition-all duration-300 hover:text-shadow-[0_0_8px_rgba(255,255,255,0.6)]">Freelance Web Development</span>, and <span className="font-bold text-white transition-all duration-300 hover:text-shadow-[0_0_8px_rgba(255,255,255,0.6)]">AI</span>. 
+            I'm very motivated and eager to learn and grow in these fields.
           </p>
         </motion.div>
 
