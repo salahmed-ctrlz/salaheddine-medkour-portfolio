@@ -157,25 +157,6 @@ export default function Hero() {
     }),
   };
 
-  // Inject CSS animations for tracking-in-expand and focus-in-expand
-  useEffect(() => {
-    const style = document.createElement('style');
-    style.innerHTML = `
-      .tracking-in-expand{-webkit-animation:tracking-in-expand .7s cubic-bezier(.215,.61,.355,1.000) both;animation:tracking-in-expand .7s cubic-bezier(.215,.61,.355,1.000) both}
-      @-webkit-keyframes tracking-in-expand{0%{letter-spacing:-.5em;opacity:0}40%{opacity:.6}100%{opacity:1}}
-      @keyframes tracking-in-expand{0%{letter-spacing:-.5em;opacity:0}40%{opacity:.6}100%{opacity:1}}
-      
-      .focus-in-expand{-webkit-animation:focus-in-expand .8s cubic-bezier(.25,.46,.45,.94) both;animation:focus-in-expand .8s cubic-bezier(.25,.46,.45,.94) both}
-      @-webkit-keyframes focus-in-expand{0%{letter-spacing:-.5em;-webkit-filter:blur(12px);filter:blur(12px);opacity:0}100%{-webkit-filter:blur(0);filter:blur(0);opacity:1}}
-      @keyframes focus-in-expand{0%{letter-spacing:-.5em;-webkit-filter:blur(12px);filter:blur(12px);opacity:0}100%{-webkit-filter:blur(0);filter:blur(0);opacity:1}}
-    `;
-    document.head.appendChild(style);
-    
-    return () => {
-      document.head.removeChild(style);
-    };
-  }, []);
-
   // Check if device is mobile - using 640px for better tablet handling
   useEffect(() => {
     const checkMobile = () => {
@@ -200,24 +181,31 @@ export default function Hero() {
 
   // Handle title rotation and language toggle
   useEffect(() => {
-    const titleInterval = setInterval(() => {
-      setCurrentTitle((prev) => (prev + 1) % titles.length);
-    }, 3000);
+    // Defer non-critical animations until after the initial render to improve TBT
+    const initialLoadTimeout = setTimeout(() => {
+      const titleInterval = setInterval(() => {
+        setCurrentTitle((prev) => (prev + 1) % titles.length);
+      }, 3000);
 
-    // Language switching - timed for mobile, manual for desktop
-    let languageInterval: NodeJS.Timeout | undefined;
-    
-    if (isMobile) {
-      // Mobile animation (timed switching)
-      languageInterval = setInterval(() => {
-        setDisplayLanguage(prev => prev === 'en' ? 'ar' : 'en');
-      }, 4000);
-    }
-    // Desktop will be handled by hover events only
+      // Language switching - timed for mobile, manual for desktop
+      let languageInterval: NodeJS.Timeout | undefined;
+      
+      if (isMobile) {
+        // Mobile animation (timed switching)
+        languageInterval = setInterval(() => {
+          setDisplayLanguage(prev => prev === 'en' ? 'ar' : 'en');
+        }, 4000);
+      }
+
+      // Cleanup function for intervals
+      return () => {
+        clearInterval(titleInterval);
+        if (languageInterval) clearInterval(languageInterval);
+      };
+    }, 2000); // Start animations 2 seconds after component mounts
 
     return () => {
-      clearInterval(titleInterval);
-      if (languageInterval) clearInterval(languageInterval);
+      clearTimeout(initialLoadTimeout);
     };
   }, [isMobile]);
 
@@ -553,7 +541,7 @@ export default function Hero() {
 
       {/* Back to Top Button */}
 <AnimatePresence>
-  {showBackToTop && (
+  {showBackToTop && !isMobile && (
     <motion.button
       initial={{ opacity: 0, y: 20, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}

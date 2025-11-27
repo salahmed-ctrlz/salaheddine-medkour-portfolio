@@ -18,7 +18,7 @@ const languages = [
   { 
     name: "Arabic", 
     level: "Native",
-    flags: ["sa"]
+    flags: ["arab"]
   },
   { 
     name: "English", 
@@ -46,12 +46,12 @@ const timelineData = [
   {
     type: "work",
     title: "Teaching Assistant & Lab Instructor",
-    institution: "Université Badji Mokhtar de Annaba",
+    institution: "Badji Mokhtar University of Annaba",
     period: "Oct 2025 - Present",
     description: "Teaching and supervising Python lab sessions for master's students, and mentoring first-year student-teachers at ENS through the 'Information and Communication Technology' module. Leading practical sessions covering IT fundamentals, cloud collaboration (Google Workspace), cybersecurity awareness, and digital literacy.",
     icon: FaChalkboardTeacher,
     color: "#f59e0b",
-    isPeak: false,
+    isPeak: true,
     skills: ["Python", "IT Fundamentals", "Google Workspace", "Cybersecurity", "Digital Literacy", "Teaching"]
   },
   {

@@ -24,11 +24,22 @@ const LoadingSpinner = () => (
 function App() {
   const [mounted, setMounted] = useState(false);
   const [showLoadingScreen, setShowLoadingScreen] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     // Always show loading screen on page load/refresh
     setShowLoadingScreen(true);
     setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768); // Using 768px as a common tablet breakpoint
+    };
+    
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   useEffect(() => {
@@ -59,28 +70,22 @@ function App() {
       <div className="bg-black text-white min-h-screen relative">
         {/* Orb Background */}
         <Orb
-          hoverIntensity={0.5}
-          rotateOnHover={true}
+          hoverIntensity={isMobile ? 0 : 0.5}
+          rotateOnHover={!isMobile}
           hue={0}
-          forceHoverState={false}
+          forceHoverState={isMobile}
         />
 
         {/* Content */}
         <div className="relative z-10">
           <Navigation>
-            <ScrollMeter />
-            <CustomCursor />
+            {!isMobile && <ScrollMeter />}
+            {!isMobile && <CustomCursor />}
             <Hero />
             <Suspense fallback={<LoadingSpinner />}>
               <About />
-            </Suspense>
-            <Suspense fallback={<LoadingSpinner />}>
               <Skills />
-            </Suspense>
-            <Suspense fallback={<LoadingSpinner />}>
               <Projects />
-            </Suspense>
-            <Suspense fallback={<LoadingSpinner />}>
               <Contact />
             </Suspense>
             <Footer />

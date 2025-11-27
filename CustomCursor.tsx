@@ -9,7 +9,7 @@ export default function CustomCursor() {
   const rafId = useRef<number>();
   
   // Spring configurations for smooth movement
-  const springConfig = { damping: 20, stiffness: 300, mass: 0.5 };
+  const springConfig = { damping: 30, stiffness: 500, mass: 0.5 };
   const x = useSpring(cursorX, springConfig);
   const y = useSpring(cursorY, springConfig);
   
@@ -93,8 +93,8 @@ export default function CustomCursor() {
           cursorType === 'pointer' ? 'cursor-dot-pointer' : 'cursor-dot-default'
         }`}
         style={{
-          x: x,
-          y: y,
+          x: cursorX,
+          y: cursorY,
           scale: scale,
           translateX: '-50%',
           translateY: '-50%'
@@ -112,10 +112,10 @@ export default function CustomCursor() {
           translateY: '-50%'
         }}
         transition={{
-          type: "spring",
-          damping: 15,
-          stiffness: 150,
-          mass: 0.3,
+          type: 'spring',
+          damping: 25,
+          stiffness: 250,
+          mass: 0.4,
         }}
       />
     </>

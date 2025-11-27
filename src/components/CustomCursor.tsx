@@ -115,8 +115,8 @@ export default function CustomCursor() {
           cursorType === 'pointer' ? 'cursor-dot-pointer' : 'cursor-dot-default'
         }`}
         style={{
-          x: x,
-          y: y,
+          x: cursorX,
+          y: cursorY,
           scale: scale,
           left: 0,
           top: 0,

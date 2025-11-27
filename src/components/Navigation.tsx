@@ -23,7 +23,9 @@ export function Navigation({ children }: { children?: React.ReactNode }) {
 
   const handleNavClick = (href: string) => {
     setOpen(false);
-    if (href.startsWith('#')) {
+    if (href === '#') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (href.startsWith('#')) {
       document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
     }
   };
