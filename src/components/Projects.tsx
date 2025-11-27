@@ -10,26 +10,23 @@ import currentPortfolio from './images/Projects/CurrentPortfolio.webp';
 import pchavenMockup from './images/Projects/pchavenmockup.webp';
 import amaneMockup from './images/Projects/amanemockup.webp';
 import pwdGeneratorDark from './images/Projects/pwd-generator-dark.webp';
+import bettercallsaul from './images/Projects/BetterCallSaul.webp';
 import pwdGeneratorLight from './images/Projects/pwd-generator-light.webp';
 import pwdGeneratorHacker from './images/Projects/pwd-generator-hacker.webp';
-import ecommerce from './images/Projects/ecommerce.webp';
-import weatherApp from './images/Projects/WeathApp.webp';
-import eportfolio from './images/Projects/eportfolio.webp';
-import bettercallsaul from './images/Projects/BetterCallSaul.webp';
 import graphicdesigner from './images/Projects/graphicdesigner.webp';
-import webrtcE2eeImage1 from './images/Projects/webrtcE2eeImage1.png'
-import webrtcE2eeImage2 from './images/Projects/webrtcE2eeImage2.png'
-import webrtcE2eeImage3 from './images/Projects/webrtcE2eeImage3.png'
+import webrtcE2eeImage1 from './images/Projects/webrtcE2eeImage1.webp'
+import webrtcE2eeImage2 from './images/Projects/webrtcE2eeImage2.webp'
+import webrtcE2eeImage3 from './images/Projects/webrtcE2eeImage3.webp'
 import saktool from './images/Projects/saktool.png';
 import adamzebilah from './images/Projects/adamzebilah.webp';
 
 // Import preview GIFs  
-import portfolioPreview from './images/Preview/portfolio-preview.gif';
-import pchavenPreview from './images/Preview/pchaven-preview.gif';
-import bettercallsaulPreview from './images/Preview/bettercallsaul-preview.gif';
-import graphicdesignerPreview from './images/Preview/graphicdesigner-preview.gif';
+import portfolioPreview from './images/Preview/portfolio-preview.webp';
+import pchavenPreview from './images/Preview/pchaven-preview.webp';
+import bettercallsaulPreview from './images/Preview/bettercallsaul-preview.webp';
+import graphicdesignerPreview from './images/Preview/graphicdesigner-preview.webp';
 import { SiResearchgate } from 'react-icons/si';
-import adamzebilahPreview from './images/Preview/adamzebilah-preview.gif';
+import adamzebilahPreview from './images/Preview/adamzebilah-preview.webp';
 
 interface Project {
   id: number;
@@ -238,45 +235,6 @@ export default function Projects() {
       carousel: true,
       category: 'security'
     },
-    {
-      id: 10,
-      title: "E-commerce Website (Front End)",
-      description: "Admin dashboard for e-commerce platforms with analytics, inventory management, and order processing.",
-      details: "Admin Dashboard Features\n\n• Comprehensive admin dashboard for managing e-commerce operations\n• Real-time analytics with customizable date ranges and metrics\n• Inventory management system with low stock alerts\n• Order processing workflow with status tracking\n\nTechnical Implementation\n\n• Built with React and Material-UI for consistent UI components\n• Implemented data visualization with Chart.js\n• Used React Query for efficient data fetching and caching\n• Set up role-based access control for different admin levels",
-      image: ecommerce,
-      technologies: ["React", "TypeScript", "Material-UI", "Chart.js"],
-      github: "https://github.com/salahmed-ctrlz/etopia",
-      demo: "https://salahmed-ctrlz.github.io/etopia/",
-      featured: false,
-      category: 'web',
-      hidden: true
-    },
-    {
-      id: 11,
-      title: "Weather Web App",
-      description: "Weather application with 7-day forecast, location detection, and beautiful UI transitions.",
-      details: "Weather App Features\n\n• Displays current weather conditions and 7-day forecast\n• Implements geolocation for automatic location detection\n• Allows searching for weather in any city worldwide\n• Shows additional metrics like humidity, wind speed, and UV index\n\nTechnical Details\n\n• Built with React and CSS modules for styling\n• Integrated with OpenWeatherMap API for weather data\n• Implemented error handling for API failures and location services\n• Added smooth transitions between different views and states",
-      image: weatherApp,
-      technologies: ["React", "CSS Modules", "OpenWeatherMap API"],
-      github: "https://github.com/salahmed-ctrlz/WeathApp",
-      demo: "https://salahmed-ctrlz.github.io/WeathApp/",
-      featured: false,
-      category: 'web',
-      hidden: true
-    },
-    {
-      id: 12,
-      title: "ePortfolio",
-      description: "Digital portfolio showcasing various projects and achievements.",
-      details: "ePortfolio Overview\n\n• Comprehensive digital portfolio showcasing various projects and achievements\n• Includes detailed project descriptions, images, and links\n• Features a clean and modern design with easy navigation\n\nTechnical Details\n\n• Built with HTML, CSS, and JavaScript\n• Used responsive design principles for all device sizes\n• Implemented lazy loading for improved performance",
-      image: eportfolio,
-      technologies: ["HTML", "CSS", "JavaScript"],
-      github: "https://github.com/salahmed-ctrlz/eportfolio",
-      demo: "https://salahmed-ctrlz.github.io/eportfolio/",
-      featured: false,
-      category: 'web',
-      hidden: true
-    }
   ];
 
   // Coming Soon cards for Tools & Scripts and Cybersecurity

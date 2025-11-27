@@ -552,24 +552,35 @@ export default function Hero() {
       </motion.div>
 
       {/* Back to Top Button */}
-      <AnimatePresence>
-        {showBackToTop && (
-          <motion.button
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.3 }}
-            onClick={scrollToTop}
-            className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-1 text-white/70 hover:text-white transition-all duration-300 group"
-            style={{ zIndex: 100 }}
-          >
-            <svg className="w-6 h-6 transition-transform duration-300 group-hover:-translate-y-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 10l7-7m0 0l7 7m-7-7v18" />
-            </svg>
-            <span className="text-xs">back to top</span>
-          </motion.button>
-        )}
-      </AnimatePresence>
+<AnimatePresence>
+  {showBackToTop && (
+    <motion.button
+      initial={{ opacity: 0, y: 20, scale: 0.9 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: 20, scale: 0.9 }}
+      transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+      onClick={scrollToTop}
+      className="fixed bottom-6 right-6 z-50 h-12 rounded-full bg-zinc-900 flex items-center justify-center overflow-hidden cursor-pointer group transition-all duration-300 ease-out hover:w-[130px] hover:bg-violet-500 w-12"
+      style={{
+        boxShadow: "0px 0px 0px 4px rgba(139, 92, 246, 0.2)"
+      }}
+      aria-label="Back to top"
+    >
+      {/* Arrow Icon */}
+      <svg
+        className="w-3 h-3 fill-white absolute transition-all duration-300 ease-out group-hover:-translate-y-12 group-hover:opacity-0"
+        viewBox="0 0 384 512"
+      >
+        <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" />
+      </svg>
+
+      {/* Text */}
+      <span className="absolute text-white text-[13px] font-semibold whitespace-nowrap translate-y-8 opacity-0 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100">
+        Back to Top
+      </span>
+    </motion.button>
+  )}
+</AnimatePresence>
 
     </section>
   );

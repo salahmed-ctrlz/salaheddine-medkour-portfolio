@@ -1,171 +1,275 @@
 "use client";
 import React, { useState } from "react";
-import { Sidebar, SidebarBody, SidebarLink } from "./ui/sidebar";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../lib/utils";
-import { Home, User, Code, Briefcase, Mail, Linkedin, Github } from "lucide-react";
-import { IconChevronRight, IconX } from "@tabler/icons-react";
+import { Home, User, Code, Briefcase, Mail, Linkedin, Github, Menu, X } from "lucide-react";
 import portrait1 from './images/Portraits/portrait3.webp';
 
 export function Navigation({ children }: { children?: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+
   const links = [
-    {
-      label: "Home",
-      href: "#",
-      icon: (
-        <Home className="h-5 w-5 shrink-0 text-white" />
-      ),
-    },
-    {
-      label: "About",
-      href: "#about",
-      icon: (
-        <User className="h-5 w-5 shrink-0 text-white" />
-      ),
-    },
-    {
-      label: "Skills",
-      href: "#skills",
-      icon: (
-        <Code className="h-5 w-5 shrink-0 text-white" />
-      ),
-    },
-    {
-      label: "Projects",
-      href: "#projects",
-      icon: (
-        <Briefcase className="h-5 w-5 shrink-0 text-white" />
-      ),
-    },
-    {
-      label: "Contact",
-      href: "#contact",
-      icon: (
-        <Mail className="h-5 w-5 shrink-0 text-white" />
-      ),
-    },
+    { label: "Home", href: "#", icon: Home },
+    { label: "About", href: "#about", icon: User },
+    { label: "Skills", href: "#skills", icon: Code },
+    { label: "Projects", href: "#projects", icon: Briefcase },
+    { label: "Contact", href: "#contact", icon: Mail },
   ];
 
   const socialLinks = [
-    {
-      label: "LinkedIn",
-      href: "https://www.linkedin.com/in/salah-eddine-medkour/",
-      icon: (
-        <Linkedin className="h-4 w-4 shrink-0 text-white" />
-      ),
-    },
-    {
-      label: "GitHub",
-      href: "https://github.com/salahmed-ctrlz",
-      icon: (
-        <Github className="h-4 w-4 shrink-0 text-white" />
-      ),
-    },
+    { label: "LinkedIn", href: "https://www.linkedin.com/in/salah-eddine-medkour/", icon: Linkedin },
+    { label: "GitHub", href: "https://github.com/salahmed-ctrlz", icon: Github },
   ];
 
-  const [open, setOpen] = useState(false);
+  const handleNavClick = (href: string) => {
+    setOpen(false);
+    if (href.startsWith('#')) {
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <>
-      {/* Single arrow button for both PC and mobile */}
-      <div className="fixed top-4 left-4 z-40">
-        <div
-          className="w-12 h-12 bg-black/10 backdrop-blur-[40px] border border-white/20 rounded-full flex items-center justify-center cursor-pointer hover:bg-white/10 transition-all duration-300"
-          onClick={() => setOpen(!open)}
-        >
-          <IconChevronRight className="text-white w-6 h-6" />
-        </div>
-      </div>
-
-      <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className={open ? "justify-center items-center gap-12 py-8 h-screen relative" : "justify-between gap-8 py-8 h-screen"}>
-          {/* Close button - top right when open */}
-          {open && (
-            <div className="absolute top-8 right-8 z-50">
-              <IconX 
-                className="text-white w-8 h-8 cursor-pointer hover:text-gray-300 transition-all duration-300" 
-                onClick={() => setOpen(false)}
-              />
-            </div>
+      {/* Toggle Button */}
+      <motion.button
+        className="fixed top-5 left-5 z-50 w-11 h-11 rounded-xl bg-zinc-900/80 backdrop-blur-xl border border-white/[0.08] flex items-center justify-center cursor-pointer group"
+        onClick={() => setOpen(!open)}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        style={{
+          boxShadow: '0 4px 24px -4px rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255,255,255,0.05)'
+        }}
+      >
+        <AnimatePresence mode="wait">
+          {open ? (
+            <motion.div
+              key="close"
+              initial={{ opacity: 0, rotate: -90 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              exit={{ opacity: 0, rotate: 90 }}
+              transition={{ duration: 0.2 }}
+            >
+              <X className="w-5 h-5 text-zinc-400 group-hover:text-white transition-colors" />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="menu"
+              initial={{ opacity: 0, rotate: 90 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              exit={{ opacity: 0, rotate: -90 }}
+              transition={{ duration: 0.2 }}
+            >
+              <Menu className="w-5 h-5 text-zinc-400 group-hover:text-white transition-colors" />
+            </motion.div>
           )}
+        </AnimatePresence>
+      </motion.button>
 
-          {/* Navigation icons - centered when open */}
-          <div className={open ? "flex flex-col gap-8 items-center" : "flex flex-col gap-4 items-center flex-1 justify-center"}>
-            {links.map((link, idx) => (
-              <SidebarLink key={idx} link={link} />
-            ))}
-          </div>
-          
-          {/* PC Full-screen layout - only show on desktop */}
-          <div className="hidden md:contents">
-            {/* Profile picture and name - bottom left when open, centered when closed */}
-            <div className={open ? "absolute bottom-8 left-8 flex flex-col gap-6 items-start" : "flex flex-col gap-6 items-center"}>
-              <div className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 min-h-[60px]">
-                <img
-                  src={portrait1}
-                  className={open ? "h-16 w-16 shrink-0 rounded-full object-cover" : "h-10 w-10 shrink-0 rounded-full object-cover"}
-                  width={50}
-                  height={50}
-                  alt="Salahuddin M."
-                />
-                <motion.span
-                  animate={{
-                    display: open ? "inline-block" : "none",
-                    opacity: open ? 1 : 0,
-                  }}
-                  className={open ? "text-white text-xl font-medium whitespace-pre" : "text-white text-sm font-medium whitespace-pre"}
+      {/* Overlay for mobile */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
+            onClick={() => setOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Sidebar */}
+      <AnimatePresence>
+        {open && (
+          <motion.aside
+            initial={{ x: "-100%", opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ x: "-100%", opacity: 0 }}
+            transition={{ duration: 0.4, ease: [0.23, 1, 0.32, 1] }}
+            className="fixed inset-0 md:inset-auto md:left-0 md:top-0 md:bottom-0 md:w-80 z-40 flex flex-col"
+          >
+            {/* Background */}
+            <div className="absolute inset-0 bg-zinc-950/95 md:bg-zinc-950/90 backdrop-blur-2xl">
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/20 to-transparent" />
+              <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-violet-500/10 via-transparent to-violet-500/10 hidden md:block" />
+              <div className="absolute top-20 -left-20 w-60 h-60 bg-violet-600/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute bottom-20 -left-10 w-40 h-40 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
+            </div>
+
+            {/* Content Container */}
+            <div className="relative flex flex-col h-full px-6 py-8">
+              
+              {/* Header - Profile Section (with extra top spacing) */}
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                className="flex items-center gap-4 mt-14 md:mt-12"
+              >
+                <div className="relative">
+                  <img
+                    src={portrait1}
+                    className="w-12 h-12 rounded-full object-cover ring-2 ring-white/10"
+                    alt="Salahuddin M."
+                  />
+                  <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-zinc-950" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-white font-medium text-base">Salahuddin M.</span>
+                  <span className="text-zinc-500 text-sm">Networks Engineer & Frontend Developer</span>
+                </div>
+              </motion.div>
+
+              {/* Navigation Links - Centered Vertically */}
+              <nav className="flex-1 flex flex-col gap-1.5 justify-center">
+                <span className="text-zinc-600 text-xs font-medium uppercase tracking-wider mb-4 px-3">
+                  Navigation
+                </span>
+                {links.map((link, idx) => (
+                  <motion.a
+                    key={link.label}
+                    href={link.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleNavClick(link.href);
+                    }}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.05 * idx + 0.15 }}
+                    className="group relative flex items-center gap-4 px-4 py-3.5 rounded-xl text-zinc-400 hover:text-white transition-all duration-300"
+                  >
+                    <div className="absolute inset-0 rounded-xl bg-white/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 bg-violet-500 rounded-full group-hover:h-5 transition-all duration-300" />
+                    
+                    <link.icon className="relative w-5 h-5 text-zinc-500 group-hover:text-violet-400 transition-colors duration-300" />
+                    <span className="relative font-medium text-[15px]">{link.label}</span>
+                  </motion.a>
+                ))}
+              </nav>
+
+              {/* Footer Section */}
+              <div className="pt-6 border-t border-white/[0.05]">
+                <div className="flex items-center gap-2 mb-5">
+                  <span className="text-zinc-600 text-xs font-medium uppercase tracking-wider mr-2">
+                    Connect
+                  </span>
+                  {socialLinks.map((link, idx) => (
+                    <motion.a
+                      key={link.label}
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.3 + idx * 0.05 }}
+                      whileHover={{ scale: 1.1, y: -2 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/[0.05] flex items-center justify-center hover:bg-violet-600/20 hover:border-violet-500/30 transition-all duration-300 group"
+                    >
+                      <link.icon className="w-4 h-4 text-zinc-500 group-hover:text-violet-400 transition-colors" />
+                    </motion.a>
+                  ))}
+                </div>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4 }}
+                  className="flex items-center gap-3 px-4 py-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20"
                 >
-                  Salahuddin M.
-                </motion.span>
+                  <span className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500" />
+                  </span>
+                  <span className="text-emerald-400 text-sm font-medium">Available for work</span>
+                </motion.div>
               </div>
             </div>
+          </motion.aside>
+        )}
+      </AnimatePresence>
 
-            {/* Social links - bottom center when open, part of profile when closed */}
-            <div className={open ? "absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-4" : "hidden"}>
-              {socialLinks.map((link, idx) => (
-                <motion.a
-                  key={idx}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="h-16 w-16 flex items-center justify-center"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  {React.cloneElement(link.icon as React.ReactElement, {
-                    className: "h-8 w-8 shrink-0 text-white hover:text-gray-300 transition-colors duration-300"
-                  })}
-                </motion.a>
-              ))}
-            </div>
+      {/* Collapsed Desktop Sidebar */}
+      <motion.aside
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className={cn(
+          "fixed left-0 top-0 bottom-0 w-[72px] z-30 hidden md:flex flex-col items-center py-6 transition-opacity duration-300",
+          open ? "opacity-0 pointer-events-none" : "opacity-100"
+        )}
+      >
+        <div className="absolute inset-0 bg-zinc-950/60 backdrop-blur-xl border-r border-white/[0.04]" />
+        
+        <div className="h-14" />
+        
+        {/* Nav Icons - Centered Vertically */}
+        <nav className="relative flex-1 flex flex-col items-center justify-center gap-2">
+          {links.map((link, idx) => (
+            <motion.a
+              key={link.label}
+              href={link.href}
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavClick(link.href);
+              }}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1 * idx + 0.3 }}
+              className="group relative w-11 h-11 rounded-xl flex items-center justify-center hover:bg-white/[0.05] transition-all duration-300"
+            >
+              <link.icon className="w-5 h-5 text-zinc-500 group-hover:text-violet-400 transition-colors duration-300" />
+              
+              <div className="absolute left-full ml-3 px-3 py-1.5 rounded-lg bg-zinc-900 border border-white/10 text-white text-sm font-medium opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap pointer-events-none">
+                {link.label}
+                <div className="absolute left-0 top-1/2 -translate-x-1 -translate-y-1/2 w-2 h-2 bg-zinc-900 border-l border-b border-white/10 rotate-45" />
+              </div>
+            </motion.a>
+          ))}
+        </nav>
 
-            {/* Available to work label - bottom right when open, part of profile when closed */}
-            <div className={open ? "absolute bottom-8 right-8 flex flex-col gap-6 items-start" : "hidden"}>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/10 transition-all duration-300 min-h-[60px]"
-              >
-                <div className="h-16 w-16 flex items-center justify-center">
-                  <div className="w-8 h-8 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50 flex items-center justify-center">
-                    <div className="w-4 h-4 bg-green-600 rounded-full"></div>
-                  </div>
-                </div>
-                <span className="text-green-400 text-xl font-medium whitespace-pre">Available to work</span>
-              </motion.div>
-            </div>
-          </div>
-        </SidebarBody>
-      </Sidebar>
-      
-      {/* Content wrapper with dynamic margin */}
+        {/* Bottom Section */}
+        <div className="relative flex flex-col items-center gap-3">
+          {socialLinks.map((link, idx) => (
+            <motion.a
+              key={link.label}
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 + idx * 0.1 }}
+              className="w-9 h-9 rounded-lg flex items-center justify-center hover:bg-white/[0.05] transition-all duration-300 group"
+            >
+              <link.icon className="w-4 h-4 text-zinc-600 group-hover:text-zinc-300 transition-colors" />
+            </motion.a>
+          ))}
+          
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7 }}
+            className="relative mt-2"
+          >
+            <img
+              src={portrait1}
+              className="w-9 h-9 rounded-full object-cover ring-2 ring-white/10 hover:ring-violet-500/30 transition-all duration-300 cursor-pointer"
+              alt="Profile"
+              onClick={() => setOpen(true)}
+            />
+            <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-zinc-950" />
+          </motion.div>
+        </div>
+      </motion.aside>
+
+      {/* Content wrapper */}
       {children && (
-        <div 
-          className={`transition-all duration-300 ${
-            open ? 'md:ml-[300px]' : 'md:ml-[80px]'
-          }`}
-        >
+        <div className={cn(
+          "transition-all duration-300 ease-out",
+          "md:ml-[72px]"
+        )}>
           {children}
         </div>
       )}
@@ -173,19 +277,4 @@ export function Navigation({ children }: { children?: React.ReactNode }) {
   );
 }
 
-export const ArrowIcon = ({ open, setOpen }: { open: boolean; setOpen: (open: boolean) => void }) => {
-  return (
-    <motion.button
-      onClick={(e) => {
-        e.preventDefault();
-        setOpen(!open);
-      }}
-      className="relative z-20 flex items-center justify-center p-4 cursor-pointer hover:scale-105 transition-all duration-300 rounded-xl hover:bg-white/10 min-h-[60px] min-w-[60px]"
-      whileHover={{ scale: 1.05, rotate: open ? -90 : 0 }}
-      whileTap={{ scale: 0.98 }}
-      animate={{ rotate: open ? -90 : 0 }}
-    >
-      <IconChevronRight className="h-6 w-6 text-white" />
-    </motion.button>
-  );
-};
+export default Navigation;
