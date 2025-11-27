@@ -78,18 +78,20 @@ function App() {
 
         {/* Content */}
         <div className="relative z-10">
-          <Navigation>
-            {!isMobile && <ScrollMeter />}
-            {!isMobile && <CustomCursor />}
-            <Hero />
-            <Suspense fallback={<LoadingSpinner />}>
-              <About />
-              <Skills />
-              <Projects />
-              <Contact />
-            </Suspense>
-            <Footer />
-          </Navigation>
+          <main>
+            <Navigation>
+              {!isMobile && <ScrollMeter />}
+              {!isMobile && <CustomCursor />}
+              <Hero />
+              <Suspense fallback={<LoadingSpinner />}>
+                <About />
+                <Skills />
+                <Projects />
+                <Contact />
+              </Suspense>
+              <Footer />
+            </Navigation>
+          </main>
         </div>
 
         {/* Progressive loading overlay */}

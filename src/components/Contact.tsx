@@ -186,7 +186,7 @@ export default function Contact() {
               <form onSubmit={handleSubmit} className="space-y-5">
                 {/* Name */}
                 <div>
-                  <label htmlFor="name" className="block text-sm text-white/40 mb-2">
+                  <label htmlFor="name" className="block text-sm text-white/60 mb-2">
                     Name <span className="text-indigo-400">*</span>
                   </label>
                   <input
@@ -204,7 +204,7 @@ export default function Contact() {
 
                 {/* Email */}
                 <div>
-                  <label htmlFor="email" className="block text-sm text-white/40 mb-2">
+                  <label htmlFor="email" className="block text-sm text-white/60 mb-2">
                     Email <span className="text-indigo-400">*</span>
                   </label>
                   <input
@@ -222,7 +222,7 @@ export default function Contact() {
 
                 {/* Availability */}
                 <div>
-                  <label htmlFor="availability" className="block text-sm text-white/40 mb-2">
+                  <label htmlFor="availability" className="block text-sm text-white/60 mb-2">
                     Preferred Time <span className="text-white/20">(optional)</span>
                   </label>
                   <div className="relative">
@@ -239,13 +239,13 @@ export default function Contact() {
                         <option key={index} value={slot} className="bg-gray-900">{slot}</option>
                       ))}
                     </select>
-                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30 pointer-events-none" />
+                    <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50 pointer-events-none" />
                   </div>
                 </div>
 
                 {/* Message */}
                 <div>
-                  <label htmlFor="message" className="block text-sm text-white/40 mb-2">
+                  <label htmlFor="message" className="block text-sm text-white/60 mb-2">
                     Message <span className="text-indigo-400">*</span>
                   </label>
                   <textarea
@@ -315,7 +315,7 @@ export default function Contact() {
                   <Mail className="w-5 h-5 text-indigo-400" />
                 </div>
                 <div className="text-left">
-                  <p className="text-xs text-white/40 mb-0.5">Email</p>
+                  <p className="text-xs text-white/60 mb-0.5">Email</p>
                   <p className="text-sm text-white/80">medkoursalaheddine@gmail.com</p>
                 </div>
               </div>
@@ -337,7 +337,7 @@ export default function Contact() {
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                   >
-                    <Copy className="w-4 h-4 text-white/20 group-hover:text-white/50 transition-colors" />
+                    <Copy className="w-4 h-4 text-white/40 group-hover:text-white/60 transition-colors" />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -355,11 +355,11 @@ export default function Contact() {
                   <Linkedin className="w-5 h-5 text-blue-400" />
                 </div>
                 <div className="text-left">
-                  <p className="text-xs text-white/40 mb-0.5">LinkedIn</p>
+                  <p className="text-xs text-white/60 mb-0.5">LinkedIn</p>
                   <p className="text-sm text-white/80">Salah Eddine Medkour</p>
                 </div>
               </div>
-              <ExternalLink className="w-4 h-4 text-white/20 group-hover:text-white/50 transition-colors" />
+              <ExternalLink className="w-4 h-4 text-white/40 group-hover:text-white/60 transition-colors" />
             </a>
 
             {/* GitHub */}
@@ -374,11 +374,11 @@ export default function Contact() {
                   <Github className="w-5 h-5 text-white/60" />
                 </div>
                 <div className="text-left">
-                  <p className="text-xs text-white/40 mb-0.5">GitHub</p>
+                  <p className="text-xs text-white/60 mb-0.5">GitHub</p>
                   <p className="text-sm text-white/80">salahmed-ctrlz</p>
                 </div>
               </div>
-              <ExternalLink className="w-4 h-4 text-white/20 group-hover:text-white/50 transition-colors" />
+              <ExternalLink className="w-4 h-4 text-white/40 group-hover:text-white/60 transition-colors" />
             </a>
 
             {/* Resume */}
@@ -392,7 +392,7 @@ export default function Contact() {
                   <Download className="w-5 h-5 text-purple-400" />
                 </div>
                 <div className="text-left">
-                  <p className="text-xs text-white/40 mb-0.5">Resume</p>
+                  <p className="text-xs text-white/60 mb-0.5">Resume</p>
                   <p className="text-sm text-white/80">Download CV</p>
                 </div>
               </div>
@@ -401,16 +401,16 @@ export default function Contact() {
 
             {/* Status Tags */}
             <div className="pt-6 flex flex-wrap gap-2">
-              <span className="text-xs text-white/30 px-3 py-1.5 rounded-full border border-white/5">
+              <span className="text-xs text-white/50 px-3 py-1.5 rounded-full border border-white/5">
                 Open to Work
               </span>
-              <span className="text-xs text-white/30 px-3 py-1.5 rounded-full border border-white/5">
+              <span className="text-xs text-white/50 px-3 py-1.5 rounded-full border border-white/5">
                 Freelance
               </span>
-              <span className="text-xs text-white/30 px-3 py-1.5 rounded-full border border-white/5">
+              <span className="text-xs text-white/50 px-3 py-1.5 rounded-full border border-white/5">
                 Remote
               </span>
-              <span className="text-xs text-white/30 px-3 py-1.5 rounded-full border border-white/5">
+              <span className="text-xs text-white/50 px-3 py-1.5 rounded-full border border-white/5">
                 ~24h Response
               </span>
             </div>

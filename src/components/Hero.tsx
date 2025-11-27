@@ -411,6 +411,7 @@ export default function Hero() {
                   e.preventDefault();
                   scrollToContact();
                 }}
+                aria-label="Contact me via email form"
                 className="text-white/80 hover:text-white transition-colors duration-200"
                 whileHover={{ scale: 1.2, rotate: 5 }}
                 whileTap={{ scale: 0.9 }}
@@ -423,6 +424,7 @@ export default function Hero() {
                 href="https://www.linkedin.com/in/salah-eddine-medkour/"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Visit my LinkedIn profile"
                 className="text-white/80 hover:text-white transition-colors duration-200"
                 whileHover={{ scale: 1.2, rotate: -5 }}
                 whileTap={{ scale: 0.9 }}
@@ -435,6 +437,7 @@ export default function Hero() {
                 href="https://github.com/salahmed-ctrlz"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Visit my GitHub profile"
                 className="text-white/80 hover:text-white transition-colors duration-200"
                 whileHover={{ scale: 1.2, rotate: 5 }}
                 whileTap={{ scale: 0.9 }}

@@ -333,7 +333,7 @@ export default function About() {
                     </motion.p>
                   )}
                   {activeCard.line3 && (
-                    <motion.p 
+                    <motion.p
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.2 }}
@@ -412,7 +412,7 @@ export default function About() {
             </h4>
             
             {/* Level */}
-            <p className="text-xs sm:text-sm text-white/50 text-center">
+            <p className="text-xs sm:text-sm text-white/60 text-center">
               {lang.level}
             </p>
           </motion.div>
@@ -573,7 +573,7 @@ export default function About() {
                         <h4 className="text-lg sm:text-xl font-bold text-white mb-1">
                           {card.title}
                         </h4>
-                        <p className="text-xs text-white/40">{card.subtitle}</p>
+                        <p className="text-xs text-white/60">{card.subtitle}</p>
                       </div>
 
                       {/* Description */}
@@ -793,19 +793,19 @@ export default function About() {
                                 </span>
                               )}
                             </div>
-                            <p className="text-sm text-white/40 mt-1">
+                            <p className="text-sm text-white/60 mt-1">
                               {item.institution}
                             </p>
                           </div>
                           <div className="flex items-center gap-3 flex-shrink-0">
-                            <span className="text-xs sm:text-sm text-white/30">
+                            <span className="text-xs sm:text-sm text-white/50">
                               {item.period}
                             </span>
                             <motion.div
                               animate={{ rotate: expandedItems[index] ? 180 : 0 }}
                               transition={{ duration: 0.2 }}
                             >
-                              <ChevronDown className="w-5 h-5 text-white/30 group-hover:text-white/50 transition-colors" />
+                              <ChevronDown className="w-5 h-5 text-white/50 group-hover:text-white/70 transition-colors" />
                             </motion.div>
                           </div>
                         </div>

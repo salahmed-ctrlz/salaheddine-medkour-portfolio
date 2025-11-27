@@ -38,6 +38,7 @@ export function Navigation({ children }: { children?: React.ReactNode }) {
         onClick={() => setOpen(!open)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
+        aria-label={open ? "Close navigation menu" : "Open navigation menu"}
         style={{
           boxShadow: '0 4px 24px -4px rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255,255,255,0.05)'
         }}
@@ -125,7 +126,7 @@ export function Navigation({ children }: { children?: React.ReactNode }) {
 
               {/* Navigation Links - Centered Vertically */}
               <nav className="flex-1 flex flex-col gap-1.5 justify-center">
-                <span className="text-zinc-600 text-xs font-medium uppercase tracking-wider mb-4 px-3">
+                <span className="text-zinc-500 text-xs font-medium uppercase tracking-wider mb-4 px-3">
                   Navigation
                 </span>
                 {links.map((link, idx) => (
@@ -154,7 +155,7 @@ export function Navigation({ children }: { children?: React.ReactNode }) {
               {/* Footer Section */}
               <div className="pt-6 border-t border-white/[0.05]">
                 <div className="flex items-center gap-2 mb-5">
-                  <span className="text-zinc-600 text-xs font-medium uppercase tracking-wider mr-2">
+                  <span className="text-zinc-500 text-xs font-medium uppercase tracking-wider mr-2">
                     Connect
                   </span>
                   {socialLinks.map((link, idx) => (
@@ -169,6 +170,7 @@ export function Navigation({ children }: { children?: React.ReactNode }) {
                       whileHover={{ scale: 1.1, y: -2 }}
                       whileTap={{ scale: 0.95 }}
                       className="w-10 h-10 rounded-lg bg-white/[0.03] border border-white/[0.05] flex items-center justify-center hover:bg-violet-600/20 hover:border-violet-500/30 transition-all duration-300 group"
+                      aria-label={`Visit my ${link.label} profile`}
                     >
                       <link.icon className="w-4 h-4 text-zinc-500 group-hover:text-violet-400 transition-colors" />
                     </motion.a>
@@ -220,6 +222,7 @@ export function Navigation({ children }: { children?: React.ReactNode }) {
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 * idx + 0.3 }}
+              aria-label={link.label}
               className="group relative w-11 h-11 rounded-xl flex items-center justify-center hover:bg-white/[0.05] transition-all duration-300"
             >
               <link.icon className="w-5 h-5 text-zinc-500 group-hover:text-violet-400 transition-colors duration-300" />
@@ -243,9 +246,10 @@ export function Navigation({ children }: { children?: React.ReactNode }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 + idx * 0.1 }}
+              aria-label={`Visit my ${link.label} profile`}
               className="w-9 h-9 rounded-lg flex items-center justify-center hover:bg-white/[0.05] transition-all duration-300 group"
             >
-              <link.icon className="w-4 h-4 text-zinc-600 group-hover:text-zinc-300 transition-colors" />
+              <link.icon className="w-4 h-4 text-zinc-500 group-hover:text-zinc-300 transition-colors" />
             </motion.a>
           ))}
           
