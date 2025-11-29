@@ -17,49 +17,55 @@ interface Skill {
 }
 
 const skills: Skill[] = [
-  // Security Tools
+  // --- ROW 1: The "Identity" (Security, Scripting, Dev, Networks) ---
   { name: "Kali Linux", logo: "https://cdn.simpleicons.org/kalilinux", category: "security" },
-  { name: "Wireshark", logo: "https://cdn.simpleicons.org/wireshark", category: "security" },
-  { name: "Burp Suite", logo: burpsuiteLogo, category: "security" },
-  { name: "Nmap", logo: nmapLogo, category: "security" },
-  { name: "ZAP", logo: zapLogo, category: "security" },
-  
-  // Frontend
-  { name: "React", logo: "https://cdn.simpleicons.org/react", category: "frontend" },
+  { name: "Python", logo: "https://cdn.simpleicons.org/python", category: "backend" },
   { name: "TypeScript", logo: "https://cdn.simpleicons.org/typescript", category: "frontend" },
+  { name: "Wireshark", logo: "https://cdn.simpleicons.org/wireshark", category: "security" },
+
+  // --- ROW 2: The "SysAdmin & Support" (Windows/Linux/PowerShell) ---
+  { name: "Windows", logo: windowsLogo, category: "other" },
+  { name: "PowerShell", logo: powershellLogo, category: "other" },
+  { name: "Linux", logo: "https://cdn.simpleicons.org/linux", category: "other" },
+  { name: "React", logo: "https://cdn.simpleicons.org/react", category: "frontend" },
+
+  // --- ROW 3: DevOps & Version Control (Bumped Up) ---
+  { name: "Git", logo: "https://cdn.simpleicons.org/git", category: "devops" },
+  { name: "Github", logo: "https://cdn.simpleicons.org/github", category: "other" },
+  { name: "Docker", logo: "https://cdn.simpleicons.org/docker", category: "devops" },
+  { name: "Nmap", logo: nmapLogo, category: "security" },
+
+  // --- ROW 4: Cloud & Security Tools ---
+  { name: "AWS", logo: awsLogo, category: "devops" },
+  { name: "Google Cloud", logo: "https://cdn.simpleicons.org/googlecloud", category: "devops" },
+  { name: "Burp Suite", logo: burpsuiteLogo, category: "security" },
+  { name: "Bash", logo: "https://cdn.simpleicons.org/gnubash", category: "other" },
+
+  // --- ROW 5: Web Fundamentals ---
   { name: "Next.js", logo: "https://cdn.simpleicons.org/nextdotjs", category: "frontend" },
+  { name: "Vite", logo: "https://cdn.simpleicons.org/vite", category: "frontend" },
   { name: "HTML", logo: "https://cdn.simpleicons.org/html5", category: "frontend" },
   { name: "CSS", logo: "https://cdn.simpleicons.org/css", category: "frontend" },
-  { name: "Vite", logo: "https://cdn.simpleicons.org/vite", category: "frontend" },
-  { name: "Three.js", logo: "https://cdn.simpleicons.org/threedotjs", category: "frontend" },
+
+  // --- ROW 6: Other OS & Tools ---
+  { name: "Ubuntu", logo: "https://cdn.simpleicons.org/ubuntu", category: "other" },
+  { name: "Arch Linux", logo: "https://cdn.simpleicons.org/archlinux", category: "other" },
+  { name: "ZAP", logo: zapLogo, category: "security" },
+  { name: "OpenAI", logo: "https://cdn.simpleicons.org/openai", category: "ai" },
+
   
-  // Backend
-  { name: "Python", logo: "https://cdn.simpleicons.org/python", category: "backend" },
+
+  // --- ROW 7: Backend & DBs (Lowered as requested) ---
   { name: "Node.js", logo: "https://cdn.simpleicons.org/nodedotjs", category: "backend" },
   { name: "PostgreSQL", logo: "https://cdn.simpleicons.org/postgresql", category: "backend" },
   { name: "MongoDB", logo: "https://cdn.simpleicons.org/mongodb", category: "backend" },
-  
-  // DevOps
-  { name: "Git", logo: "https://cdn.simpleicons.org/git", category: "devops" },
-  { name: "Docker", logo: "https://cdn.simpleicons.org/docker", category: "devops" },
-  { name: "AWS", logo: awsLogo, category: "devops" },
-  { name: "Google Cloud", logo: "https://cdn.simpleicons.org/googlecloud", category: "devops" },
-  
-  // Other
-  { name: "Github", logo: "https://cdn.simpleicons.org/github", category: "other" },
-  { name: "Bash", logo: "https://cdn.simpleicons.org/gnubash", category: "other" },
-  { name: "Windows", logo: windowsLogo, category: "other" },
-  { name: "Linux", logo: "https://cdn.simpleicons.org/linux", category: "other" },
-  { name: "Ubuntu", logo: "https://cdn.simpleicons.org/ubuntu", category: "other" },
-  { name: "Arch Linux", logo: "https://cdn.simpleicons.org/archlinux", category: "other" },
-  { name: "PowerShell", logo: powershellLogo, category: "other" },
-  
-  // AI
-  { name: "Hugging Face", logo: "https://cdn.simpleicons.org/huggingface", category: "ai" },
-  { name: "OpenAI", logo: "https://cdn.simpleicons.org/openai", category: "ai" },
+  { name: "Three.js", logo: "https://cdn.simpleicons.org/threedotjs", category: "frontend" },
+
+  // --- ROW 8: AI Tools (Lowest priority) ---
+  { name: "Cloudflare", logo: "https://cdn.simpleicons.org/cloudflare", category: "devops" },
   { name: "Google Gemini", logo: "https://cdn.simpleicons.org/googlegemini", category: "ai" },
   { name: "Claude", logo: "https://cdn.simpleicons.org/claude", category: "ai" },
-  { name: "Windsurf", logo: "https://cdn.simpleicons.org/windsurf", category: "ai" }
+  { name: "Hugging Face", logo: "https://cdn.simpleicons.org/huggingface", category: "ai" }
 ];
 
 const categories = [
@@ -236,7 +242,7 @@ export default function Skills() {
             Skills & Technologies
           </h2>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Tech stack I have experience with, ranging from frontend/backend development to DevOps, security tools, Operating Systems and AI technologies.
+            My technical toolkit. While my core focus is Networking & Cybersecurity, I enjoy experimenting with a wide range of security and development tools to stay versatile.
           </p>
         </motion.div>
 

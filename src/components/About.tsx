@@ -520,7 +520,7 @@ export default function About() {
 
           {/* Cards Container */}
           <div 
-            className={`relative h-[320px] sm:h-[300px] w-full max-w-xs sm:max-w-sm md:max-w-md flex items-center justify-center overflow-visible select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+            className={`relative h-[340px] sm:h-[320px] w-full max-w-xs sm:max-w-sm md:max-w-md flex items-center justify-center overflow-visible select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
             onTouchStart={handleTouchStart}
             onTouchMove={(e) => e.preventDefault()}
             onTouchEnd={handleTouchEnd}
@@ -551,7 +551,7 @@ export default function About() {
                     style={{ cursor: isActive ? 'default' : 'pointer' }}
                   >
                     <div
-                      className="h-[300px] sm:h-[280px] p-6 sm:p-8 rounded-2xl flex flex-col transition-all duration-300"
+                      className="h-[320px] sm:h-[300px] p-6 sm:p-8 rounded-2xl flex flex-col transition-all duration-300"
                       style={{
                         background: isActive 
                           ? `linear-gradient(160deg, ${card.color}12 0%, rgba(0,0,0,0.5) 100%)`
