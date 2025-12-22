@@ -25,6 +25,7 @@ function App() {
   const [mounted, setMounted] = useState(false);
   const [showLoadingScreen, setShowLoadingScreen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [isLowEndDevice, setIsLowEndDevice] = useState(false);
 
   useEffect(() => {
     // Always show loading screen on page load/refresh
@@ -36,8 +37,16 @@ function App() {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 768); // Using 768px as a common tablet breakpoint
     };
-    
+
+    // Detect low-end devices - only hide on mobile screens
+    const checkLowEndDevice = () => {
+      // Only hide on mobile devices (≤768px), keep visible on all PCs
+      const isLowEnd = window.innerWidth <= 768;
+      setIsLowEndDevice(isLowEnd);
+    };
+
     checkMobile();
+    checkLowEndDevice();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
@@ -45,9 +54,9 @@ function App() {
   useEffect(() => {
     const contactLink = document.querySelector('a[href="#contact"]');
     const contactElement = document.getElementById('contact');
-    
+
     if (contactLink && contactElement) {
-      contactLink.addEventListener('click', function(e) {
+      contactLink.addEventListener('click', function (e) {
         e.preventDefault();
         contactElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
@@ -65,16 +74,18 @@ function App() {
       {showLoadingScreen && (
         <LoadingScreen onComplete={handleLoadingComplete} />
       )}
-      
+
       {/* Main App */}
       <div className="bg-black text-white min-h-screen relative">
-        {/* Orb Background */}
-        <Orb
-          hoverIntensity={isMobile ? 0 : 0.5}
-          rotateOnHover={!isMobile}
-          hue={0}
-          forceHoverState={isMobile}
-        />
+        {/* Orb Background - Hidden on mobile and low-end devices */}
+        {!isLowEndDevice && (
+          <Orb
+            hoverIntensity={0.5}
+            rotateOnHover={true}
+            hue={0}
+            forceHoverState={false}
+          />
+        )}
 
         {/* Content */}
         <div className="relative z-10">

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../lib/utils";
 import { Home, User, Code, Briefcase, Mail, Linkedin, Github, Menu, X } from "lucide-react";
-import portrait1 from './images/Portraits/portrait3.webp';
+import portrait1 from './images/Portraits/Portrait3.webp';
 
 export function Navigation({ children }: { children?: React.ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -102,7 +102,7 @@ export function Navigation({ children }: { children?: React.ReactNode }) {
 
             {/* Content Container */}
             <div className="relative flex flex-col h-full px-6 py-8">
-              
+
               {/* Header - Profile Section (with extra top spacing) */}
               <motion.div
                 initial={{ opacity: 0, y: -20 }}
@@ -145,7 +145,7 @@ export function Navigation({ children }: { children?: React.ReactNode }) {
                     <div className="absolute inset-0 rounded-xl bg-white/[0.03] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-violet-600/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                     <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-0 bg-violet-500 rounded-full group-hover:h-5 transition-all duration-300" />
-                    
+
                     <link.icon className="relative w-5 h-5 text-zinc-500 group-hover:text-violet-400 transition-colors duration-300" />
                     <span className="relative font-medium text-[15px]">{link.label}</span>
                   </motion.a>
@@ -206,9 +206,9 @@ export function Navigation({ children }: { children?: React.ReactNode }) {
         )}
       >
         <div className="absolute inset-0 bg-zinc-950/60 backdrop-blur-xl border-r border-white/[0.04]" />
-        
+
         <div className="h-14" />
-        
+
         {/* Nav Icons - Centered Vertically */}
         <nav className="relative flex-1 flex flex-col items-center justify-center gap-2">
           {links.map((link, idx) => (
@@ -226,7 +226,7 @@ export function Navigation({ children }: { children?: React.ReactNode }) {
               className="group relative w-11 h-11 rounded-xl flex items-center justify-center hover:bg-white/[0.05] transition-all duration-300"
             >
               <link.icon className="w-5 h-5 text-zinc-500 group-hover:text-violet-400 transition-colors duration-300" />
-              
+
               <div className="absolute left-full ml-3 px-3 py-1.5 rounded-lg bg-zinc-900 border border-white/10 text-white text-sm font-medium opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 whitespace-nowrap pointer-events-none">
                 {link.label}
                 <div className="absolute left-0 top-1/2 -translate-x-1 -translate-y-1/2 w-2 h-2 bg-zinc-900 border-l border-b border-white/10 rotate-45" />
@@ -252,7 +252,7 @@ export function Navigation({ children }: { children?: React.ReactNode }) {
               <link.icon className="w-4 h-4 text-zinc-500 group-hover:text-zinc-300 transition-colors" />
             </motion.a>
           ))}
-          
+
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

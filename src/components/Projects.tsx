@@ -19,6 +19,7 @@ import webrtcE2eeImage2 from './images/Projects/webrtcE2eeImage2.webp'
 import webrtcE2eeImage3 from './images/Projects/webrtcE2eeImage3.webp'
 import saktool from './images/Projects/saktool.png';
 import adamzebilah from './images/Projects/adamzebilah.webp';
+import airquiz from './images/Projects/AirQuiz.webp';
 
 // Import preview GIFs  
 import portfolioPreview from './images/Preview/portfolio-preview.webp';
@@ -77,15 +78,15 @@ const categories = [
   }
 ];
 
-const ProjectImage = ({ src, alt, width, height }: { 
-  src: string; 
+const ProjectImage = ({ src, alt, width, height }: {
+  src: string;
   alt: string;
   width: number;
   height: number;
 }) => (
-  <div 
-    className="project-image-wrapper" 
-    style={{ 
+  <div
+    className="project-image-wrapper"
+    style={{
       contain: 'layout size style',
       aspectRatio: `${width}/${height}`,
     }}
@@ -112,9 +113,9 @@ export default function Projects() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  
+
   const sectionRef = useRef<HTMLElement>(null);
-  
+
   // Projects data organized by categories - Easy to edit in the future
   const projects: Project[] = [
     // Featured Projects (First 3 - Pinned)
@@ -146,14 +147,13 @@ export default function Projects() {
     },
     {
       id: 3,
-      title: "Graphic Designer Portfolio",
-      description: "A modern, responsive portfolio website for a graphic designer showcasing brand identity projects and creative work.",
-      details: "Portfolio Features\n\n• Multilingual Support: Available in English, French, German, Spanish, and Arabic\n• Responsive Design: Fully responsive layout that works on all devices\n• Dark/Light Mode: Toggle between dark and light themes\n• Interactive UI: Smooth animations and transitions\n• Project Showcase: Detailed project pages with image galleries\n• Contact Form: Integrated contact form with validation\n• Social Integration: Links to social media profiles\n• Accessibility: Built with accessibility in mind\n\nTechnical Implementation\n\n• Built with React 18 and TypeScript for type safety\n• Styled with TailwindCSS for consistent design\n• Enhanced with Radix UI and Shadcn/ui components\n• Smooth animations using Framer Motion\n• Form handling with React Hook Form\n• Data visualization with Recharts\n• Icons from Lucide React\n• Deployed on GitHub Pages",
-      image: graphicdesigner,
-      previewGif: graphicdesignerPreview,
-      technologies: ["React", "TypeScript", "TailwindCSS", "Framer Motion", "Radix UI"],
-      github: "https://github.com/salahmed-ctrlz/graphic-designer-portfolio",
-      demo: "https://salahmed-ctrlz.github.io/graphic-designer-portfolio/",
+      title: "AirQuiz: Offline-First Assessment Platform",
+      description: "A local-first digital examination system engineered to operate independently of internet connectivity, serving 180+ university students.",
+      details: "System Capabilities\n\n• Offline-First Architecture: Zero dependency on external internet; operates entirely on Local Area Network (LAN)\n• High Concurrency: Engineered to handle 45+ simultaneous connections with <10ms latency\n• Automated Grading: Instant scoring engine that reduces administrative grading time by 95%\n• Data Export: One-click CSV/Excel generation for academic records\n• Real-time Monitoring: Live dashboard for instructors to track student progress\n• Responsive Interface: Mobile-optimized for students using personal devices\n\nTechnical Infrastructure\n\n• Backend: High-performance REST API built with Python (FastAPI)\n• Frontend: Interactive UI built with React.js and TailwindCSS\n• Networking: Optimized for high-throughput local WLAN environments\n• Database: Lightweight SQLite integration for portable deployment\n• Security: Session management and data integrity checks",
+      image: airquiz,
+      technologies: ["Python", "FastAPI", "React", "Network Engineering", "TailwindCSS"],
+      github: "https://github.com/salahmed-ctrlz/Airquiz",
+      demo: "https://github.com/salahmed-ctrlz/Airquiz",
       featured: true,
       category: 'web'
     },
@@ -222,7 +222,7 @@ export default function Projects() {
       category: 'web'
     },
     {
-      id: 9,  
+      id: 9,
       title: "Password Generator",
       description: "Secure password generator with multiple themes and customization options. Built with React and styled-components.",
       details: "Password Generator Features\n\n• Generates secure passwords with customizable length and character sets\n• Features multiple themes including light, dark, and hacker modes\n• Allows copying generated passwords to clipboard with a single click\n• Provides password strength evaluation and security tips\n\nTechnical Implementation\n\n• Built with React and styled-components for theme switching\n• Used cryptographically secure random number generation\n• Implemented responsive design for mobile and desktop usage\n• Added keyboard accessibility and screen reader support",
@@ -246,7 +246,7 @@ export default function Projects() {
       category: 'tools'
     },
     {
-      id: 'tools-coming-soon-2', 
+      id: 'tools-coming-soon-2',
       title: "System Automation Suite",
       description: "Comprehensive system automation and management tools",
       category: 'tools'
@@ -271,15 +271,15 @@ export default function Projects() {
     if (selectedCategory === 'all') {
       return activeProjects;
     }
-    
+
     const categoryProjects = activeProjects.filter(project => project.category === selectedCategory);
-    
+
     // Add coming soon cards for specific categories
     if (selectedCategory === 'tools' || selectedCategory === 'security') {
       const comingSoon = comingSoonCards.filter(card => card.category === selectedCategory);
       return [...categoryProjects, ...comingSoon];
     }
-    
+
     return categoryProjects;
   }, [projects, selectedCategory]);
 
@@ -312,7 +312,7 @@ export default function Projects() {
     });
     return counts;
   }, [projects]);
-  
+
   // Simulate image preloading
   useEffect(() => {
     const imagePromises = projects.map(project => {
@@ -328,7 +328,7 @@ export default function Projects() {
       setTimeout(() => setImagesLoaded(true), 500); // Add a small delay for smoother transition
     });
   }, [projects]);
-  
+
   // Intersection Observer for lazy loading
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -351,30 +351,30 @@ export default function Projects() {
   }, []);
 
 
-  
+
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>, project: Project) => {
     if (!project.previewGif) return;
-    
+
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
+
     // Calculate percentage position for CSS variables
     const xPercent = (x / rect.width) * 100;
     const yPercent = (y / rect.height) * 100;
-    
+
     // Add bounds checking
     const safeX = Math.max(10, Math.min(90, xPercent));
     const safeY = Math.max(10, Math.min(90, yPercent));
-    
+
     // Get the preview element and update CSS variables
     const previewElement = e.currentTarget.querySelector('.preview-gif') as HTMLElement;
     if (previewElement) {
       previewElement.style.setProperty('--cursor-x', `${safeX}%`);
       previewElement.style.setProperty('--cursor-y', `${safeY}%`);
     }
-    
+
     setHoveredId(project.id);
   };
 
@@ -388,7 +388,7 @@ export default function Projects() {
     if (!carouselProject?.images?.length) return;
 
     const interval = setInterval(() => {
-      setCurrentCarouselIndex(prevIndex => 
+      setCurrentCarouselIndex(prevIndex =>
         prevIndex === (carouselProject.images?.length || 1) - 1 ? 0 : prevIndex + 1
       );
     }, 3000);
@@ -446,19 +446,19 @@ export default function Projects() {
   }, []);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
-      id="projects" 
+      id="projects"
       className="section relative overflow-hidden"
     >
       {/* Enhanced Blurry Background with Fade Edges */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute inset-0 backdrop-blur-3xl bg-black/70" 
-             style={{
-               filter: 'blur(20px)',
-               maskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)',
-               WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)'
-             }}></div>
+        <div className="absolute inset-0 backdrop-blur-3xl bg-black/70"
+          style={{
+            filter: 'blur(20px)',
+            maskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, transparent 0%, black 10%, black 90%, transparent 100%)'
+          }}></div>
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -481,11 +481,10 @@ export default function Projects() {
             {/* All Projects Tab */}
             <button
               onClick={() => setSelectedCategory('all')}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border ${
-                selectedCategory === 'all'
-                  ? 'bg-white text-gray-900 border-white shadow-lg'
-                  : 'bg-transparent text-gray-300 border-gray-600 hover:border-gray-400 hover:text-white'
-              }`}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border ${selectedCategory === 'all'
+                ? 'bg-white text-gray-900 border-white shadow-lg'
+                : 'bg-transparent text-gray-300 border-gray-600 hover:border-gray-400 hover:text-white'
+                }`}
             >
               All Projects ({categoryCounts.all})
             </button>
@@ -497,11 +496,10 @@ export default function Projects() {
                 <button
                   key={category.id}
                   onClick={() => setSelectedCategory(category.id)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border flex items-center gap-2 ${
-                    selectedCategory === category.id
-                      ? `bg-gradient-to-r ${category.gradient} text-white border-transparent shadow-lg`
-                      : 'bg-transparent text-gray-300 border-gray-600 hover:border-gray-400 hover:text-white'
-                  }`}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 border flex items-center gap-2 ${selectedCategory === category.id
+                    ? `bg-gradient-to-r ${category.gradient} text-white border-transparent shadow-lg`
+                    : 'bg-transparent text-gray-300 border-gray-600 hover:border-gray-400 hover:text-white'
+                    }`}
                 >
                   <Icon className="w-4 h-4" />
                   {category.name} ({categoryCounts[category.id]})
@@ -542,12 +540,12 @@ export default function Projects() {
         {/* Projects Grid */}
         <div className="project-grid">
           {isInView && !imagesLoaded && renderSkeletons()}
-          
+
           {isInView && imagesLoaded && visibleProjects.length > 0 ? (
             visibleProjects.map((project) => {
               const isComingSoon = isComingSoonCard(project);
               const projectCategories = isComingSoon ? [project.category] : getProjectCategories(project as Project);
-              
+
               return (
                 <motion.div
                   key={project.id}
@@ -558,75 +556,75 @@ export default function Projects() {
                   className={`project-card ${expandedId === project.id ? 'expanded' : ''}`}
                 >
                   {/* Project Image */}
-                  <div 
+                  <div
                     className="project-image-container"
                     onMouseMove={!isComingSoon ? (e) => handleMouseMove(e, project as Project) : undefined}
                     onMouseLeave={!isComingSoon ? () => setHoveredId(null) : undefined}
                   >
                     {isComingSoon ? (
-                       // Coming Soon Card - Same structure as normal cards
-                       <>
-                         {/* Blurred Image Placeholder */}
-                         <div className="relative w-full h-full bg-gradient-to-br from-gray-700/50 to-gray-800/50 rounded-2xl overflow-hidden">
-                           <div className="absolute inset-0 bg-gray-800/80 backdrop-blur-xl" />
-                           <div className="absolute inset-0 flex items-center justify-center">
-                             <div className="w-16 h-16 bg-gray-600/50 rounded-full flex items-center justify-center">
-                               <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                               </svg>
-                             </div>
-                           </div>
-                         </div>
-                       </>
-                     ) : (
-                       // Regular Project Card
-                       <>
-                         {(project as Project).carousel && (project as Project).images ? (
-                           <div className="carousel-container">
-                             {(project as Project).images!.map((image: string, imgIndex: number) => (
-                               <div
-                                 key={imgIndex}
-                                 className={`carousel-slide ${imgIndex === currentCarouselIndex ? 'active' : ''}`}
-                               >
-                                 <ProjectImage 
-                                   src={image}
-                                   alt={`${project.title} - View ${imgIndex + 1}`}
-                                   width={640}
-                                   height={360}
-                                 />
-                               </div>
-                             ))}
-                             <div className="carousel-dots">
-                               {(project as Project).images!.map((_: string, dotIndex: number) => (
-                                 <span
-                                   key={dotIndex}
-                                   className={`carousel-dot ${dotIndex === currentCarouselIndex ? 'active' : ''}`}
-                                   onClick={() => setCurrentCarouselIndex(dotIndex)}
-                                 />
-                               ))}
-                             </div>
-                           </div>
-                         ) : (
-                           <>
-                             <ProjectImage 
-                               src={(project as Project).image}
-                               alt={project.title}
-                               width={640}
-                               height={360}
-                             />
-                             {(project as Project).previewGif && (
-                               <div className="preview-gif">
-                                 <img 
-                                   src={(project as Project).previewGif}
-                                   alt={`${project.title} preview`}
-                                   loading="lazy"
-                                 />
-                               </div>
-                             )}
-                           </>
-                         )}
-                       </>
-                     )}
+                      // Coming Soon Card - Same structure as normal cards
+                      <>
+                        {/* Blurred Image Placeholder */}
+                        <div className="relative w-full h-full bg-gradient-to-br from-gray-700/50 to-gray-800/50 rounded-2xl overflow-hidden">
+                          <div className="absolute inset-0 bg-gray-800/80 backdrop-blur-xl" />
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="w-16 h-16 bg-gray-600/50 rounded-full flex items-center justify-center">
+                              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    ) : (
+                      // Regular Project Card
+                      <>
+                        {(project as Project).carousel && (project as Project).images ? (
+                          <div className="carousel-container">
+                            {(project as Project).images!.map((image: string, imgIndex: number) => (
+                              <div
+                                key={imgIndex}
+                                className={`carousel-slide ${imgIndex === currentCarouselIndex ? 'active' : ''}`}
+                              >
+                                <ProjectImage
+                                  src={image}
+                                  alt={`${project.title} - View ${imgIndex + 1}`}
+                                  width={640}
+                                  height={360}
+                                />
+                              </div>
+                            ))}
+                            <div className="carousel-dots">
+                              {(project as Project).images!.map((_: string, dotIndex: number) => (
+                                <span
+                                  key={dotIndex}
+                                  className={`carousel-dot ${dotIndex === currentCarouselIndex ? 'active' : ''}`}
+                                  onClick={() => setCurrentCarouselIndex(dotIndex)}
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        ) : (
+                          <>
+                            <ProjectImage
+                              src={(project as Project).image}
+                              alt={project.title}
+                              width={640}
+                              height={360}
+                            />
+                            {(project as Project).previewGif && (
+                              <div className="preview-gif">
+                                <img
+                                  src={(project as Project).previewGif}
+                                  alt={`${project.title} preview`}
+                                  loading="lazy"
+                                />
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </>
+                    )}
                     <div className="project-overlay" />
                   </div>
 
@@ -641,13 +639,12 @@ export default function Projects() {
                         {projectCategories.map((cat, index) => {
                           const categoryInfo = getCategoryInfo(cat);
                           return (
-                            <span 
+                            <span
                               key={cat}
-                              className={`px-2 py-1 rounded-full text-xs font-medium ${
-                                cat === 'web' ? 'bg-blue-500/20 text-blue-300' :
+                              className={`px-2 py-1 rounded-full text-xs font-medium ${cat === 'web' ? 'bg-blue-500/20 text-blue-300' :
                                 cat === 'tools' ? 'bg-emerald-500/20 text-emerald-300' :
-                                'bg-purple-500/20 text-purple-300'
-                              }`}
+                                  'bg-purple-500/20 text-purple-300'
+                                }`}
                             >
                               {categoryInfo.shortName}
                             </span>
@@ -655,7 +652,7 @@ export default function Projects() {
                         })}
                       </div>
                     </div>
-                    
+
                     {isComingSoon ? (
                       // Mock content for coming soon cards
                       <>
@@ -666,7 +663,7 @@ export default function Projects() {
                             </p>
                           </div>
                         </div>
-                        
+
                         {/* Mock Technologies */}
                         <div className="project-tags">
                           <span className="project-tag">In Development</span>
@@ -730,7 +727,7 @@ export default function Projects() {
                             )}
                           </div>
                         </div>
-                        
+
                         {/* Technologies */}
                         <div className="project-tags">
                           {(project as Project).technologies.map((tech: string, index: number) => (
@@ -826,7 +823,7 @@ export default function Projects() {
             transition={{ duration: 0.5 }}
             className="text-center mt-12"
           >
-            <button 
+            <button
               className="cta"
               onClick={() => setShowAllProjects(true)}
               data-hover="true"
@@ -845,7 +842,7 @@ export default function Projects() {
             transition={{ duration: 0.5 }}
             className="text-center mt-12"
           >
-            <button 
+            <button
               className="minimize"
               onClick={() => {
                 setShowAllProjects(false);

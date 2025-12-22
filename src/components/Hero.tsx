@@ -4,16 +4,16 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import Resume from "./MEDKOUR_SALAH_EDDINE_CV_EN.pdf";
 
 // Text animation component with improved Arabic text handling
-const TextAnimate = ({ 
-  children, 
-  variants, 
+const TextAnimate = ({
+  children,
+  variants,
   className = "",
   style = {},
   direction = "ltr",
   isArabic = false,
   animationType = "default"
-}: { 
-  children: string; 
+}: {
+  children: string;
   variants: any;
   className?: string;
   style?: React.CSSProperties;
@@ -24,9 +24,9 @@ const TextAnimate = ({
   // For Arabic text, we need to render it as a whole to maintain connections
   if (isArabic) {
     return (
-      <motion.div 
+      <motion.div
         className={`${className} ${animationType === "focus-in-expand" ? "focus-in-expand" : ""}`}
-        style={{ 
+        style={{
           direction,
           ...style
         }}
@@ -39,13 +39,13 @@ const TextAnimate = ({
       </motion.div>
     );
   }
-  
+
   // For tracking-in-expand animation, we want to animate the whole text as one unit
   if (animationType === "tracking-in-expand" || animationType === "focus-in-expand") {
     return (
-      <motion.div 
+      <motion.div
         className={`${className} ${animationType}`}
-        style={{ 
+        style={{
           direction,
           ...style
         }}
@@ -58,14 +58,14 @@ const TextAnimate = ({
       </motion.div>
     );
   }
-  
+
   // For English text with default animation, animate each character
   return (
-    <motion.div 
+    <motion.div
       className={className}
-      style={{ 
+      style={{
         display: "flex",
-        flexWrap: "wrap", 
+        flexWrap: "wrap",
         justifyContent: "center",
         direction,
         ...style
@@ -79,7 +79,7 @@ const TextAnimate = ({
           initial="hidden"
           animate="show"
           exit="exit"
-          style={{ 
+          style={{
             display: "inline-block",
             whiteSpace: "pre"
           }}
@@ -95,9 +95,8 @@ const TextAnimate = ({
 // Main Hero component
 export default function Hero() {
   const titles = [
-    "Web Developer",
     "Network Engineer",
-    "Cybersecurity Enthusiast",
+    "Web Developer",
     "Writer"
   ];
 
@@ -112,15 +111,16 @@ export default function Hero() {
   const [displayLanguage, setDisplayLanguage] = useState('en');
 
   // Content based on language with phonetic pronunciation
-  const content: Record<string, { greeting: string; name: string; phonetic?: string }> = {
+  const content: Record<string, { greeting: string; name: string; fullName?: string; phonetic?: string }> = {
     en: {
       greeting: "Hello World! I am",
       name: "Salahuddin",
+      fullName: "Salah Eddine Medkour",
       phonetic: "/saː.laːħ ad.diːn/"
     },
     ar: {
       greeting: "السَّلاَمُ عَلَيْكُمْ وَرَحْمَةُ اللهِ",
-      name: "صَلَاحُ الدّينْ "
+      name: "صَلَاحُ الدّينْ"
     }
   };
 
@@ -162,7 +162,7 @@ export default function Hero() {
     const checkMobile = () => {
       setIsMobile(window.innerWidth <= 640);
     };
-    
+
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
@@ -179,44 +179,28 @@ export default function Hero() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Handle title rotation and language toggle
+  // Handle title rotation - simple and smooth
   useEffect(() => {
-    // Defer non-critical animations until after the initial render to improve TBT
-    const initialLoadTimeout = setTimeout(() => {
-      const titleInterval = setInterval(() => {
-        setCurrentTitle((prev) => (prev + 1) % titles.length);
-      }, 3000);
+    const interval = setInterval(() => {
+      setCurrentTitle((prev) => (prev + 1) % titles.length);
+    }, 4000); // 4 seconds per title
 
-      // Language switching - timed for mobile, manual for desktop
-      let languageInterval: NodeJS.Timeout | undefined;
-      
-      if (isMobile) {
-        // Mobile animation (timed switching)
-        languageInterval = setInterval(() => {
-          setDisplayLanguage(prev => prev === 'en' ? 'ar' : 'en');
-        }, 4000);
-      }
-
-      // Cleanup function for intervals
-      return () => {
-        clearInterval(titleInterval);
-        if (languageInterval) clearInterval(languageInterval);
-      };
-    }, 2000); // Start animations 2 seconds after component mounts
-
-    return () => {
-      clearTimeout(initialLoadTimeout);
-    };
-  }, [isMobile]);
+    return () => clearInterval(interval);
+  }, [titles.length]);
 
 
 
-  // Toggle language on hover (desktop only)
+  // Toggle language on hover (desktop) or tap (mobile)
   const handleLanguageToggle = useCallback(() => {
-    if (!isMobile) {
-      setDisplayLanguage(prev => prev === 'en' ? 'ar' : 'en');
+    setDisplayLanguage(prev => prev === 'en' ? 'ar' : 'en');
+  }, []);
+
+  // Handle tap for mobile
+  const handleNameTap = useCallback(() => {
+    if (isMobile) {
+      handleLanguageToggle();
     }
-  }, [isMobile]);
+  }, [isMobile, handleLanguageToggle]);
 
   // Handle contact button click
   const scrollToContact = () => {
@@ -230,15 +214,15 @@ export default function Hero() {
 
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       className="min-h-screen relative flex flex-col items-center justify-center overflow-hidden"
     >
-      
 
-      {/* Static radial gradient - centered in main content area (ignoring sidebar) */}
-      <motion.div 
-        className="absolute pointer-events-none"
+
+      {/* Static radial gradient - hidden on mobile, visible on md+ */}
+      <motion.div
+        className="absolute pointer-events-none hidden md:block"
         initial={{ opacity: 0 }}
         animate={{ opacity: 0.8 }}
         transition={{ duration: 2 }}
@@ -285,7 +269,7 @@ export default function Hero() {
                 direction={displayLanguage === 'ar' ? 'rtl' : 'ltr'}
                 isArabic={displayLanguage === 'ar'}
                 animationType={displayLanguage === 'en' ? "tracking-in-expand" : "focus-in-expand"}
-                style={{ 
+                style={{
                   fontFamily: displayLanguage === 'ar' ? 'Neo Sans Arabic, sans-serif' : 'inherit',
                   textAlign: 'center'
                 }}
@@ -298,7 +282,11 @@ export default function Hero() {
 
         {/* Name with phonetic pronunciation */}
         <div className="relative h-32 md:h-40 flex items-center justify-center">
-          <div className="relative group" onMouseEnter={!isMobile ? handleLanguageToggle : undefined}>
+          <div
+            className="relative group cursor-pointer"
+            onMouseEnter={!isMobile ? handleLanguageToggle : undefined}
+            onClick={handleNameTap}
+          >
             <AnimatePresence mode="wait">
               {displayLanguage === 'en' ? (
                 <motion.div
@@ -310,15 +298,15 @@ export default function Hero() {
                   transition={{ duration: 0.6, ease: "easeInOut" }}
                 >
                   <motion.h1
-                    className="text-5xl md:text-7xl font-bold text-white tracking-in-expand"
+                    className="text-4xl sm:text-5xl md:text-7xl font-bold text-white tracking-in-expand"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.7, delay: 0.1 }}
                   >
                     {content.en.name}
                   </motion.h1>
-                  <motion.p 
-                    className="text-sm md:text-base text-gray-300/80 italic font-light whitespace-nowrap"
+                  <motion.p
+                    className="text-xs sm:text-sm md:text-base text-gray-300/80 italic font-light whitespace-nowrap"
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 0.8, y: 0 }}
                     transition={{ delay: 0.4, duration: 0.4 }}
@@ -330,7 +318,7 @@ export default function Hero() {
                 <motion.h1
                   key="name-ar"
                   className="absolute inset-0 text-5xl md:text-7xl font-bold text-white focus-in-expand flex items-center justify-center"
-                  style={{ 
+                  style={{
                     fontFamily: 'Neo Sans Arabic, sans-serif',
                     direction: 'rtl',
                     whiteSpace: 'nowrap'
@@ -344,7 +332,7 @@ export default function Hero() {
                 </motion.h1>
               )}
             </AnimatePresence>
-            
+
             <motion.div
               className="absolute inset-0 -z-10 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 rounded-xl blur-2xl opacity-0 group-hover:opacity-100"
               transition={{ duration: 0.3 }}
@@ -388,7 +376,7 @@ export default function Hero() {
             <motion.span
               className="absolute z-10 font-medium text-white text-lg tracking-wide"
               initial={false}
-              animate={{ 
+              animate={{
                 opacity: isContactHovered ? 0 : 1,
                 scale: isContactHovered ? 0.8 : 1
               }}
@@ -396,7 +384,7 @@ export default function Hero() {
             >
               Contact Me
             </motion.span>
-            
+
             {/* Social Icons Container */}
             <motion.div
               className="container flex items-center justify-center space-x-4 w-full"
@@ -418,7 +406,7 @@ export default function Hero() {
               >
                 <Mail size={22} />
               </motion.a>
-              
+
               {/* LinkedIn Icon */}
               <motion.a
                 href="https://www.linkedin.com/in/salah-eddine-medkour/"
@@ -431,7 +419,7 @@ export default function Hero() {
               >
                 <Linkedin size={22} />
               </motion.a>
-              
+
               {/* GitHub Icon */}
               <motion.a
                 href="https://github.com/salahmed-ctrlz"
@@ -445,7 +433,7 @@ export default function Hero() {
                 <Github size={22} />
               </motion.a>
             </motion.div>
-            
+
             {/* Background hover effect */}
             <motion.div
               className="absolute inset-0 bg-gradient-to-r from-[#4f46e5]/80 to-[#818cf8]/80 opacity-0"
@@ -478,9 +466,9 @@ export default function Hero() {
             <motion.span
               className="relative z-10 flex items-center gap-2 text-lg font-medium text-white border-none"
               initial={false}
-              animate={{ 
-                x: isResumeClicked ? -20 : 0, 
-                opacity: isResumeClicked ? 0 : 1 
+              animate={{
+                x: isResumeClicked ? -20 : 0,
+                opacity: isResumeClicked ? 0 : 1
               }}
             >
               <Download className={`w-5 h-5 transition-colors duration-300 ${isResumeHovered ? 'text-white' : 'text-indigo-400'}`} />
@@ -492,9 +480,9 @@ export default function Hero() {
             {/* Success checkmark when clicked */}
             <motion.div
               initial={{ opacity: 0, scale: 0.5 }}
-              animate={{ 
-                opacity: isResumeClicked ? 1 : 0, 
-                scale: isResumeClicked ? 1 : 0.5 
+              animate={{
+                opacity: isResumeClicked ? 1 : 0,
+                scale: isResumeClicked ? 1 : 0.5
               }}
               className="absolute flex items-center justify-center"
             >
@@ -507,7 +495,7 @@ export default function Hero() {
             <motion.div
               className="absolute inset-0 w-full h-full"
               initial={false}
-              animate={{ 
+              animate={{
                 scaleY: isResumeHovered ? 1 : 0,
                 opacity: isResumeHovered ? 1 : 0
               }}
@@ -521,57 +509,57 @@ export default function Hero() {
           </motion.a>
         </div>
       </div>
-      
+
       {/* Static scroll indicator with gradient lines - centered with main content */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, delay: 1 }}
         className="absolute bottom-10 left-2/2 -translate-x-1/2 flex items-center gap-4"
-        style={{ 
+        style={{
           zIndex: 20
         }}
       >
         {/* Left gradient line */}
         <div className="w-16 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent"></div>
-        
+
         {/* Scroll text */}
         <span className="text-white uppercase tracking-[2px] text-xs font-medium">SCROLL</span>
-        
+
         {/* Right gradient line */}
         <div className="w-16 h-px bg-gradient-to-r from-transparent via-gray-500 to-transparent"></div>
       </motion.div>
 
       {/* Back to Top Button */}
-<AnimatePresence>
-  {showBackToTop && !isMobile && (
-    <motion.button
-      initial={{ opacity: 0, y: 20, scale: 0.9 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: 20, scale: 0.9 }}
-      transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
-      onClick={scrollToTop}
-      className="fixed bottom-6 right-6 z-50 h-12 rounded-full bg-zinc-900 flex items-center justify-center overflow-hidden cursor-pointer group transition-all duration-300 ease-out hover:w-[130px] hover:bg-violet-500 w-12"
-      style={{
-        boxShadow: "0px 0px 0px 4px rgba(139, 92, 246, 0.2)"
-      }}
-      aria-label="Back to top"
-    >
-      {/* Arrow Icon */}
-      <svg
-        className="w-3 h-3 fill-white absolute transition-all duration-300 ease-out group-hover:-translate-y-12 group-hover:opacity-0"
-        viewBox="0 0 384 512"
-      >
-        <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" />
-      </svg>
+      <AnimatePresence>
+        {showBackToTop && !isMobile && (
+          <motion.button
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+            onClick={scrollToTop}
+            className="fixed bottom-6 right-6 z-50 h-12 rounded-full bg-zinc-900 flex items-center justify-center overflow-hidden cursor-pointer group transition-all duration-300 ease-out hover:w-[130px] hover:bg-violet-500 w-12"
+            style={{
+              boxShadow: "0px 0px 0px 4px rgba(139, 92, 246, 0.2)"
+            }}
+            aria-label="Back to top"
+          >
+            {/* Arrow Icon */}
+            <svg
+              className="w-3 h-3 fill-white absolute transition-all duration-300 ease-out group-hover:-translate-y-12 group-hover:opacity-0"
+              viewBox="0 0 384 512"
+            >
+              <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" />
+            </svg>
 
-      {/* Text */}
-      <span className="absolute text-white text-[13px] font-semibold whitespace-nowrap translate-y-8 opacity-0 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100">
-        Back to Top
-      </span>
-    </motion.button>
-  )}
-</AnimatePresence>
+            {/* Text */}
+            <span className="absolute text-white text-[13px] font-semibold whitespace-nowrap translate-y-8 opacity-0 transition-all duration-300 ease-out group-hover:translate-y-0 group-hover:opacity-100">
+              Back to Top
+            </span>
+          </motion.button>
+        )}
+      </AnimatePresence>
 
     </section>
   );

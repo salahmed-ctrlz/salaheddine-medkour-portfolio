@@ -15,28 +15,28 @@ import portrait3 from './images/Portraits/portrait3.webp';
 import './About.css';
 
 const languages = [
-  { 
-    name: "Arabic", 
+  {
+    name: "Arabic",
     level: "Native",
     flags: ["arab"]
   },
-  { 
-    name: "English", 
+  {
+    name: "English",
     level: "C1+ to C2",
     flags: ["gb", "us"]
   },
-  { 
-    name: "French", 
+  {
+    name: "French",
     level: "B2+ to C1",
     flags: ["fr"]
   },
-  { 
-    name: "Spanish", 
+  {
+    name: "Spanish",
     level: "A1+ to A2",
     flags: ["es"]
   },
-  { 
-    name: "Russian & Turkish", 
+  {
+    name: "Russian & Turkish",
     level: "A1+",
     flags: ["ru", "tr"]
   }
@@ -45,53 +45,60 @@ const languages = [
 const timelineData = [
   {
     type: "work",
-    title: "Teaching Assistant & Lab Instructor",
-    institution: "Badji Mokhtar University of Annaba",
+    title: "Technical Lab Instructor (Python & ICT)",
+    institution: "Badji Mokhtar University & ENS Annaba",
     period: "Oct 2025 - Present",
-    description: "Teaching and supervising Python lab sessions for master's students, and mentoring first-year student-teachers at ENS through the 'Information and Communication Technology' module. Leading practical sessions covering IT fundamentals, cloud collaboration (Google Workspace), cybersecurity awareness, and digital literacy.",
+    description: "Selected by the faculty to instruct 180+ students. Engineered 'AirQuiz', an offline-first platform enabling digital quizzes in low-connectivity labs, reducing grading time by 95%. Curriculum covers Advanced Python, ICT essentials, and cybersecurity awareness.",
     icon: FaChalkboardTeacher,
-    color: "#f59e0b",
+    color: "#6366f1", // Bright Indigo (Current Role)
     isPeak: true,
-    skills: ["Python", "IT Fundamentals", "Google Workspace", "Cybersecurity", "Digital Literacy", "Teaching"]
+    skills: ["Python", "AirQuiz Dev", "Cybersecurity Awareness", "LMS Platforms", "Digital Literacy"]
   },
   {
     type: "work",
-    title: "Web Developer",
-    institution: "Freelance",
+    title: "Freelance Web Developer",
+    institution: "Remote",
     period: "July 2024 - Present",
-    description: "Freelance web developer specializing in custom online portfolios. Full-stack development from UI/UX design to deployment using React, Next.js, and Node.js.",
+    description: "Full-stack development of portfolio websites and custom applications. Handling technical support for deployments including DNS configuration, hosting setup, and troubleshooting. Maintaining open-source projects and WebRTC video tools.",
     icon: FaCode,
-    color: "#00eaff",
-    isPeak: false
+    color: "#06b6d4", // Modern Cyan/Teal
+    isPeak: false,
+    skills: ["React", "DNS Management", "Hosting", "WebRTC", "Open Source"]
   },
   {
     type: "work",
-    title: "Network & Cybersecurity Self-Learner",
-    institution: "Personal Development",
+    title: "Network & Security Analyst (Self-Learner)",
+    institution: "Home Lab & Certifications",
     period: "Present",
-    description: "Building deep technical skills through personal lab environments. Focus on networking, operating systems, and cybersecurity with practical security testing.",
+    description: "Configuring Linux-based home labs to simulate network security scenarios. Holding Google Cybersecurity & IT Support Professional Certifications. actively researching vulnerabilities and publishing technical articles.",
     icon: FaShieldAlt,
-    color: "#d400ff",
+    color: "#7c3aed", // Deep Violet (Security vibe)
     platforms: [
-      { name: "Coursera", link: "https://www.coursera.org/user/f30ce887e6bf606962bcdbd0125111e6" },
+      { name: "Coursera (Google Certs)", link: "https://www.coursera.org/user/f30ce887e6bf606962bcdbd0125111e6" },
       { name: "TryHackMe", link: "https://tryhackme.com/p/bettercallsala7" }
     ],
-    research: {
-      title: "AI-Driven Scams in Algeria: Exposure, Detection, and Roadmap",
-      link: "https://www.researchgate.net/publication/395466783_A_Preliminary_Study_of_AI-Driven_Scams_in_Algeria_Exposure_Detection_and_a_Roadmap"
-    },
+    research: [
+      {
+        title: "AI-Driven Scams in Algeria: Exposure, Detection, and Roadmap",
+        link: "https://www.researchgate.net/publication/395466783_A_Preliminary_Study_of_AI-Driven_Scams_in_Algeria_Exposure_Detection_and_a_Roadmap"
+      },
+      {
+        title: "The Shared Identity Crisis: CGNAT in Algeria's Fiber Network",
+        link: "https://www.researchgate.net/publication/398259988_The_Shared_Identity_Crisis_A_Forensic_and_Performance_Analysis_of_Carrier-Grade_NAT_CGNAT_in_Algeria's_Fiber_Network"
+      }
+    ],
     isPeak: false
   },
   {
     type: "education",
-    title: "Master's in Network & Telecommunications",
+    title: "Master's in Networks & Telecommunications",
     institution: "Badji Mokhtar University of Annaba",
     period: "Sep 2023 – Jun 2025",
-    description: "Focused on network architecture, secure communications, and cybersecurity. Graduated with Highest Honors. Thesis: Implementation of End-to-End Encryption in WebRTC Video Streaming.",
+    description: "Graduated with Top Score. Built a browser-based encryption layer using Insertable Streams (<15ms overhead). Thesis: Implementation of End-to-End Encryption Mechanism in WebRTC Video Streaming.",
     icon: FaGraduationCap,
-    color: "#ffd700",
+    color: "#f59e0b", // Bright Amber/Gold (Education Peak)
     research: {
-      title: "E2E Encryption in WebRTC Video Streaming",
+      title: "Read Published Paper",
       link: "https://www.researchgate.net/publication/392926889_Implementation_of_an_End-to-End_Encryption_Mechanism_in_WebRTC_Video_Streaming"
     },
     isPeak: true
@@ -103,7 +110,7 @@ const timelineData = [
     period: "Aug 2023 – Oct 2024",
     description: "Launched and managed an online store with automated sales and finance systems. Improved inventory management and customer satisfaction.",
     icon: FaShoppingCart,
-    color: "#00ff88",
+    color: "#10b981", // Emerald Green
     social: {
       text: "Instagram: eTopia Shop",
       link: "https://www.instagram.com/etopia.plus/"
@@ -112,12 +119,12 @@ const timelineData = [
   },
   {
     type: "education",
-    title: "Licentiate in Telecommunications Engineering",
+    title: "Bachelor's in Telecommunications",
     institution: "Badji Mokhtar University",
     period: "Sep 2020 - Jun 2023",
-    description: "Telecommunications fundamentals and engineering principles.",
+    description: "Focused on Telecommunications fundamentals, engineering principles, and academic research methodologies.",
     icon: FaGraduationCap,
-    color: "#ff6b6b",
+    color: "#64748b", // Slate Grey (Foundational)
     isPeak: false
   }
 ];
@@ -131,17 +138,17 @@ interface TooltipProps {
 
 const Tooltip = ({ text, link, children, color = "#00eaff" }: TooltipProps) => {
   const [isHovered, setIsHovered] = useState(false);
-  
+
   return (
-    <span 
+    <span
       className="relative inline-block"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <a 
-        href={link} 
-        target="_blank" 
-        rel="noopener noreferrer" 
+      <a
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
         className="font-medium text-white/90 hover:text-white transition-colors underline decoration-1 underline-offset-2"
         style={{ textDecorationColor: color }}
       >
@@ -149,19 +156,19 @@ const Tooltip = ({ text, link, children, color = "#00eaff" }: TooltipProps) => {
       </a>
       <AnimatePresence>
         {isHovered && (
-          <motion.span 
+          <motion.span
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 4 }}
             transition={{ duration: 0.15 }}
             className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1.5 text-xs font-medium text-white rounded-lg whitespace-nowrap z-[9999] pointer-events-none"
-            style={{ 
+            style={{
               backgroundColor: color,
               boxShadow: `0 4px 20px ${color}40`
             }}
           >
             {text}
-            <span 
+            <span
               className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent"
               style={{ borderTopColor: color }}
             />
@@ -173,13 +180,13 @@ const Tooltip = ({ text, link, children, color = "#00eaff" }: TooltipProps) => {
 };
 
 // Custom Arrow Component
-const CustomArrow = ({ 
-  direction, 
-  onClick, 
-  className = "" 
-}: { 
-  direction: 'left' | 'right'; 
-  onClick: () => void; 
+const CustomArrow = ({
+  direction,
+  onClick,
+  className = ""
+}: {
+  direction: 'left' | 'right';
+  onClick: () => void;
   className?: string;
 }) => (
   <button
@@ -213,12 +220,12 @@ export default function About() {
     const [swipeDirection, setSwipeDirection] = useState<'left' | 'right' | null>(null);
     const [isDragging, setIsDragging] = useState(false);
     const dragStartX = useRef<number>(0);
-    
+
     const next = useCallback(() => {
       setSwipeDirection('left');
       setActiveIndex((p) => (p + 1) % cards.length);
     }, [cards.length]);
-    
+
     const prev = useCallback(() => {
       setSwipeDirection('right');
       setActiveIndex((p) => (p - 1 + cards.length) % cards.length);
@@ -261,7 +268,7 @@ export default function About() {
     const activeCard = cards[activeIndex];
 
     return (
-      <div 
+      <div
         className="w-full flex items-center justify-center gap-8 md:gap-12 lg:gap-20"
         onKeyDown={handleKeyDown}
         tabIndex={0}
@@ -269,16 +276,16 @@ export default function About() {
         aria-label="Profile card carousel"
       >
         {/* Left Arrow */}
-        <CustomArrow 
-          direction="left" 
+        <CustomArrow
+          direction="left"
           onClick={prev}
-          className="hidden md:flex flex-shrink-0" 
+          className="hidden md:flex flex-shrink-0"
         />
 
         {/* Card + Dots Container */}
         <div className="flex flex-col items-center">
           {/* Card Container */}
-          <div 
+          <div
             className={`relative w-[300px] sm:w-[340px] md:w-[380px] lg:w-[400px] aspect-[3/4] rounded-2xl overflow-hidden bg-gradient-to-b from-gray-800/50 to-gray-900/50 shadow-2xl select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
@@ -290,12 +297,12 @@ export default function About() {
               <motion.div
                 key={activeIndex}
                 className="absolute inset-0"
-                initial={{ 
+                initial={{
                   opacity: 0,
                   x: swipeDirection === 'left' ? 80 : swipeDirection === 'right' ? -80 : 0
                 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ 
+                exit={{
                   opacity: 0,
                   x: swipeDirection === 'left' ? -80 : swipeDirection === 'right' ? 80 : 0
                 }}
@@ -314,7 +321,7 @@ export default function About() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent pointer-events-none" />
 
                 <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 text-center pointer-events-none">
-                  <motion.h2 
+                  <motion.h2
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
@@ -323,7 +330,7 @@ export default function About() {
                     {activeCard.title}
                   </motion.h2>
                   {activeCard.line2 && (
-                    <motion.p 
+                    <motion.p
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       transition={{ delay: 0.15 }}
@@ -374,10 +381,10 @@ export default function About() {
         </div>
 
         {/* Right Arrow */}
-        <CustomArrow 
-          direction="right" 
+        <CustomArrow
+          direction="right"
           onClick={next}
-          className="hidden md:flex flex-shrink-0" 
+          className="hidden md:flex flex-shrink-0"
         />
       </div>
     );
@@ -399,18 +406,18 @@ export default function About() {
             {/* Flags */}
             <div className="flex items-center justify-center gap-2 mb-4">
               {lang.flags.map((flag, idx) => (
-                <span 
-                  key={idx} 
+                <span
+                  key={idx}
                   className={`fi fi-${flag} text-2xl sm:text-3xl lg:text-4xl rounded-sm`}
                 />
               ))}
             </div>
-            
+
             {/* Language Name */}
             <h4 className="text-sm sm:text-base lg:text-lg font-bold text-white text-center mb-1">
               {lang.name}
             </h4>
-            
+
             {/* Level */}
             <p className="text-xs sm:text-sm text-white/60 text-center">
               {lang.level}
@@ -418,9 +425,9 @@ export default function About() {
           </motion.div>
         ))}
       </div>
-      
+
       {/* Duolingo Link */}
-      <motion.a 
+      <motion.a
         href="https://www.duolingo.com/profile/bettercallsala7"
         target="_blank"
         rel="noopener noreferrer"
@@ -441,7 +448,7 @@ export default function About() {
   // Skills Carousel Component
   const SkillsCarousel = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
-    
+
     const cards = useMemo(() => [
       {
         Icon: Code2,
@@ -512,14 +519,14 @@ export default function About() {
         {/* Arrow + Cards Row */}
         <div className="w-full flex items-center justify-center gap-4 sm:gap-8 md:gap-12">
           {/* Left Arrow */}
-          <CustomArrow 
-            direction="left" 
-            onClick={handlePrev} 
-            className="hidden md:flex flex-shrink-0" 
+          <CustomArrow
+            direction="left"
+            onClick={handlePrev}
+            className="hidden md:flex flex-shrink-0"
           />
 
           {/* Cards Container */}
-          <div 
+          <div
             className={`relative h-[340px] sm:h-[320px] w-full max-w-xs sm:max-w-sm md:max-w-md flex items-center justify-center overflow-visible select-none ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
             onTouchStart={handleTouchStart}
             onTouchMove={(e) => e.preventDefault()}
@@ -534,7 +541,7 @@ export default function About() {
                 const normalizedOffset = ((offset % cards.length) + cards.length) % cards.length;
                 const position = normalizedOffset === 0 ? 0 : normalizedOffset === 1 ? 1 : -1;
                 const isActive = position === 0;
-                
+
                 return (
                   <motion.div
                     key={card.title}
@@ -553,49 +560,49 @@ export default function About() {
                     <div
                       className="h-[320px] sm:h-[300px] p-6 sm:p-8 rounded-2xl flex flex-col transition-all duration-300"
                       style={{
-                        background: isActive 
+                        background: isActive
                           ? `linear-gradient(160deg, ${card.color}12 0%, rgba(0,0,0,0.5) 100%)`
                           : 'rgba(255,255,255,0.02)',
                         boxShadow: isActive ? `0 25px 60px -15px ${card.color}20` : 'none'
                       }}
-                    > 
+                    >
                       <div className={!isActive ? 'blur-sm' : ''}>
-                      {/* Icon */}
-                      <div 
-                        className="w-14 h-14 rounded-xl flex items-center justify-center mb-5 mx-auto"
-                        style={{ backgroundColor: `${card.color}12` }}
-                      >
-                        <card.Icon className="w-7 h-7" style={{ color: card.color }} />
-                      </div>
+                        {/* Icon */}
+                        <div
+                          className="w-14 h-14 rounded-xl flex items-center justify-center mb-5 mx-auto"
+                          style={{ backgroundColor: `${card.color}12` }}
+                        >
+                          <card.Icon className="w-7 h-7" style={{ color: card.color }} />
+                        </div>
 
-                      {/* Title */}
-                      <div className="text-center mb-4">
-                        <h4 className="text-lg sm:text-xl font-bold text-white mb-1">
-                          {card.title}
-                        </h4>
-                        <p className="text-xs text-white/60">{card.subtitle}</p>
-                      </div>
+                        {/* Title */}
+                        <div className="text-center mb-4">
+                          <h4 className="text-lg sm:text-xl font-bold text-white mb-1">
+                            {card.title}
+                          </h4>
+                          <p className="text-xs text-white/60">{card.subtitle}</p>
+                        </div>
 
-                      {/* Description */}
-                      <p className="text-sm text-white/60 text-center mb-5 leading-relaxed line-clamp-2">
-                        {card.description}
-                      </p>
+                        {/* Description */}
+                        <p className="text-sm text-white/60 text-center mb-5 leading-relaxed line-clamp-2">
+                          {card.description}
+                        </p>
 
-                      {/* Skills */}
-                      <div className="flex flex-wrap gap-2 justify-center mt-auto">
-                        {card.skills.slice(0, 5).map((skill, idx) => (
-                          <span
-                            key={idx}
-                            className="text-xs px-2.5 py-1 rounded-full"
-                            style={{
-                              backgroundColor: `${card.color}10`,
-                              color: isActive ? card.color : 'rgba(255,255,255,0.4)'
-                            }}
-                          >
-                            {skill}
-                          </span>
-                        ))}
-                      </div>
+                        {/* Skills */}
+                        <div className="flex flex-wrap gap-2 justify-center mt-auto">
+                          {card.skills.slice(0, 5).map((skill, idx) => (
+                            <span
+                              key={idx}
+                              className="text-xs px-2.5 py-1 rounded-full"
+                              style={{
+                                backgroundColor: `${card.color}10`,
+                                color: isActive ? card.color : 'rgba(255,255,255,0.4)'
+                              }}
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </motion.div>
@@ -605,10 +612,10 @@ export default function About() {
           </div>
 
           {/* Right Arrow */}
-          <CustomArrow 
-            direction="right" 
-            onClick={handleNext} 
-            className="hidden md:flex flex-shrink-0" 
+          <CustomArrow
+            direction="right"
+            onClick={handleNext}
+            className="hidden md:flex flex-shrink-0"
           />
         </div>
 
@@ -648,9 +655,9 @@ export default function About() {
   }, []);
 
   return (
-    <section 
+    <section
       ref={containerRef}
-      id="about" 
+      id="about"
       className="py-24 md:py-36 text-white relative overflow-hidden"
     >
       {/* Background */}
@@ -659,7 +666,7 @@ export default function About() {
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-        
+
         {/* Header */}
         <motion.div
           initial="hidden"
@@ -673,9 +680,9 @@ export default function About() {
             About Me
           </h2>
           <p className="text-lg sm:text-xl text-white/60 max-w-3xl mx-auto leading-relaxed">
-            My name is <span className="text-white">Salahuddin Medkour</span>, a 23-year-old from Annaba, Algeria. 
-            I hold a Master's degree in <span className="text-white">Networks Engineering</span>. And currently working as a <span className="text-white">Teaching Assistant & Lab Instructor</span> at <span className="text-white">Badji Mokhtar University of Annaba.</span> I'm actively looking for new opportunities. 
-            My main interests are <span className="text-white">Cybersecurity</span>, <span className="text-white">Networking</span>, <span className="text-white">Freelance Web Development</span>, and <span className="text-white">AI</span>. 
+            My name is <span className="text-white">Salahuddin Medkour</span>, a 23-year-old from Annaba, Algeria.
+            I hold a Master's degree in <span className="text-white">Networks Engineering</span>. And currently working as a <span className="text-white">Teaching Assistant & Lab Instructor</span> at <span className="text-white">Badji Mokhtar University of Annaba.</span> I'm actively looking for new opportunities.
+            My main interests are <span className="text-white">Cybersecurity</span>, <span className="text-white">Networking</span>, <span className="text-white">Freelance Web Development</span>, and <span className="text-white">AI</span>.
             I'm very motivated and eager to learn and grow in these fields.
           </p>
         </motion.div>
@@ -693,7 +700,7 @@ export default function About() {
         </motion.div>
 
         {/* Typewriter */}
-        <motion.div 
+        <motion.div
           className="text-center mb-24 md:mb-32"
           initial="hidden"
           whileInView="visible"
@@ -704,10 +711,10 @@ export default function About() {
           <p className="text-lg sm:text-xl text-white/50">
             Currently exploring{" "}
             <span className="text-white font-medium">
-              <Typewriter 
-                words={["Web Development", "Cybersecurity", "Network Engineering", "Technical Writing"]} 
-                loop 
-                cursor 
+              <Typewriter
+                words={["Web Development", "Cybersecurity", "Network Engineering", "Technical Writing"]}
+                loop
+                cursor
                 cursorStyle="_"
                 typeSpeed={80}
                 deleteSpeed={40}
@@ -729,7 +736,7 @@ export default function About() {
           <h3 className="text-2xl sm:text-3xl font-bold text-white mb-10 text-center">
             Languages
           </h3>
-          
+
           <LanguagesSection />
         </motion.div>
 
@@ -755,30 +762,30 @@ export default function About() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
               >
-                <div 
+                <div
                   className="relative bg-white/[0.02] hover:bg-white/[0.04] rounded-xl transition-all duration-300 cursor-pointer overflow-hidden group"
                   onClick={() => toggleExpand(index)}
                 >
                   {/* Left accent */}
-                  <motion.div 
+                  <motion.div
                     className="absolute left-0 top-0 bottom-0 w-1"
                     style={{ backgroundColor: item.color }}
                     animate={{ opacity: expandedItems[index] ? 1 : 0.4 }}
                   />
-                  
+
                   {/* Header */}
                   <div className="p-5 sm:p-6 pl-6 sm:pl-7">
                     <div className="flex items-start gap-4">
-                      <div 
+                      <div
                         className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center flex-shrink-0"
                         style={{ backgroundColor: `${item.color}15` }}
                       >
-                        <item.icon 
-                          className="w-5 h-5 sm:w-6 sm:h-6" 
-                          style={{ color: item.color }} 
+                        <item.icon
+                          className="w-5 h-5 sm:w-6 sm:h-6"
+                          style={{ color: item.color }}
                         />
                       </div>
-                      
+
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-3">
                           <div>
@@ -812,7 +819,7 @@ export default function About() {
                       </div>
                     </div>
                   </div>
-                  
+
                   {/* Expandable Content */}
                   <AnimatePresence>
                     {expandedItems[index] && (
@@ -827,11 +834,11 @@ export default function About() {
                           <p className="text-sm sm:text-base text-white/60 leading-relaxed">
                             {item.description}
                           </p>
-                          
+
                           {item.skills && (
                             <div className="flex flex-wrap gap-2">
                               {item.skills.map((skill, idx) => (
-                                <span 
+                                <span
                                   key={idx}
                                   className="text-xs px-2.5 py-1 rounded-lg"
                                   style={{
@@ -844,19 +851,29 @@ export default function About() {
                               ))}
                             </div>
                           )}
-                          
+
                           {item.research && (
-                            <Tooltip text="View Publication" link={item.research.link} color={item.color}>
-                              <span className="text-sm">📄 {item.research.title}</span>
-                            </Tooltip>
+                            Array.isArray(item.research) ? (
+                              <div className="flex flex-col gap-1">
+                                {item.research.map((article, idx) => (
+                                  <Tooltip key={idx} text="View Publication" link={article.link} color={item.color}>
+                                    <span className="text-sm">📄 {article.title}</span>
+                                  </Tooltip>
+                                ))}
+                              </div>
+                            ) : (
+                              <Tooltip text="View Publication" link={item.research.link} color={item.color}>
+                                <span className="text-sm">📄 {item.research.title}</span>
+                              </Tooltip>
+                            )
                           )}
-                          
+
                           {item.social && (
                             <Tooltip text="Visit Profile" link={item.social.link} color={item.color}>
                               <span className="text-sm">🔗 {item.social.text}</span>
                             </Tooltip>
                           )}
-                          
+
                           {item.platforms && (
                             <div className="flex flex-wrap gap-2">
                               {item.platforms.map((platform, idx) => (
@@ -889,7 +906,7 @@ export default function About() {
           <h3 className="text-2xl sm:text-3xl font-bold text-white mb-12 text-center">
             Interests & Expertise
           </h3>
-          
+
           <SkillsCarousel />
         </motion.div>
       </div>
