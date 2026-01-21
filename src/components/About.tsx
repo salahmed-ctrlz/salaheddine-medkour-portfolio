@@ -8,9 +8,9 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import 'flag-icons/css/flag-icons.min.css';
 
-import portrait1 from './images/Portraits/portrait1.webp';
-import portrait2 from './images/Portraits/portrait2.webp';
-import portrait3 from './images/Portraits/portrait3.webp';
+import portrait1 from './images/Portraits/Salah Eddine Medkour 1.webp';
+import portrait2 from './images/Portraits/Salah Eddine Medkour 2.webp';
+import portrait3 from './images/Portraits/Salah Eddine Medkour 3.webp';
 
 import './About.css';
 
@@ -211,9 +211,9 @@ export default function About() {
   // Profile Card Component
   const ProfileCard = () => {
     const cards = useMemo(() => [
-      { src: portrait1, alt: 'Portrait 1', title: 'Salah Eddine Medkour', line2: 'Network Engineer', line3: 'Annaba, Algeria' },
-      { src: portrait2, alt: 'Portrait 2', title: 'صَلَاحُ الدّينْ مَذكُورْ', line2: 'مهندس شبكات', line3: 'عنابة، الجزائر' },
-      { src: portrait3, alt: 'Portrait 3', title: 'Salahuddin', line2: 'Jack Of All Trades', line3: '' }
+      { src: portrait1, alt: 'Salah Eddine Medkour Portrait', title: 'Salah Eddine Medkour', line2: 'Network Engineer', line3: 'Annaba, Algeria' },
+      { src: portrait2, alt: 'Salah Eddine Medkour Portrait', title: 'صَلَاحُ الدّينْ مَذكُورْ', line2: 'مهندس شبكات', line3: 'عنابة، الجزائر' },
+      { src: portrait3, alt: 'Salah Eddine Medkour Portrait', title: 'Salahuddin', line2: 'Jack Of All Trades', line3: '' }
     ], []);
 
     const [activeIndex, setActiveIndex] = useState(0);

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "../lib/utils";
 import { Home, User, Code, Briefcase, Mail, Linkedin, Github, Menu, X } from "lucide-react";
-import portrait1 from './images/Portraits/Portrait3.webp';
+import portrait1 from './images/Portraits/Salah Eddine Medkour 3.webp';
 
 export function Navigation({ children }: { children?: React.ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -114,7 +114,7 @@ export function Navigation({ children }: { children?: React.ReactNode }) {
                   <img
                     src={portrait1}
                     className="w-12 h-12 rounded-full object-cover ring-2 ring-white/10"
-                    alt="Salahuddin M."
+                    alt="Salah Eddine Medkour"
                   />
                   <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-zinc-950" />
                 </div>
@@ -262,7 +262,7 @@ export function Navigation({ children }: { children?: React.ReactNode }) {
             <img
               src={portrait1}
               className="w-9 h-9 rounded-full object-cover ring-2 ring-white/10 hover:ring-violet-500/30 transition-all duration-300 cursor-pointer"
-              alt="Profile"
+              alt="Salah Eddine Medkour Profile"
               onClick={() => setOpen(true)}
             />
             <span className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-zinc-950" />

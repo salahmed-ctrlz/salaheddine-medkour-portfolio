@@ -3,6 +3,7 @@ import { Clock, MapPin, Mail, Github, Linkedin, Copy, Check, ExternalLink } from
 import confetti from 'canvas-confetti';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SiWhatsapp } from 'react-icons/si';
+import logo from './images/Logos/SALA7logoWhiteBlackbg.svg';
 
 export default function Footer() {
   const [currentTime, setCurrentTime] = useState(new Date());
@@ -99,6 +100,7 @@ export default function Footer() {
 
           {/* Center: Contact */}
           <div className="space-y-4">
+            
             <motion.button
               onClick={() => handleCopy('medkoursalaheddine@gmail.com')}
               className="w-full flex items-center justify-between gap-4 px-4 py-3 rounded-lg bg-white/[0.03] hover:bg-white/[0.06] transition-colors group"
@@ -188,9 +190,16 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-8 border-t border-white/5">
           <span className="text-xs text-white/30">
-            © 2025 All rights reserved
+            © 2026 All rights reserved
           </span>
-          
+          <motion.button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="flex justify-center mb-4 sm:mb-0"
+            whileHover={{ scale: 1.32 }}
+            whileTap={{ scale: 1.1 }}
+          >
+            <img src={logo} alt="Salah Eddine Medkour Logo" className="w-8 h-8" />
+          </motion.button>
           <span className="text-xs text-white/30 text-center sm:text-right">
             Open to collaborations and new projects
           </span>

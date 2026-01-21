@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 
-import Image from "../components/images/Portraits/portrait3.webp";
+import Image from "../components/images/Portraits/Salah Eddine Medkour 3.webp";
 
 interface SEOProps {
   title?: string;
